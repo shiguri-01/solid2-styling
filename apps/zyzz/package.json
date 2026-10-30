@@ -17,7 +17,7 @@
     "@solidjs/web": "^2.0.0-rc.20",
     "solid-js": "^2.0.0-rc.20",
     "utils": "workspace:*",
-    "zyzz": "latest"
+    "zyzz": "^0.0.43"
   },
   "devDependencies": {
     "@solidjs/diagnostics": "^2.0.0-rc.20",

@@ -200,7 +200,7 @@ importers:
         specifier: ^2.0.0-rc.20
         version: 2.0.0-rc.20(solid-js@2.0.0-rc.20)
       '@stylexjs/stylex':
-        specifier: latest
+        specifier: ^0.19.1
         version: 0.19.1
       solid-js:
         specifier: ^2.0.0-rc.20
@@ -219,7 +219,7 @@ importers:
         specifier: ^3.0.0-next.53
         version: 3.0.0-next.53(@solidjs/web@2.0.0-rc.20(solid-js@2.0.0-rc.20))(@testing-library/jest-dom@7.0.1(@testing-library/dom@10.4.2)(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.1))(solid-js@2.0.0-rc.20)
       '@stylexjs/unplugin':
-        specifier: latest
+        specifier: ^0.19.1
         version: 0.19.1(unplugin@2.3.11)
       '@testing-library/jest-dom':
         specifier: ^7.0.0
@@ -258,7 +258,7 @@ importers:
         specifier: ^2.0.0-rc.20
         version: 2.0.0-rc.20(solid-js@2.0.0-rc.20)
       '@vanilla-extract/css':
-        specifier: latest
+        specifier: ^1.21.3
         version: 1.21.3
       solid-js:
         specifier: ^2.0.0-rc.20
@@ -280,7 +280,7 @@ importers:
         specifier: ^7.0.0
         version: 7.0.1(@testing-library/dom@10.4.2)(vitest@5.0.5)
       '@vanilla-extract/vite-plugin':
-        specifier: latest
+        specifier: ^5.2.6
         version: 5.2.6(@types/node@26.6.6)(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.1))(esbuild@0.28.2)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.1)
       eslint-plugin-solid:
         specifier: ~0.18.1
@@ -334,7 +334,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/utils
       zyzz:
-        specifier: latest
+        specifier: ^0.0.43
         version: 0.0.43(@babel/core@7.29.7)(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.1))(esbuild@0.28.2)
     devDependencies:
       '@solidjs/diagnostics':
