@@ -1,7 +1,7 @@
 import type { ParentProps } from "solid-js";
 import { HydrationScript } from "@solidjs/web";
 import * as stylex from "@stylexjs/stylex";
-import { appStyles } from "./styles";
+import { primitives } from "./styles";
 
 export default function Document(props: ParentProps) {
   return (
@@ -25,7 +25,7 @@ export default function Document(props: ParentProps) {
         )}
         <HydrationScript />
       </head>
-      <body class={stylex.attrs(appStyles.body).class}>{props.children}</body>
+      <body class={stylex.attrs(primitives.body).class}>{props.children}</body>
     </html>
   );
 }

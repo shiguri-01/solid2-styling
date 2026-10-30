@@ -16,7 +16,8 @@
     "@solidjs/router": "^2.0.0-next.43",
     "@solidjs/web": "^2.0.0-rc.20",
     "@vanilla-extract/css": "latest",
-    "solid-js": "^2.0.0-rc.20"
+    "solid-js": "^2.0.0-rc.20",
+    "utils": "workspace:*"
   },
   "devDependencies": {
     "@solidjs/diagnostics": "^2.0.0-rc.20",

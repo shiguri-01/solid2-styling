@@ -205,6 +205,9 @@ importers:
       solid-js:
         specifier: ^2.0.0-rc.20
         version: 2.0.0-rc.20
+      utils:
+        specifier: workspace:*
+        version: link:../../packages/utils
     devDependencies:
       '@solidjs/diagnostics':
         specifier: ^2.0.0-rc.20
@@ -260,6 +263,9 @@ importers:
       solid-js:
         specifier: ^2.0.0-rc.20
         version: 2.0.0-rc.20
+      utils:
+        specifier: workspace:*
+        version: link:../../packages/utils
     devDependencies:
       '@solidjs/diagnostics':
         specifier: ^2.0.0-rc.20
@@ -312,6 +318,9 @@ importers:
       solid-js:
         specifier: ^2.0.0-rc.20
         version: 2.0.0-rc.20
+      utils:
+        specifier: workspace:*
+        version: link:../../packages/utils
       zyzz:
         specifier: latest
         version: 0.0.43(@babel/core@7.29.7)(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.1))(esbuild@0.28.2)
@@ -363,6 +372,10 @@ importers:
         version: 1.4.0(@types/node@26.6.6)(@vitest/ui@5.0.5)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@25.0.1)(typescript@7.0.2)(yaml@2.9.1)
 
   packages/utils:
+    dependencies:
+      solid-js:
+        specifier: ^2.0.0-rc.20
+        version: 2.0.0-rc.20
     devDependencies:
       '@types/node':
         specifier: ^26.6.5

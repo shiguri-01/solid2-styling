@@ -1,7 +1,8 @@
 import { Title } from "@solidjs/meta";
 import type { RouteDefinition } from "@solidjs/router";
 import { httpStatus } from "@solidjs/web";
-import { container, lightTheme, pageShell, panel, panelTitle } from "../styles.css";
+import { container, pageShell, panel, panelTitle } from "../styles.css";
+import { lightTheme } from "../theme.css";
 
 export const route = {
   preload: () => httpStatus(404),
