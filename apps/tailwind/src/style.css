@@ -1,0 +1,44 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-ink: #202521;
+  --color-muted: #737b76;
+  --color-line: #e1e6e2;
+  --color-brand: #147d68;
+  --color-paper: #ffffff;
+  --color-ground: #f4f6f3;
+  --color-night: #171b19;
+  --color-night-ink: #eff3f0;
+  --color-night-muted: #c5cec8;
+  --color-night-panel: #202623;
+  --color-night-control: #1b211e;
+  --color-night-border: #3a443e;
+  --color-night-line: #343c37;
+  --color-night-hover: #29312c;
+  --color-teal-soft: #d8eee8;
+  --color-teal-ink: #17634f;
+  --color-emerald-soft: #e0f1df;
+  --color-emerald-ink: #376d3b;
+  --color-amber-soft: #f6ead3;
+  --color-amber-ink: #805915;
+  --color-rose-soft: #f5e0df;
+  --color-rose-ink: #8b4745;
+  --color-red-soft: #f8e7e5;
+  --color-red-ink: #9e4640;
+  --color-priority-amber-soft: #f6eddc;
+  --color-priority-amber-ink: #86602b;
+  --color-green-soft: #e7f2e8;
+  --color-green-ink: #3d7345;
+  --color-body-muted: #4d5650;
+  --color-badge: #f0f2f0;
+  --color-badge-ink: #58605b;
+  --color-hover: #aebbb2;
+  --color-progress: #e7eee9;
+  --color-selected: #eef6f2;
+  --color-row-hover: #f7f9f7;
+}
+
+:root {
+  --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%23585c60' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}

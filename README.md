@@ -1,12 +1,14 @@
-# Solid 2.0 Zero-Runtime Styling Comparison
+# Solid 2.0 Styling Library Comparison
 
-A Vite+ monorepo comparing three zero-runtime, type-safe CSS-in-TS styling libraries in **Solid 2.0** (`solid-js@^2.0.0-rc.20` + `@solidjs/vite-plugin@^3.0.0-next.53`):
+A Vite+ monorepo comparing styling approaches in **Solid 2.0** (`solid-js@^2.0.0-rc.20` + `@solidjs/vite-plugin@^3.0.0-next.53`):
 
 - **`apps/vanilla-extract`** — [vanilla-extract](https://vanilla-extract.style/) (`@vanilla-extract/css` + `@vanilla-extract/vite-plugin`) on port `3001`
 - **`apps/stylex`** — [StyleX](https://stylexjs.com/) (`@stylexjs/stylex` + `@stylexjs/unplugin`) on port `3002`
 - **`apps/zyzz`** — [Zyzz](https://zyzz.style/) (`zyzz` + `zyzz/vite`) on port `3003`
-
-Each app implements the same interactive single-page **Design System & Task Management Dashboard** (Light/Dark theming, KPI progress cards, filterable task board, multi-axis button variant playground, and a `@solidjs/diagnostics`-verified counter) without relying on hand-written `.css` rules.
+- **`apps/panda-css`** — [Panda CSS](https://panda-css.com/) (`@pandacss/vite` + generated `css()` styles) on port `3004`
+- **`apps/tailwind`** — [Tailwind CSS](https://tailwindcss.com/) (`@tailwindcss/vite` + utility classes) on port `3005`
+- **`apps/unocss`** — [UnoCSS](https://unocss.dev/) (`unocss/vite` + on-demand utility classes) on port `3006`
+- **`apps/css-modules`** — CSS Modules (scoped `.module.css` classes) on port `3007`
 
 ---
 
@@ -22,28 +24,34 @@ vp check
 # Run unit & reactivity diagnostics tests across all apps
 vp run -r test
 
-# Build all apps (client + SSR prerendered shell)
+# Build all apps
 vp run -r build
 
 # Start individual dev servers
 vp run vanilla-extract#dev   # http://localhost:3001/
 vp run stylex#dev            # http://localhost:3002/
 vp run zyzz#dev              # http://localhost:3003/
+vp run panda-css#dev         # http://localhost:3004/
+vp run tailwind#dev          # http://localhost:3005/
+vp run unocss#dev            # http://localhost:3006/
+vp run css-modules#dev       # http://localhost:3007/
 ```
 
 ---
 
-## At-a-Glance Comparison
+## Styling Implementation Comparison
 
-| Feature                   | vanilla-extract                           | StyleX (`@stylexjs/unplugin`)                                                       | Zyzz (`zyzz`)                                                                                         |
-| :------------------------ | :---------------------------------------- | :---------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------- |
-| **Authoring Location**    | Separate `*.css.ts` files                 | Co-located or separate (`*.stylex.ts` for vars)                                     | Co-located or separate (`zyzz.config.ts` for config)                                                  |
-| **Vite Plugin**           | `vanillaExtractPlugin()`                  | `stylex.vite({ useCSSLayers: true })`                                               | `zyzz({ reset: true })`                                                                               |
-| **Solid JSX Binding**     | `class={buttonVariants.idle}`             | `class={stylex.attrs(styles.btn).class}`                                            | `class={button({ tone }).class}` (`output: "html"`)                                                   |
-| **Theme Mechanism**       | `createThemeContract()` + `createTheme()` | `stylex.defineVars()` + `stylex.createTheme()`                                      | `defineConfig({ vars })` with `{ light, dark }` pairs                                                 |
-| **Variants / Recipes**    | `styleVariants()`                         | Conditional args in `stylex.attrs(base, cond && active)`                            | Built-in multi-axis `variants({ selection: "class" })`                                                |
-| **Token Enforcement**     | Opt-in via theme contract references      | Opt-in via `defineVars` + longhand property rules                                   | **Strict**: raw values on token-mapped properties fail at compile time unless suffixed with `!custom` |
-| **Global Styles / Reset** | `globalStyle("body", ...)` in `*.css.ts`  | Intentional no-global-selector design; style `<body class={...}>` in `Document.tsx` | Built-in `zyzz({ reset: true })` (`@layer reset`) + `<body class={...}>`                              |
+The same interface makes it possible to compare how each approach handles styling concerns in practice: authoring and composing styles, representing UI states, organizing themes and one-off values, writing responsive rules, and producing CSS.
+
+| Library                                  | Authoring and composition                                                                                                                                                 | UI states and variants                                                                                                                | Theme and one-off values                                                                                                                                                       | Responsive styling                                                                            | CSS output                                                                                        |
+| :--------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
+| [vanilla-extract](apps/vanilla-extract/) | TypeScript style objects in `.css.ts` files compile to class names. `style()` composes declarations; `styleVariants()` builds named alternatives from shared base styles. | Components choose a class for states such as done/todo, priority, and button tone.                                                    | `theme.css.ts` defines a `createThemeContract()` and light/dark `createTheme()` classes. Styles can also use direct CSS values.                                                | Standard `@media` rules and CSS `@container` queries are written in style objects.            | The Vite plugin extracts ordinary CSS during the build; components receive class names.           |
+| [StyleX](apps/stylex/)                   | `stylex.create()` defines typed style objects; Solid elements bind `stylex.attrs(...).class`. Style objects can be composed.                                              | Conditional style objects are passed to `stylex.attrs(base, condition && variant)`, including reactive state.                         | `tokens.stylex.ts` defines variables; `stylex.createTheme()` supplies the alternate theme values. Literal values can be used where appropriate.                                | Media conditions and pseudo-classes such as hover and focus are expressed in style objects.   | The Vite plugin extracts atomic rules into cascade layers at build time.                          |
+| [Zyzz](apps/zyzz/)                       | `style()` defines styles and `variants()` defines reusable recipes; with `output: "html"`, elements bind the returned `.class`.                                           | Recipes can define multiple axes, such as avatar tone or button tone and size, and select classes from current state.                 | `zyzz.config.ts` centralizes theme variables, including light/dark pairs. When a property is mapped to a token domain, raw values require the explicit `!custom` escape hatch. | Media conditions, nested selectors, and container properties are available in style objects.  | The Vite integration compiles styles into CSS, including atomic rules and theme variables.        |
+| [Panda CSS](apps/panda-css/)             | TypeScript objects passed to `css()` are grouped by board area; `cva()` defines reusable variants. Panda codegen generates the `css()` helpers.                           | `cva()` recipes select priority badge and filter-tab variants; Solid switches named `css()` classes for other states.                 | `panda.config.ts` extends the theme with named color tokens. Style objects also use direct CSS values for one-off declarations.                                                | Responsive conditions, media queries, and nested selectors are declared in the style objects. | Codegen and the Vite integration emit static CSS at build time.                                   |
+| [Tailwind CSS](apps/tailwind/)           | Utility classes are written on the elements in `Board.tsx`, using bracket notation for non-theme values.                                                                  | Solid composes utility classes directly; small maps select tone and priority classes. The dark theme uses Tailwind's `dark:` variant. | `@theme` defines named color utilities; one-off dimensions and the select chevron use arbitrary values.                                                                        | Responsive prefixes and arbitrary variants handle breakpoints and descendant selectors.       | The Vite plugin scans JSX class strings and emits the matching utility CSS at build time.         |
+| [UnoCSS](apps/unocss/)                   | Utility classes are written on elements in `Board.tsx`; a small `reset.css` supplies the base reset that UnoCSS does not include.                                         | Solid composes utility classes directly; small maps select tone and priority utility classes.                                         | `uno.config.ts` extends the Wind3 theme with named project colors used by the utilities.                                                                                       | Preset responsive variants and arbitrary selectors are written in utility strings.            | The Vite integration generates CSS for utilities found in the app; the reset remains regular CSS. |
+| [CSS Modules](apps/css-modules/)         | Semantic selectors are written as regular CSS; `Board.tsx` imports the module and binds its local class names directly.                                                   | Solid composes local classes for selected, done, priority, and dark states; CSS owns the declarations.                                | CSS custom properties hold shared colors; the `.dark` class overrides theme values while the module keeps selectors local.                                                     | Standard CSS `@media` rules and selectors are used.                                           | Vite scopes module class names and emits standard CSS.                                            |
 
 ---
 
