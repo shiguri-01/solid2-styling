@@ -2,9 +2,9 @@
 
 A Vite+ monorepo comparing three zero-runtime, type-safe CSS-in-TS styling libraries in **Solid 2.0** (`solid-js@^2.0.0-rc.20` + `@solidjs/vite-plugin@^3.0.0-next.53`):
 
-- **`apps/solid-vanilla-extract`** — [vanilla-extract](https://vanilla-extract.style/) (`@vanilla-extract/css` + `@vanilla-extract/vite-plugin`) on port `3001`
-- **`apps/solid-stylex`** — [StyleX](https://stylexjs.com/) (`@stylexjs/stylex` + `@stylexjs/unplugin`) on port `3002`
-- **`apps/solid-zyzz`** — [Zyzz](https://zyzz.style/) (`zyzz` + `zyzz/vite`) on port `3003`
+- **`apps/vanilla-extract`** — [vanilla-extract](https://vanilla-extract.style/) (`@vanilla-extract/css` + `@vanilla-extract/vite-plugin`) on port `3001`
+- **`apps/stylex`** — [StyleX](https://stylexjs.com/) (`@stylexjs/stylex` + `@stylexjs/unplugin`) on port `3002`
+- **`apps/zyzz`** — [Zyzz](https://zyzz.style/) (`zyzz` + `zyzz/vite`) on port `3003`
 
 Each app implements the same interactive single-page **Design System & Task Management Dashboard** (Light/Dark theming, KPI progress cards, filterable task board, multi-axis button variant playground, and a `@solidjs/diagnostics`-verified counter) without relying on hand-written `.css` rules.
 
@@ -26,9 +26,9 @@ vp run -r test
 vp run -r build
 
 # Start individual dev servers
-vp run solid-vanilla-extract#dev   # http://localhost:3001/
-vp run solid-stylex#dev            # http://localhost:3002/
-vp run solid-zyzz#dev              # http://localhost:3003/
+vp run vanilla-extract#dev   # http://localhost:3001/
+vp run stylex#dev            # http://localhost:3002/
+vp run zyzz#dev              # http://localhost:3003/
 ```
 
 ---

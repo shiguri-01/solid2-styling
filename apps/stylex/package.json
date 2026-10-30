@@ -1,7 +1,7 @@
 {
-  "name": "solid-zyzz",
+  "name": "stylex",
   "version": "0.0.0",
-  "description": "Solid 2.0 + Zyzz",
+  "description": "Solid 2.0 + StyleX",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -15,14 +15,15 @@
     "@solidjs/meta": "^1.0.0-next.2",
     "@solidjs/router": "^2.0.0-next.43",
     "@solidjs/web": "^2.0.0-rc.20",
+    "@stylexjs/stylex": "latest",
     "solid-js": "^2.0.0-rc.20",
-    "utils": "workspace:*",
-    "zyzz": "latest"
+    "utils": "workspace:*"
   },
   "devDependencies": {
     "@solidjs/diagnostics": "^2.0.0-rc.20",
     "@solidjs/testing-library": "^1.0.0-beta.3",
     "@solidjs/vite-plugin": "^3.0.0-next.53",
+    "@stylexjs/unplugin": "latest",
     "@testing-library/jest-dom": "^7.0.0",
     "eslint-plugin-solid": "~0.18.1",
     "filesystem-routing": "0.4.0",
