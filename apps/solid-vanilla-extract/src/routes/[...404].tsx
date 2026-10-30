@@ -1,7 +1,7 @@
 import { Title } from "@solidjs/meta";
 import type { RouteDefinition } from "@solidjs/router";
 import { httpStatus } from "@solidjs/web";
-import { contentLink, main } from "../styles.css";
+import { container, lightTheme, pageShell, panel, panelTitle } from "../styles.css";
 
 export const route = {
   preload: () => httpStatus(404),
@@ -9,16 +9,13 @@ export const route = {
 
 export default function NotFound() {
   return (
-    <main class={main}>
+    <main class={`${lightTheme} ${pageShell}`}>
       <Title>Not Found - Solid App</Title>
-      <h1>Page Not Found</h1>
-      <p>
-        Visit{" "}
-        <a class={contentLink} href="https://docs.solidjs.com" target="_blank" rel="noreferrer">
-          docs.solidjs.com
-        </a>{" "}
-        to learn how to build Solid apps.
-      </p>
+      <div class={container}>
+        <div class={panel}>
+          <h1 class={panelTitle}>404 - Page Not Found</h1>
+        </div>
+      </div>
     </main>
   );
 }

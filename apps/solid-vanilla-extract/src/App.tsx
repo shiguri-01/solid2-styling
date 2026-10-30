@@ -1,23 +1,14 @@
 import { Title } from "@solidjs/meta";
 import { Loading } from "solid-js";
-import { paths, Router } from "./router";
-import { main, nav, navLink } from "./styles.css";
+import { Router } from "./router";
 
 export default function App() {
   return (
     <Router>
       {(props) => (
         <>
-          <Title>Solid App (vanilla-extract)</Title>
-          <nav class={nav}>
-            <a class={navLink} href={paths()}>
-              Home
-            </a>
-            <a class={navLink} href={paths.users()}>
-              Users
-            </a>
-          </nav>
-          <Loading fallback={<main class={main}>Loading…</main>}>{props.children}</Loading>
+          <Title>Solid 2.0 + vanilla-extract Showcase</Title>
+          <Loading fallback={<div>Loading…</div>}>{props.children}</Loading>
         </>
       )}
     </Router>

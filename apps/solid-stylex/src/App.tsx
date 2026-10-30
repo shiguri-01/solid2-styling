@@ -1,8 +1,6 @@
 import { Title } from "@solidjs/meta";
-import * as stylex from "@stylexjs/stylex";
 import { Loading } from "solid-js";
-import { paths, Router } from "./router";
-import { appStyles } from "./styles";
+import { Router } from "./router";
 import "./stylex.css";
 
 export default function App() {
@@ -10,18 +8,8 @@ export default function App() {
     <Router>
       {(props) => (
         <>
-          <Title>Solid App (StyleX)</Title>
-          <nav class={stylex.attrs(appStyles.nav).class}>
-            <a class={stylex.attrs(appStyles.navLink).class} href={paths()}>
-              Home
-            </a>
-            <a class={stylex.attrs(appStyles.navLink).class} href={paths.users()}>
-              Users
-            </a>
-          </nav>
-          <Loading fallback={<main class={stylex.attrs(appStyles.main).class}>Loading…</main>}>
-            {props.children}
-          </Loading>
+          <Title>Solid 2.0 + StyleX Showcase</Title>
+          <Loading fallback={<div>Loading…</div>}>{props.children}</Loading>
         </>
       )}
     </Router>

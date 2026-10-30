@@ -19,7 +19,7 @@ const card = style({
 const badge = style({
   fontSize: "0.75rem",
   fontWeight: 600,
-  color: vars.color.muted,
+  color: vars.color.textMuted,
   textTransform: "uppercase",
   letterSpacing: "0.05em",
 });

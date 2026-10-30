@@ -10,21 +10,13 @@ export const route = {
 
 export default function NotFound() {
   return (
-    <main class={stylex.attrs(appStyles.main).class}>
+    <main class={stylex.attrs(appStyles.pageShell).class}>
       <Title>Not Found - Solid App</Title>
-      <h1>Page Not Found</h1>
-      <p>
-        Visit{" "}
-        <a
-          class={stylex.attrs(appStyles.contentLink).class}
-          href="https://docs.solidjs.com"
-          target="_blank"
-          rel="noreferrer"
-        >
-          docs.solidjs.com
-        </a>{" "}
-        to learn how to build Solid apps.
-      </p>
+      <div class={stylex.attrs(appStyles.container).class}>
+        <div class={stylex.attrs(appStyles.panel).class}>
+          <h1 class={stylex.attrs(appStyles.panelTitle).class}>404 - Page Not Found</h1>
+        </div>
+      </div>
     </main>
   );
 }
