@@ -1,0 +1,25 @@
+import type { ParentProps } from "solid-js";
+import { HydrationScript } from "@solidjs/web";
+import * as stylex from "@stylexjs/stylex";
+import { appStyles } from "./styles";
+
+export default function Document(props: ParentProps) {
+  return (
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+        <title>Solid App (StyleX)</title>
+        {import.meta.env.DEV && (
+          <>
+            <link rel="stylesheet" href="/virtual:stylex.css" />
+            <script type="module" src="/@id/virtual:stylex:runtime" />
+          </>
+        )}
+        <HydrationScript />
+      </head>
+      <body class={stylex.attrs(appStyles.body).class}>{props.children}</body>
+    </html>
+  );
+}

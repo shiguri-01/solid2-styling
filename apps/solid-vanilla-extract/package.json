@@ -1,0 +1,35 @@
+{
+  "name": "solid-vanilla-extract",
+  "version": "0.0.0",
+  "description": "Solid 2.0 + vanilla-extract",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "vp build",
+    "serve": "vp preview",
+    "test": "vp test",
+    "lint": "vp lint src"
+  },
+  "dependencies": {
+    "@solidjs/meta": "^1.0.0-next.2",
+    "@solidjs/router": "^2.0.0-next.43",
+    "@solidjs/web": "^2.0.0-rc.20",
+    "@vanilla-extract/css": "latest",
+    "solid-js": "^2.0.0-rc.20"
+  },
+  "devDependencies": {
+    "@solidjs/diagnostics": "^2.0.0-rc.20",
+    "@solidjs/testing-library": "^1.0.0-beta.3",
+    "@solidjs/vite-plugin": "^3.0.0-next.53",
+    "@testing-library/jest-dom": "^7.0.0",
+    "@vanilla-extract/vite-plugin": "latest",
+    "eslint-plugin-solid": "~0.18.1",
+    "filesystem-routing": "0.4.0",
+    "jsdom": "^25.0.1",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

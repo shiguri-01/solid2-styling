@@ -10,6 +10,7 @@ catalog:
   typescript: ^7.0.2
   vite: npm:@voidzero-dev/vite-plus-core@1.4.0
   vite-plus: 1.4.0
+  vitest: 5.0.5
 overrides:
   vite@*: "catalog:"
 peerDependencyRules:
@@ -17,3 +18,11 @@ peerDependencyRules:
     - vite
   allowedVersions:
     vite: "*"
+minimumReleaseAgeExclude:
+  - "@solidjs/diagnostics@2.0.0-rc.20"
+  - "@solidjs/signals@2.0.0-rc.20"
+  - "@solidjs/vite-plugin@3.0.0-next.53"
+  - "@solidjs/web@2.0.0-rc.20"
+  - solid-js@2.0.0-rc.20
+allowBuilds:
+  esbuild: true
