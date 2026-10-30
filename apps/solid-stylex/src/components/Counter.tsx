@@ -32,8 +32,8 @@ const styles = stylex.create({
     cursor: "pointer",
     color: "#ffffff",
     backgroundColor: {
-      default: "#7c3aed",
-      ":hover": "#6d28d9",
+      default: "#1b6c80",
+      ":hover": "#145363",
     },
     transform: {
       default: null,

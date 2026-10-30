@@ -1,204 +1,454 @@
 import * as stylex from "@stylexjs/stylex";
-import { tokens } from "./tokens.stylex";
+import { rowMarker, tokens } from "./tokens.stylex";
+
+export { rowMarker };
 
 export const darkTheme = stylex.createTheme(tokens, {
-  bg: "#0b0716",
-  surface: "#151026",
-  surfaceElevated: "#1e1736",
-  surfaceHover: "#2a214a",
-  border: "#2e2452",
-  text: "#f8fafc",
-  textMuted: "#a78bfa",
-  brand: "#8b5cf6",
-  brandHover: "#a78bfa",
-  brandSoft: "rgb(139 92 246 / 0.2)",
-  success: "#10b981",
-  successSoft: "rgb(16 185 129 / 0.2)",
-  warning: "#f59e0b",
-  warningSoft: "rgb(245 158 11 / 0.2)",
-  danger: "#ef4444",
-  dangerSoft: "rgb(239 68 68 / 0.2)",
-  shadowCard: "0 8px 20px -4px rgb(0 0 0 / 0.5)",
+  bg: "#0a0b0d",
+  surface: "#121417",
+  surfaceElevated: "#1a1d21",
+  surfaceHover: "#171a1e",
+  surfaceSelected: "#132227",
+  border: "#26292e",
+  rule: "#1c1f24",
+  control: "#3e434a",
+  text: "#f4f6f8",
+  textMuted: "#a8aeb5",
+  textSubtle: "#9097a0",
+  brand: "#3ca1b8",
+  brandHover: "#52b4ca",
+  brandSoft: "#152b32",
+  brandInk: "#7fd6ea",
+  primary: "#f4f6f8",
+  primaryInk: "#0a0b0d",
+  success: "#3fc07a",
+  successSoft: "#172a1d",
+  successInk: "#3fc07a",
+  warning: "#e5a93b",
+  warningSoft: "#2b2414",
+  warningInk: "#e5a93b",
+  danger: "#e5566f",
+  dangerSoft: "#2c1a20",
+  dangerInk: "#e5566f",
+  spaceXs: "4px",
+  spaceSm: "8px",
+  spaceMd: "12px",
+  spaceLg: "16px",
+  spaceXl: "24px",
+  fontSans: '"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+  radiusSm: "6px",
+  radiusMd: "8px",
+  radiusFull: "9999px",
+  chevron: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%23a8aeb5' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
 });
 
-const pulse = stylex.keyframes({
-  "0%, 100%": { opacity: 1 },
-  "50%": { opacity: 0.45 },
+const fadeSlideIn = stylex.keyframes({
+  "0%": {
+    opacity: 0,
+    transform: "translateY(2px)",
+  },
+  "100%": {
+    opacity: 1,
+    transform: "translateY(0)",
+  },
 });
 
 export const appStyles = stylex.create({
   body: {
     margin: 0,
-    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    padding: 0,
+    fontFamily: tokens.fontSans,
+    fontSize: "14px",
+    lineHeight: "20px",
+    WebkitFontSmoothing: "antialiased",
   },
+
+  // ---------------------------------------------------------------------------
+  // App Shell & Top Navigation
+  // ---------------------------------------------------------------------------
   pageShell: {
-    minHeight: "100vh",
+    boxSizing: "border-box",
+    minHeight: "100svh",
     backgroundColor: tokens.bg,
     color: tokens.text,
+    fontFamily: tokens.fontSans,
     transitionProperty: "background-color, color",
-    transitionDuration: "200ms",
+    transitionDuration: "180ms",
     transitionTimingFunction: "ease",
-    paddingTop: "2rem",
-    paddingInline: "1.5rem",
-    paddingBottom: "4rem",
-    boxSizing: "border-box",
+    paddingTop: {
+      default: tokens.spaceXl,
+      "@media (max-width: 640px)": tokens.spaceLg,
+    },
+    paddingInline: {
+      default: tokens.spaceXl,
+      "@media (max-width: 640px)": tokens.spaceLg,
+    },
+    paddingBottom: {
+      default: "56px",
+      "@media (max-width: 640px)": "40px",
+    },
   },
+
   container: {
-    maxWidth: "1080px",
+    boxSizing: "border-box",
+    maxWidth: "1200px",
     marginBlock: 0,
     marginInline: "auto",
     display: "flex",
     flexDirection: "column",
-    gap: "1.75rem",
+    gap: tokens.spaceXl,
   },
+
   headerBar: {
+    boxSizing: "border-box",
     display: "flex",
     flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "space-between",
-    gap: "1rem",
-    paddingBlock: "1.25rem",
-    paddingInline: "1.5rem",
-    backgroundColor: tokens.surface,
-    borderWidth: "1px",
-    borderStyle: "solid",
-    borderColor: tokens.border,
-    borderRadius: "1rem",
-    boxShadow: tokens.shadowCard,
+    gap: tokens.spaceLg,
+    paddingBottom: "20px",
+    borderBottomWidth: "1px",
+    borderBottomStyle: "solid",
+    borderBottomColor: tokens.border,
   },
+
   brandGroup: {
     display: "flex",
     alignItems: "center",
-    gap: "0.875rem",
+    gap: tokens.spaceMd,
   },
+
   liveDot: {
-    width: "0.625rem",
-    height: "0.625rem",
-    borderRadius: "9999px",
+    width: "10px",
+    height: "10px",
+    borderRadius: tokens.radiusFull,
     backgroundColor: tokens.brand,
-    animationName: pulse,
-    animationDuration: "2s",
-    animationIterationCount: "infinite",
-    animationTimingFunction: "ease-in-out",
+    flexShrink: 0,
   },
+
   titleBlock: {
     display: "flex",
     flexDirection: "column",
-    gap: "0.2rem",
+    gap: "2px",
   },
-  appTitle: {
-    margin: 0,
-    fontSize: "1.25rem",
-    fontWeight: 700,
-    letterSpacing: "-0.02em",
-  },
-  appSubtitle: {
-    margin: 0,
-    fontSize: "0.85rem",
+
+  breadcrumbRow: {
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
+    fontSize: "12px",
     color: tokens.textMuted,
   },
+
+  appTitle: {
+    margin: 0,
+    fontSize: "22px",
+    fontWeight: 600,
+    lineHeight: 1.2,
+    letterSpacing: "-0.01em",
+  },
+
+  appSubtitle: {
+    margin: 0,
+    fontSize: "13px",
+    color: tokens.textMuted,
+  },
+
   headerActions: {
     display: "flex",
     alignItems: "center",
-    gap: "0.75rem",
+    gap: "12px",
+    flexWrap: "wrap",
   },
+
+  avatarStack: {
+    display: "inline-flex",
+    alignItems: "center",
+    paddingLeft: "6px",
+  },
+
+  avatarBase: {
+    boxSizing: "border-box",
+    width: "26px",
+    height: "26px",
+    borderRadius: tokens.radiusFull,
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "11px",
+    fontWeight: 600,
+    borderWidth: "2px",
+    borderStyle: "solid",
+    borderColor: tokens.bg,
+    marginLeft: "-6px",
+    flexShrink: 0,
+    userSelect: "none",
+    fontVariantNumeric: "tabular-nums",
+  },
+
+  avatarTeal: {
+    backgroundColor: tokens.brandSoft,
+    color: tokens.brandInk,
+  },
+
+  avatarEmerald: {
+    backgroundColor: tokens.successSoft,
+    color: tokens.successInk,
+  },
+
+  avatarAmber: {
+    backgroundColor: tokens.warningSoft,
+    color: tokens.warningInk,
+  },
+
+  avatarRose: {
+    backgroundColor: tokens.dangerSoft,
+    color: tokens.dangerInk,
+  },
+
+  // ---------------------------------------------------------------------------
+  // KPI Metric Strip (4-cell divided strip)
+  // ---------------------------------------------------------------------------
   statsGrid: {
+    boxSizing: "border-box",
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "1rem",
-  },
-  statCard: {
+    gridTemplateColumns: {
+      default: "repeat(4, minmax(0, 1fr))",
+      "@media (max-width: 900px)": "repeat(2, minmax(0, 1fr))",
+      "@media (max-width: 540px)": "minmax(0, 1fr)",
+    },
     backgroundColor: tokens.surface,
     borderWidth: "1px",
     borderStyle: "solid",
     borderColor: tokens.border,
-    borderRadius: "0.75rem",
-    padding: "1.25rem",
-    boxShadow: tokens.shadowCard,
+    borderRadius: tokens.radiusMd,
+  },
+
+  statCard: {
+    boxSizing: "border-box",
+    paddingBlock: {
+      default: "18px",
+      "@media (max-width: 540px)": "16px",
+    },
+    paddingInline: {
+      default: "22px",
+      "@media (max-width: 540px)": "18px",
+    },
     display: "flex",
     flexDirection: "column",
-    gap: "0.5rem",
+    gap: "8px",
+    borderLeftWidth: {
+      default: "1px",
+      ":first-child": 0,
+      "@media (max-width: 900px)": {
+        default: "1px",
+        ":nth-child(2n + 1)": 0,
+      },
+      "@media (max-width: 540px)": 0,
+    },
+    borderLeftStyle: "solid",
+    borderLeftColor: tokens.border,
+    borderTopWidth: {
+      default: 0,
+      "@media (max-width: 900px)": {
+        default: 0,
+        ":nth-child(n + 3)": "1px",
+      },
+      "@media (max-width: 540px)": {
+        default: "1px",
+        ":first-child": 0,
+      },
+    },
+    borderTopStyle: "solid",
+    borderTopColor: tokens.border,
   },
+
   statLabel: {
-    fontSize: "0.8rem",
-    fontWeight: 600,
-    textTransform: "uppercase",
-    letterSpacing: "0.05em",
+    fontSize: "13px",
+    fontWeight: 500,
     color: tokens.textMuted,
   },
+
   statValueRow: {
     display: "flex",
     alignItems: "baseline",
     justifyContent: "space-between",
-    gap: "0.5rem",
+    gap: "8px",
   },
+
   statValue: {
-    fontSize: "1.85rem",
-    fontWeight: 800,
-    letterSpacing: "-0.03em",
+    fontSize: "26px",
+    fontWeight: 600,
+    lineHeight: 1.15,
+    letterSpacing: "-0.02em",
+    fontVariantNumeric: "tabular-nums",
   },
+
   progressTrack: {
     width: "100%",
-    height: "0.5rem",
+    height: "6px",
     backgroundColor: tokens.surfaceElevated,
-    borderRadius: "9999px",
+    borderRadius: tokens.radiusFull,
     overflow: "hidden",
   },
+
   progressFill: {
     height: "100%",
     backgroundColor: tokens.brand,
-    borderRadius: "9999px",
+    borderRadius: tokens.radiusFull,
     transitionProperty: "width",
-    transitionDuration: "250ms",
+    transitionDuration: "220ms",
     transitionTimingFunction: "ease",
   },
-  mainGrid: {
+
+  // ---------------------------------------------------------------------------
+  // Workspace Split Layout (Issue Table + Detail Inspector)
+  // ---------------------------------------------------------------------------
+  workspaceGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-    gap: "1.5rem",
-    alignItems: "start",
+    gridTemplateColumns: {
+      default: "minmax(0, 7fr) minmax(320px, 5fr)",
+      "@media (max-width: 960px)": "minmax(0, 1fr)",
+    },
+    gap: "24px",
+    alignItems: "stretch",
   },
+
   panel: {
+    boxSizing: "border-box",
+    containerType: "inline-size",
     backgroundColor: tokens.surface,
     borderWidth: "1px",
     borderStyle: "solid",
     borderColor: tokens.border,
-    borderRadius: "1rem",
-    padding: "1.5rem",
-    boxShadow: tokens.shadowCard,
+    borderRadius: tokens.radiusMd,
+    paddingBlock: {
+      default: "22px",
+      "@media (max-width: 600px)": "16px",
+    },
+    paddingInline: {
+      default: "24px",
+      "@media (max-width: 600px)": "16px",
+    },
     display: "flex",
     flexDirection: "column",
-    gap: "1.25rem",
+    gap: {
+      default: "18px",
+      "@media (max-width: 600px)": "14px",
+    },
   },
+
   panelHeader: {
     display: "flex",
     flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "space-between",
-    gap: "0.75rem",
+    gap: "12px",
   },
+
+  panelTitleGroup: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+  },
+
   panelTitle: {
     margin: 0,
-    fontSize: "1.05rem",
-    fontWeight: 700,
+    fontSize: "16px",
+    fontWeight: 600,
+    lineHeight: 1.3,
   },
-  filterGroup: {
+
+  // ---------------------------------------------------------------------------
+  // Filter Bar, Search Box, Segmented Control & Custom Select
+  // ---------------------------------------------------------------------------
+  toolbarRow: {
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "10px",
+    paddingBottom: "14px",
+    borderBottomWidth: "1px",
+    borderBottomStyle: "solid",
+    borderBottomColor: tokens.rule,
+  },
+
+  searchField: {
+    boxSizing: "border-box",
     display: "inline-flex",
-    padding: "0.25rem",
-    backgroundColor: tokens.surfaceElevated,
-    borderRadius: "0.75rem",
+    alignItems: "center",
+    gap: "8px",
+    height: "34px",
+    paddingInline: "10px",
+    borderRadius: tokens.radiusSm,
     borderWidth: "1px",
     borderStyle: "solid",
-    borderColor: tokens.border,
-    gap: "0.25rem",
+    borderColor: {
+      default: tokens.control,
+      ":focus-within": tokens.brand,
+    },
+    backgroundColor: tokens.surface,
+    flex: "1 1 200px",
+    maxWidth: {
+      default: "280px",
+      "@media (max-width: 640px)": "100%",
+    },
+    transitionProperty: "border-color",
+    transitionDuration: "140ms",
+    transitionTimingFunction: "ease",
   },
-  filterTab: {
+
+  searchIcon: {
+    width: "14px",
+    height: "14px",
+    color: tokens.textMuted,
+    flexShrink: 0,
+  },
+
+  searchInput: {
     borderStyle: "none",
-    borderRadius: "0.375rem",
-    paddingBlock: "0.35rem",
-    paddingInline: "0.75rem",
-    fontSize: "0.8rem",
-    fontWeight: 600,
+    backgroundColor: "transparent",
+    color: tokens.text,
+    fontFamily: "inherit",
+    fontSize: "13px",
+    width: "100%",
+    outlineStyle: "none",
+    "::placeholder": {
+      color: tokens.textMuted,
+    },
+  },
+
+  filterControls: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    flexWrap: "wrap",
+  },
+
+  filterGroup: {
+    boxSizing: "border-box",
+    display: "inline-flex",
+    width: "max-content",
+    maxWidth: "100%",
+    padding: "3px",
+    backgroundColor: tokens.surfaceElevated,
+    borderRadius: tokens.radiusSm,
+    gap: "2px",
+  },
+
+  filterTab: {
+    boxSizing: "border-box",
+    borderStyle: "none",
+    borderRadius: "4px",
+    height: "28px",
+    paddingInline: "10px",
+    fontFamily: "inherit",
+    fontSize: "12px",
+    fontWeight: 400,
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "6px",
     cursor: "pointer",
     backgroundColor: "transparent",
     color: {
@@ -206,200 +456,541 @@ export const appStyles = stylex.create({
       ":hover": tokens.text,
     },
     transitionProperty: "background-color, color",
-    transitionDuration: "150ms",
+    transitionDuration: "140ms",
     transitionTimingFunction: "ease",
   },
+
   filterTabActive: {
-    backgroundColor: tokens.brand,
+    backgroundColor: tokens.surface,
     color: {
-      default: "#ffffff",
-      ":hover": "#ffffff",
+      default: tokens.text,
+      ":hover": tokens.text,
     },
+    fontWeight: 500,
   },
+
+  tabCount: {
+    fontSize: "11px",
+    color: tokens.textMuted,
+    fontVariantNumeric: "tabular-nums",
+  },
+
   formRow: {
     display: "flex",
-    gap: "0.5rem",
+    alignItems: "center",
+    gap: "8px",
     flexWrap: "wrap",
   },
+
   textInput: {
-    flex: 1,
+    boxSizing: "border-box",
+    flex: "1 1 200px",
     minWidth: "160px",
-    paddingBlock: "0.55rem",
-    paddingInline: "0.85rem",
-    borderRadius: "0.375rem",
+    height: "34px",
+    paddingInline: "12px",
+    borderRadius: tokens.radiusSm,
     borderWidth: "1px",
     borderStyle: "solid",
     borderColor: {
-      default: tokens.border,
+      default: tokens.control,
       ":focus": tokens.brand,
     },
-    backgroundColor: tokens.surfaceElevated,
+    backgroundColor: tokens.surface,
     color: tokens.text,
-    fontSize: "0.9rem",
+    fontFamily: "inherit",
+    fontSize: "13px",
     outlineStyle: "none",
+    transitionProperty: "border-color",
+    transitionDuration: "140ms",
+    transitionTimingFunction: "ease",
+    "::placeholder": {
+      color: tokens.textMuted,
+    },
   },
+
   selectInput: {
-    paddingBlock: "0.55rem",
-    paddingInline: "0.75rem",
-    borderRadius: "0.375rem",
+    boxSizing: "border-box",
+    appearance: "none",
+    WebkitAppearance: "none",
+    height: "34px",
+    paddingLeft: "10px",
+    paddingRight: "30px",
+    borderRadius: tokens.radiusSm,
     borderWidth: "1px",
     borderStyle: "solid",
-    borderColor: tokens.border,
-    backgroundColor: tokens.surfaceElevated,
+    borderColor: {
+      default: tokens.control,
+      ":focus": tokens.brand,
+    },
+    backgroundColor: {
+      default: tokens.surface,
+      ":hover": tokens.surfaceElevated,
+    },
+    backgroundImage: tokens.chevron,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "right 9px center",
+    backgroundSize: "12px 12px",
     color: tokens.text,
-    fontSize: "0.85rem",
-    fontWeight: 600,
+    fontFamily: "inherit",
+    fontSize: "12px",
+    fontWeight: 500,
+    cursor: "pointer",
+    outlineStyle: "none",
+    transitionProperty: "border-color, background-color",
+    transitionDuration: "140ms",
+    transitionTimingFunction: "ease",
   },
+
+  // ---------------------------------------------------------------------------
+  // Issue Table / List Rows
+  // ---------------------------------------------------------------------------
+  tableHeader: {
+    boxSizing: "border-box",
+    display: "grid",
+    gridTemplateColumns: {
+      default: "minmax(0, 1fr) 92px 84px 72px 64px",
+      "@container (max-width: 560px)": "minmax(0, 1fr) 80px 64px",
+    },
+    alignItems: "center",
+    gap: "10px",
+    paddingTop: 0,
+    paddingInline: "8px",
+    paddingBottom: "8px",
+    borderBottomWidth: "1px",
+    borderBottomStyle: "solid",
+    borderBottomColor: tokens.border,
+    fontSize: "12px",
+    fontWeight: 500,
+    color: tokens.textMuted,
+  },
+
+  hideOnCompact: {
+    display: {
+      default: null,
+      "@container (max-width: 560px)": "none",
+    },
+  },
+
+  alignEnd: {
+    textAlign: "right",
+  },
+
   taskList: {
     listStyleType: "none",
     margin: 0,
     padding: 0,
     display: "flex",
     flexDirection: "column",
-    gap: "0.625rem",
   },
-  taskRow: {
+
+  tableFooter: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    gap: "0.75rem",
-    paddingBlock: "0.75rem",
-    paddingInline: "1rem",
-    borderRadius: "0.75rem",
-    borderWidth: "1px",
-    borderStyle: "solid",
-    borderColor: tokens.border,
+    gap: "12px",
+    paddingTop: "12px",
+    fontSize: "12px",
+    color: tokens.textMuted,
+    fontVariantNumeric: "tabular-nums",
+  },
+
+  taskRow: {
+    boxSizing: "border-box",
+    display: "grid",
+    gridTemplateColumns: {
+      default: "minmax(0, 1fr) 92px 84px 72px 64px",
+      "@container (max-width: 560px)": "minmax(0, 1fr) 80px 64px",
+    },
+    alignItems: "center",
+    gap: "10px",
+    paddingBlock: "13px",
+    paddingInline: "8px",
+    borderBottomWidth: "1px",
+    borderBottomStyle: "solid",
+    borderBottomColor: tokens.rule,
+    borderLeftWidth: "2px",
+    borderLeftStyle: "solid",
+    borderLeftColor: "transparent",
     backgroundColor: {
-      default: tokens.surfaceElevated,
+      default: "transparent",
       ":hover": tokens.surfaceHover,
     },
-    transitionProperty: "background-color, opacity",
-    transitionDuration: "150ms",
+    cursor: "pointer",
+    animationName: fadeSlideIn,
+    animationDuration: "140ms",
+    animationTimingFunction: "ease-out",
+    transitionProperty: "background-color, border-color, opacity",
+    transitionDuration: "120ms",
     transitionTimingFunction: "ease",
   },
-  taskRowDone: {
-    opacity: 0.65,
+
+  taskRowSelected: {
+    backgroundColor: {
+      default: tokens.surfaceSelected,
+      ":hover": tokens.surfaceSelected,
+    },
+    borderLeftColor: tokens.brand,
   },
-  taskLabelGroup: {
+
+  taskRowDone: {
+    opacity: 0.72,
+  },
+
+  taskPrimaryCell: {
     display: "flex",
     alignItems: "center",
-    gap: "0.75rem",
+    gap: "10px",
+    minWidth: 0,
+  },
+
+  checkboxInput: {
+    width: "15px",
+    height: "15px",
+    margin: 0,
+    accentColor: tokens.brand,
     cursor: "pointer",
-    flex: 1,
+    flexShrink: 0,
   },
-  taskTitle: {
-    fontSize: "0.925rem",
+
+  issueKey: {
+    fontSize: "12px",
     fontWeight: 500,
+    color: tokens.textMuted,
+    fontVariantNumeric: "tabular-nums",
+    flexShrink: 0,
   },
+
+  taskTitle: {
+    fontSize: "13px",
+    fontWeight: 500,
+    color: tokens.text,
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
+
   taskTitleDone: {
+    fontWeight: 400,
     textDecorationLine: "line-through",
     color: tokens.textMuted,
   },
-  pillBase: {
+
+  dueCell: {
+    fontSize: "12px",
+    color: tokens.textMuted,
+    fontVariantNumeric: "tabular-nums",
+    whiteSpace: "nowrap",
+  },
+
+  assigneeCell: {
     display: "inline-flex",
     alignItems: "center",
-    paddingBlock: "0.2rem",
-    paddingInline: "0.6rem",
-    borderRadius: "9999px",
-    fontSize: "0.72rem",
-    fontWeight: 700,
-    textTransform: "uppercase",
-    letterSpacing: "0.04em",
+    gap: "6px",
+    fontSize: "12px",
+    color: tokens.textMuted,
   },
+
+  rowActionBtn: {
+    boxSizing: "border-box",
+    height: "26px",
+    paddingInline: "8px",
+    fontFamily: "inherit",
+    fontSize: "12px",
+    fontWeight: 500,
+    borderRadius: tokens.radiusSm,
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderColor: {
+      default: "transparent",
+      ":focus-visible": tokens.danger,
+    },
+    backgroundColor: {
+      default: "transparent",
+      [stylex.when.ancestor(":hover", rowMarker)]: tokens.dangerSoft,
+      ":focus-visible": tokens.dangerSoft,
+    },
+    color: {
+      default: tokens.textMuted,
+      [stylex.when.ancestor(":hover", rowMarker)]: tokens.dangerInk,
+      ":focus-visible": tokens.dangerInk,
+    },
+    cursor: "pointer",
+    justifySelf: "end",
+    transitionProperty: "background-color, color, border-color",
+    transitionDuration: "120ms",
+    transitionTimingFunction: "ease",
+  },
+
+  // ---------------------------------------------------------------------------
+  // Pills, Status Dots & Buttons
+  // ---------------------------------------------------------------------------
+  pillBase: {
+    boxSizing: "border-box",
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "5px",
+    height: "22px",
+    paddingInline: "8px",
+    borderRadius: tokens.radiusFull,
+    fontSize: "12px",
+    fontWeight: 500,
+    whiteSpace: "nowrap",
+    width: "max-content",
+    flexShrink: 0,
+    fontVariantNumeric: "tabular-nums",
+  },
+
+  priorityDot: {
+    width: "6px",
+    height: "6px",
+    borderRadius: tokens.radiusFull,
+    backgroundColor: "currentColor",
+  },
+
   pillLow: {
     backgroundColor: tokens.successSoft,
-    color: tokens.success,
+    color: tokens.successInk,
   },
+
   pillMedium: {
     backgroundColor: tokens.warningSoft,
-    color: tokens.warning,
+    color: tokens.warningInk,
   },
+
   pillHigh: {
     backgroundColor: tokens.dangerSoft,
-    color: tokens.danger,
+    color: tokens.dangerInk,
   },
+
   pillBrand: {
     backgroundColor: tokens.brandSoft,
-    color: tokens.brand,
+    color: tokens.brandInk,
   },
+
+  pillNeutral: {
+    backgroundColor: tokens.surfaceElevated,
+    color: tokens.textMuted,
+  },
+
   buttonBase: {
+    boxSizing: "border-box",
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    gap: "0.4rem",
-    fontWeight: 600,
-    borderRadius: "0.375rem",
+    gap: "6px",
+    fontFamily: "inherit",
+    fontWeight: 500,
+    borderRadius: tokens.radiusSm,
     borderWidth: "1px",
     borderStyle: "solid",
     borderColor: "transparent",
     cursor: "pointer",
+    whiteSpace: "nowrap",
+    flexShrink: 0,
     transform: {
       default: null,
-      ":active": "scale(0.97)",
+      ":active": "translateY(1px)",
     },
     transitionProperty: "background-color, transform, border-color",
-    transitionDuration: "150ms",
+    transitionDuration: "140ms",
     transitionTimingFunction: "ease",
   },
+
   tonePrimary: {
+    backgroundColor: tokens.primary,
+    color: tokens.primaryInk,
+  },
+
+  toneNeutral: {
+    backgroundColor: {
+      default: tokens.surface,
+      ":hover": tokens.surfaceElevated,
+    },
+    color: tokens.text,
+    borderColor: tokens.control,
+  },
+
+  toneBrand: {
     backgroundColor: {
       default: tokens.brand,
       ":hover": tokens.brandHover,
     },
     color: "#ffffff",
   },
-  toneNeutral: {
-    backgroundColor: {
-      default: tokens.surfaceElevated,
-      ":hover": tokens.surfaceHover,
-    },
-    color: tokens.text,
-    borderColor: tokens.border,
-  },
+
   toneSuccess: {
     backgroundColor: tokens.success,
     color: "#ffffff",
   },
+
   toneDanger: {
     backgroundColor: tokens.dangerSoft,
-    color: tokens.danger,
+    color: tokens.dangerInk,
   },
+
   sizeSm: {
-    fontSize: "0.8rem",
-    paddingBlock: "0.4rem",
-    paddingInline: "0.75rem",
+    height: "28px",
+    fontSize: "12px",
+    paddingInline: "10px",
   },
+
   sizeMd: {
-    fontSize: "0.9rem",
-    paddingBlock: "0.55rem",
-    paddingInline: "1.1rem",
+    height: "34px",
+    fontSize: "13px",
+    paddingInline: "14px",
   },
+
   sizeLg: {
-    fontSize: "1rem",
-    paddingBlock: "0.75rem",
-    paddingInline: "1.4rem",
+    height: "40px",
+    fontSize: "14px",
+    paddingInline: "18px",
   },
-  controlGroup: {
+
+  // ---------------------------------------------------------------------------
+  // Right Column: Selected Issue Inspector & Activity Timeline
+  // ---------------------------------------------------------------------------
+  inspectorHeader: {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    gap: "12px",
+    paddingBottom: "14px",
+    borderBottomWidth: "1px",
+    borderBottomStyle: "solid",
+    borderBottomColor: tokens.rule,
+  },
+
+  inspectorTitleBlock: {
     display: "flex",
     flexDirection: "column",
-    gap: "0.75rem",
-    padding: "1rem",
-    borderRadius: "0.75rem",
-    backgroundColor: tokens.surfaceElevated,
-    borderWidth: "1px",
-    borderStyle: "solid",
-    borderColor: tokens.border,
+    gap: "4px",
   },
-  previewStage: {
+
+  inspectorTitle: {
+    margin: 0,
+    fontSize: "16px",
+    fontWeight: 600,
+    lineHeight: 1.35,
+  },
+
+  metaGrid: {
+    margin: 0,
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    rowGap: "12px",
+    columnGap: "16px",
+    paddingBottom: "16px",
+    borderBottomWidth: "1px",
+    borderBottomStyle: "solid",
+    borderBottomColor: tokens.rule,
+  },
+
+  metaItem: {
     display: "flex",
     flexDirection: "column",
+    gap: "4px",
+  },
+
+  metaLabel: {
+    margin: 0,
+    fontSize: "12px",
+    color: tokens.textMuted,
+  },
+
+  metaValue: {
+    margin: 0,
+    fontSize: "13px",
+    fontWeight: 500,
+    display: "inline-flex",
     alignItems: "center",
-    justifyContent: "center",
-    gap: "0.75rem",
-    padding: "1.5rem",
-    borderRadius: "0.75rem",
-    borderWidth: "1px",
-    borderStyle: "dashed",
-    borderColor: tokens.border,
+    gap: "6px",
+  },
+
+  sectionBlock: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+  },
+
+  sectionTitle: {
+    margin: 0,
+    fontSize: "12px",
+    fontWeight: 600,
+    color: tokens.textMuted,
+  },
+
+  descriptionText: {
+    margin: 0,
+    fontSize: "13px",
+    lineHeight: 1.55,
+    color: tokens.text,
+  },
+
+  checklistGroup: {
+    listStyleType: "none",
+    margin: 0,
+    padding: 0,
+    display: "flex",
+    flexDirection: "column",
+  },
+
+  checklistItem: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "8px",
+    paddingBlock: "8px",
+    borderBottomWidth: "1px",
+    borderBottomStyle: "solid",
+    borderBottomColor: tokens.rule,
+    borderTopWidth: {
+      default: 0,
+      ":first-child": "1px",
+    },
+    borderTopStyle: "solid",
+    borderTopColor: tokens.rule,
+    fontSize: "13px",
+  },
+
+  activityList: {
+    listStyleType: "none",
+    margin: 0,
+    padding: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+  },
+
+  activityItem: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: tokens.spaceSm,
+    fontSize: "12px",
+    color: tokens.textSubtle,
+  },
+
+  activityAuthor: {
+    fontWeight: 500,
+    color: tokens.text,
+  },
+
+  inspectorFooter: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "10px",
+    paddingTop: "14px",
+    borderTopWidth: "1px",
+    borderTopStyle: "solid",
+    borderTopColor: tokens.rule,
+  },
+
+  emptyState: {
+    margin: 0,
+    paddingBlock: "28px",
+    textAlign: "center",
+    fontSize: "13px",
+    color: tokens.textMuted,
   },
 });
