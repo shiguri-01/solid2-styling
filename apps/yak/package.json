@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "vp dev",
+    "dev": "cross-env \"PATH=$PATH\" PORTLESS_HTTPS=0 PORTLESS_SYNC_HOSTS=0 portless run --name yak vp dev",
     "build": "vp build",
     "serve": "vp preview",
     "lint": "vp lint src"

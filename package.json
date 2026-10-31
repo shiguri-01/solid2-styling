@@ -9,6 +9,8 @@
     "prepare": "vp config"
   },
   "devDependencies": {
+    "cross-env": "catalog:",
+    "portless": "catalog:",
     "vite-plus": "catalog:"
   },
   "devEngines": {
@@ -16,9 +18,14 @@
       "name": "pnpm",
       "version": "12.16.1",
       "onFail": "download"
+    },
+    "runtime": {
+      "name": "node",
+      "version": "26.13.0",
+      "onFail": "download"
     }
   },
   "engines": {
-    "node": ">=22.18.0"
+    "node": ">=24"
   }
 }

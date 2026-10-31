@@ -31,17 +31,17 @@ vp run -r build
 
 Start the apps you want to compare:
 
-| App             | Command                      | URL                      |
-| :-------------- | :--------------------------- | :----------------------- |
-| vanilla-extract | `vp run vanilla-extract#dev` | <http://localhost:3001/> |
-| StyleX          | `vp run stylex#dev`          | <http://localhost:3002/> |
-| Zyzz            | `vp run zyzz#dev`            | <http://localhost:3003/> |
-| Panda CSS       | `vp run panda-css#dev`       | <http://localhost:3004/> |
-| Tailwind CSS    | `vp run tailwind#dev`        | <http://localhost:3005/> |
-| UnoCSS          | `vp run unocss#dev`          | <http://localhost:3006/> |
-| CSS Modules     | `vp run css-modules#dev`     | <http://localhost:3007/> |
-| yak             | `vp run yak#dev`             | <http://localhost:3008/> |
-| Lism CSS        | `vp run lism-css#dev`        | <http://localhost:3009/> |
+| App             | Command                      | URL                                 |
+| :-------------- | :--------------------------- | :---------------------------------- |
+| vanilla-extract | `vp run vanilla-extract#dev` | <http://vanilla-extract.localhost/> |
+| StyleX          | `vp run stylex#dev`          | <http://stylex.localhost/>          |
+| Zyzz            | `vp run zyzz#dev`            | <http://zyzz.localhost/>            |
+| Panda CSS       | `vp run panda-css#dev`       | <http://panda-css.localhost/>       |
+| Tailwind CSS    | `vp run tailwind#dev`        | <http://tailwind.localhost/>        |
+| UnoCSS          | `vp run unocss#dev`          | <http://unocss.localhost/>          |
+| CSS Modules     | `vp run css-modules#dev`     | <http://css-modules.localhost/>     |
+| yak             | `vp run yak#dev`             | <http://yak.localhost/>             |
+| Lism CSS        | `vp run lism-css#dev`        | <http://lism-css.localhost/>        |
 
 Use the same issue and interactions in each app. Compare the corresponding source for:
 
