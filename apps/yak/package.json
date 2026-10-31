@@ -1,0 +1,26 @@
+{
+  "name": "yak",
+  "version": "0.0.0",
+  "description": "Solid 2.0 + yak issue tracker",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "vp build",
+    "serve": "vp preview",
+    "lint": "vp lint src"
+  },
+  "dependencies": {
+    "@solidjs/web": "^2.0.0-rc.20",
+    "@yak/solid": "^0.4.0",
+    "solid-js": "^2.0.0-rc.20",
+    "utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@solidjs/diagnostics": "^2.0.0-rc.20",
+    "@solidjs/vite-plugin": "^3.0.0-next.53",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  }
+}

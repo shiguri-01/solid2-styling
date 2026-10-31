@@ -1,0 +1,210 @@
+@layer lism-custom {
+  .c--page {
+    min-height: 100dvh;
+    padding: var(--s30);
+  }
+  .is--dark {
+    color-scheme: dark;
+    --base: #202623;
+    --base-2: #171b19;
+    --text: #eff3f0;
+    --text-2: #b4beb7;
+    --divider: #343c37;
+  }
+  .c--header {
+    padding-block-end: var(--s20);
+    border-block-end: 1px solid var(--divider);
+  }
+  .c--brand h1 {
+    font-size: var(--fz--2xl);
+  }
+  .c--mark {
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    place-items: center;
+  }
+  .c--eyebrow {
+    letter-spacing: var(--lts--l);
+  }
+  .c--headerActions {
+    gap: var(--s10);
+  }
+  .c--avatar {
+    --bgc: color-mix(in oklab, currentColor 12%, var(--base));
+    inline-size: 2rem;
+    block-size: 2rem;
+    margin-inline-start: calc(-1 * var(--s5));
+    place-items: center;
+    border: 2px solid var(--base-2);
+  }
+  .c--button,
+  .c--primary {
+    padding: var(--s10) var(--s15);
+  }
+  .c--metrics,
+  .c--panel {
+    border: 1px solid var(--divider);
+  }
+  .c--metrics > div {
+    border-inline-end: 1px solid var(--divider);
+  }
+  .c--progress {
+    block-size: var(--s5);
+  }
+  .c--workspace {
+    gap: var(--s20);
+  }
+  .c--panelHeading,
+  .c--detailTop {
+    gap: var(--s10);
+  }
+  .c--panelHeading h2,
+  .c--detailTop h2 {
+    font-size: var(--fz--l);
+  }
+  .c--panelHeading p {
+    color: var(--text-2);
+    font-size: var(--fz--s);
+  }
+  .c--toolbar {
+    margin-block-start: var(--s20);
+    flex-wrap: wrap;
+  }
+  .c--toolbar input,
+  .c--createForm input {
+    flex: 1 1 12rem;
+  }
+  .c--input {
+    min-inline-size: 0;
+  }
+  .c--filters {
+    margin-block-start: var(--s15);
+    border-block-end: 1px solid var(--divider);
+  }
+  .c--filter {
+    padding: var(--s10) var(--s15);
+    border: 0;
+    border-block-end: 2px solid transparent;
+  }
+  .c--filter span {
+    margin-inline-start: var(--s5);
+    font-size: var(--fz--xs);
+  }
+  .is--active {
+    border-color: var(--brand);
+  }
+  .c--createForm {
+    margin-block-start: var(--s20);
+  }
+  .c--primary {
+    border-color: var(--brand);
+  }
+  .c--tableHead,
+  .c--row {
+    grid-template-columns: minmax(0, 1fr) 7em 5em 4em 3.5em;
+  }
+  .c--tableHead {
+    margin-block-start: var(--s25);
+    padding-block-end: var(--s10);
+    border-block-end: 1px solid var(--divider);
+  }
+  .c--row {
+    min-block-size: 3.5rem;
+    border-block-end: 1px solid var(--divider);
+    cursor: pointer;
+  }
+  .c--row:hover {
+    background: var(--base-2);
+  }
+  .is--selected {
+    background: color-mix(in oklab, var(--brand) 8%, var(--base));
+  }
+  .c--issue {
+    min-inline-size: 0;
+    gap: var(--s5);
+  }
+  .c--issue input,
+  .c--issue code {
+    flex-shrink: 0;
+  }
+  .c--issue span,
+  .c--category {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .c--issue code {
+    color: var(--text-2);
+  }
+  .is--done {
+    color: var(--text-2);
+    text-decoration: line-through;
+  }
+  .c--badge {
+    --bgc: color-mix(in oklab, currentColor 12%, var(--base));
+    inline-size: max-content;
+    padding-inline: var(--s10);
+  }
+  .c--delete {
+    border: 0;
+    padding: 0;
+  }
+  .c--footer {
+    padding-block-start: var(--s15);
+  }
+  .c--detailTop {
+    padding-block-end: var(--s20);
+    border-block-end: 1px solid var(--divider);
+  }
+  .c--meta {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s20);
+    padding-block: var(--s20);
+    border-block-end: 1px solid var(--divider);
+  }
+  .c--meta dt {
+    color: var(--text-2);
+    font-size: var(--fz--s);
+  }
+  .c--detailSection {
+    margin-block-start: var(--s20);
+  }
+  .c--detailSection h3 {
+    margin-block-end: var(--s10);
+    font-size: var(--fz--m);
+  }
+  .c--criteria li,
+  .c--activity li {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--s10);
+    padding-block: var(--s10);
+    font-size: var(--fz--s);
+  }
+  .c--criteria li {
+    border-block-end: 1px solid var(--divider);
+  }
+  .c--criteria small,
+  .c--activity small {
+    color: var(--text-2);
+    white-space: nowrap;
+  }
+  .c--detailActions {
+    flex-wrap: wrap;
+    margin-block-start: var(--s20);
+    padding-block-start: var(--s20);
+    border-block-start: 1px solid var(--divider);
+  }
+  @container (width < 800px) {
+    .c--tableHead,
+    .c--row {
+      grid-template-columns: minmax(0, 1fr) 5em 3.5em;
+    }
+    .c--tableHead > :nth-child(2),
+    .c--tableHead > :nth-child(4),
+    .c--row > :nth-child(2),
+    .c--row > :nth-child(4) {
+      display: none;
+    }
+  }
+}

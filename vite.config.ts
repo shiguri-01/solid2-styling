@@ -5,7 +5,12 @@ export default defineConfig({
     "*": "vp check --fix",
   },
   fmt: {
-    ignorePatterns: ["**/file-routes.d.ts", ".agents/**", "**/styled-system/**"],
+    ignorePatterns: [
+      "**/file-routes.d.ts",
+      "**/lism-env.d.ts",
+      ".agents/**",
+      "**/styled-system/**",
+    ],
   },
   lint: {
     ignorePatterns: [".agents/**", "**/styled-system/**"],
