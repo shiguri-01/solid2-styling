@@ -8,7 +8,7 @@ export const inspectorStyles = {
     gap: "10px",
     pb: "14px",
     borderBottom: "1px solid token(colors.line)",
-    "& h2": { m: "5px 0 0", fontSize: "16px", lineHeight: 1.4 },
+    "& h2": { m: "5px 0 0", fontSize: "16px", fontWeight: "bold", lineHeight: 1.4 },
   }),
   meta: css({
     display: "grid",

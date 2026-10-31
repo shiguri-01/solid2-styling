@@ -2,7 +2,11 @@ import { cva } from "../../styled-system/css";
 
 export const filterTab = cva({
   base: {
-    border: 0,
+    borderWidth: 0,
+    borderBottomWidth: "2px",
+    borderBottomStyle: "solid",
+    borderBottomColor: "transparent",
+    borderRadius: "0",
     bg: "transparent",
     color: "muted",
     py: "9px",
@@ -11,9 +15,10 @@ export const filterTab = cva({
     fontSize: "12px",
     "& span": { ml: "4px", fontSize: "10px" },
   },
+  defaultVariants: { active: false },
   variants: {
     active: {
-      true: { color: "brand", borderBottom: "2px solid token(colors.brand)" },
+      true: { color: "brand", borderBottomColor: "brand" },
       false: {},
     },
   },
@@ -24,11 +29,12 @@ export const priorityBadge = cva({
     width: "max-content",
     px: "7px",
     py: "3px",
-    borderRadius: "full",
+    borderRadius: "20px",
     fontSize: "10px",
     bg: "badge",
     color: "badge-ink",
   },
+  defaultVariants: { priority: "medium" },
   variants: {
     priority: {
       high: { bg: "red-soft", color: "red-ink" },

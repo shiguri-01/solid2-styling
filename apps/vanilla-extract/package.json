@@ -16,6 +16,7 @@
     "@solidjs/router": "^2.0.0-next.43",
     "@solidjs/web": "^2.0.0-rc.20",
     "@vanilla-extract/css": "^1.21.3",
+    "@vanilla-extract/dynamic": "catalog:",
     "solid-js": "^2.0.0-rc.20",
     "utils": "workspace:*"
   },

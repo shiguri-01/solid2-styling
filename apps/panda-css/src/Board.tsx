@@ -16,7 +16,7 @@ import {
 
 export function Board(props: { library: string; tracker: IssueTrackerStore }) {
   return (
-    <main class={`${shellStyles.page} ${props.tracker.isDark() ? shellStyles.dark : ""}`}>
+    <section class={shellStyles.page}>
       <div class={shellStyles.shell}>
         <header class={shellStyles.header}>
           <div class={shellStyles.brand}>
@@ -82,12 +82,14 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
               <input
                 class={issueStyles.input}
                 type="search"
+                aria-label="Search issues"
                 placeholder="Search key, title, or category…"
                 value={props.tracker.searchQuery()}
                 onInput={(e) => props.tracker.setSearchQuery(e.currentTarget.value)}
               />
               <select
                 class={issueStyles.select}
+                aria-label="Filter by category"
                 value={props.tracker.categoryFilter()}
                 onChange={(e) => props.tracker.setCategoryFilter(e.currentTarget.value)}
               >
@@ -278,6 +280,6 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
           Same Solid 2.0 issue board and interactions in each app · styling: {props.library}
         </p>
       </div>
-    </main>
+    </section>
   );
 }

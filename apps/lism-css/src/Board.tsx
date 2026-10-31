@@ -1,6 +1,8 @@
+import { Card } from "./components/Card";
+import { Button } from "./components/Button";
+import { TextInput } from "./components/TextInput";
+import { Select } from "./components/Select";
 import { For, Show } from "solid-js";
-import "lism-css/full.css";
-import "./style.css";
 import {
   CATEGORIES,
   FILTER_LABELS,
@@ -11,40 +13,60 @@ import {
   type IssueTrackerStore,
   type Priority,
 } from "utils";
+
 const toneClasses: Record<string, string> = {
-  teal: "-c:blue -bgc",
-  emerald: "-c:green -bgc",
-  amber: "-c:orange -bgc",
-  rose: "-c:pink -bgc",
+  teal: "-bgc -c:brand",
+  emerald: "-bgc -c",
+  amber: "-bgc -c:orange",
+  rose: "-bgc -c:red",
 };
 const priorityClasses: Record<Priority, string> = {
-  high: "-c:red -bgc",
-  medium: "-c:orange -bgc",
-  low: "-c:green -bgc",
+  high: "b--priority--high",
+  medium: "b--priority--medium",
+  low: "b--priority--low",
 };
-
 export function Board(props: { library: string; tracker: IssueTrackerStore }) {
   return (
-    <main
-      class={`is--container c--page -bgc:base-2 -c:text ${props.tracker.isDark() ? "is--dark" : ""}`}
-    >
-      <div class="l--stack -max-sz:l -m:auto -g:25">
-        <header class="l--cluster -jc:between -ai:center c--header -g:20">
-          <div class="l--flex -ai:center c--brand -g:15">
-            <span class="l--grid -fw:700 c--mark -bdrs:30 -bgc:brand -c:white">S</span>
+    <section class="l--stack -g:30">
+      <div class="l--stack -g:30">
+        <header class="l--cluster -jc:between -g:20 -bd-be -pbe:20">
+          <div class="l--flex -ai:center -g:15">
+            <span
+              class="l--grid -pi:center -sz -h -fxsh:0 -bdrs -bgc:brand -c:white -fw:700"
+              style={{
+                "--sz": "var(--markSize)",
+                "--h": "var(--markSize)",
+                "--bdrs": "var(--markRadius)",
+              }}
+            >
+              S
+            </span>
             <div>
-              <p class="c--eyebrow -m:0 -c:text-2 -fz:xs">
-                DESIGN ENGINEERING / Q4 STYLING MIGRATION
-              </p>
-              <h1>Solid 2.0 × {props.library}</h1>
+              <p class="-fz:xs -c:text-2 -lts:l">DESIGN ENGINEERING / Q4 STYLING MIGRATION</p>
+              <h1 class="-fz -fw:600" style={{ "--fz": "var(--issueTitleSize)" }}>
+                Solid 2.0 × {props.library}
+              </h1>
             </div>
           </div>
-          <div class="l--flex -ai:center c--headerActions">
-            <div class="l--flex -ai:center c--avatars -g:0" aria-label="Active team members">
+          <div class="l--cluster -g:10">
+            <div class="l--cluster -g:5" aria-label="Active team members">
               <For each={TEAM_MEMBERS}>
                 {(m) => (
                   <span
-                    class={`l--grid c--avatar -bdrs:99 -fz:2xs ${toneClasses[m.tone]}`}
+                    class={`l--grid -pi:center -sz -h -fxsh:0 -bdrs:99 -fz:xs ${toneClasses[m.tone]}`}
+                    style={{
+                      "--sz": "var(--avatarSize)",
+                      "--h": "var(--avatarSize)",
+                      "--bgc": `var(--${m.tone === "teal" ? "selectedSurface" : m.tone === "emerald" ? "successSurface" : m.tone === "amber" ? "warningSurface" : "dangerSurface"})`,
+                      "--c":
+                        m.tone === "teal"
+                          ? "var(--brand)"
+                          : m.tone === "emerald"
+                            ? "var(--successInk)"
+                            : m.tone === "amber"
+                              ? "var(--orange)"
+                              : "var(--red)",
+                    }}
                     title={m.name}
                   >
                     {m.initials}
@@ -52,78 +74,83 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                 )}
               </For>
             </div>
-            <span class="c--sprint -c:text-2 -fz:xs">Sprint 14</span>
-            <button
-              class="c--button -bdrs:20 -bgc:base -c:text"
-              onClick={() => props.tracker.toggleTheme()}
-            >
+            <span class="-c:text-2 -fz:s">Sprint 14</span>
+            <Button onClick={() => props.tracker.toggleTheme()}>
               {props.tracker.isDark() ? "Light theme" : "Dark theme"}
-            </button>
+            </Button>
           </div>
         </header>
         <section
-          class="l--grid c--metrics -gtc -gtc_md -bdrs:30 -bgc:base"
-          style={{ "--gtc": "repeat(2, minmax(0, 1fr))", "--gtc_md": "repeat(4, minmax(0, 1fr))" }}
+          class="c--issueMetrics l--columns -cols_md -bd -bgc:base -g:0 -bdrs"
+          style={{ "--cols": 2, "--cols_md": 4, "--bdrs": "var(--metricRadius)" }}
         >
-          <div class="l--stack -g:5 -p:20 -c:text-2">
+          <div>
             <span>Sprint progress</span>
-            <strong class="-c:text -fz:2xl">{props.tracker.completionRate()}%</strong>
-            <div class="c--progress -ov:hidden -bdrs:10 -bgc:divider">
+            <strong class="-d:block -fz:2xl">{props.tracker.completionRate()}%</strong>
+            <div class="b--progress -ov:hidden -bgc:divider -bdrs:99">
               <i
-                class="-d:block -bsz -sz -bgc:brand"
-                style={{ "--bsz": "100%", "--sz": `${props.tracker.completionRate()}%` }}
+                class="-d:block -h:100% -w -bgc:brand"
+                style={{ "--w": `${props.tracker.completionRate()}%` }}
               />
             </div>
           </div>
-          <div class="l--stack -g:5 -p:20 -c:text-2">
+          <div>
             <span>Open issues</span>
-            <strong class="-c:text -fz:2xl">{props.tracker.activeCount()}</strong>
-            <small>Active engineering tasks</small>
+            <strong class="-d:block -fz:2xl">{props.tracker.activeCount()}</strong>
+            <small class="-c:text-2 -fz:xs">Active engineering tasks</small>
           </div>
-          <div class="l--stack -g:5 -p:20 -c:text-2">
+          <div>
             <span>High priority</span>
-            <strong class="-c:text -fz:2xl">{props.tracker.highPriorityActiveCount()}</strong>
-            <small>Requires immediate review</small>
+            <strong class="-d:block -fz:2xl">{props.tracker.highPriorityActiveCount()}</strong>
+            <small class="-c:text-2 -fz:xs">Requires immediate review</small>
           </div>
-          <div class="l--stack -g:5 -p:20 -c:text-2">
+          <div>
             <span>Categories</span>
-            <strong class="-c:text -fz:2xl">{CATEGORIES.length}</strong>
-            <small>Tokens, SSR, A11y &amp; Compiler</small>
+            <strong class="-d:block -fz:2xl">{CATEGORIES.length}</strong>
+            <small class="-c:text-2 -fz:xs">Tokens, SSR, A11y &amp; Compiler</small>
           </div>
         </section>
-        <div class="l--withSide -ai:start c--workspace" style={{ "--sideW": "22rem" }}>
-          <section class="c--panel -p:25 -bdrs:30 -bgc:base">
-            <div class="l--flex -ai:center -jc:between c--panelHeading">
+        <div
+          class="l--grid -gtc -gtc_md -ai:start -g:30"
+          style={{
+            "--gtc": "minmax(0, 1fr)",
+            "--gtc_md": "minmax(0, 1.35fr) minmax(320px, 0.9fr)",
+          }}
+        >
+          <Card as="section" class="c--issuePanel is--container l--stack -g:20">
+            <div class="l--cluster -jc:between -g:15">
               <div>
-                <h2>Sprint issues</h2>
+                <h2 class="-fz:l">Sprint issues</h2>
                 <p>Compare how each library styles this interface</p>
               </div>
-              <span class="c--count -c:text-2 -fz:xs">
-                {props.tracker.filteredTasks().length} issues
-              </span>
+              <span class="-c:text-2 -fz:s">{props.tracker.filteredTasks().length} issues</span>
             </div>
-            <div class="l--flex c--toolbar -g:10">
-              <input
-                class="c--input -bdrs:20 -bgc:base -c:text"
+            <div
+              class="l--grid -gtc -gtc_sm -g:10"
+              style={{ "--gtc": "minmax(0,1fr)", "--gtc_sm": "minmax(0,1fr) minmax(140px,180px)" }}
+            >
+              <TextInput
                 type="search"
+                aria-label="Search issues"
                 placeholder="Search key, title, or category…"
                 value={props.tracker.searchQuery()}
                 onInput={(e) => props.tracker.setSearchQuery(e.currentTarget.value)}
               />
-              <select
-                class="c--select -bdrs:20 -c:text"
+              <Select
+                aria-label="Filter by category"
                 value={props.tracker.categoryFilter()}
                 onChange={(e) => props.tracker.setCategoryFilter(e.currentTarget.value)}
               >
                 <option value="all">All categories</option>
                 <For each={CATEGORIES}>{(cat) => <option>{cat}</option>}</For>
-              </select>
+              </Select>
             </div>
-            <nav class="l--flex c--filters -g:5" aria-label="Issue status">
+            <nav class="l--cluster -g:5 -bd-be" aria-label="Issue status">
               <For each={FILTER_OPTIONS}>
                 {(filter) => (
                   <button
-                    class={`c--filter -bgc:transparent -fz:s ${props.tracker.filter() === filter ? "is--active -c:brand" : "-c:text-2"}`}
+                    class="b--tab b--tab--issues set--plain"
+                    aria-pressed={props.tracker.filter() === filter ? "true" : "false"}
                     onClick={() => props.tracker.setFilter(filter)}
                   >
                     {FILTER_LABELS[filter]} <span>{props.tracker.countForFilter(filter)}</span>
@@ -131,24 +158,30 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                 )}
               </For>
             </nav>
-            <form class="l--cluster c--createForm -g:10" onSubmit={(e) => props.tracker.addTask(e)}>
-              <input
-                class="c--input -bdrs:20 -bgc:base -c:text"
+            <form
+              class="c--issueCreate l--grid -gtc -gtc_sm -g:10"
+              style={{
+                "--gtc": "repeat(2,minmax(0,1fr))",
+                "--gtc_sm": "minmax(0,1fr) minmax(100px,140px) auto",
+              }}
+              onSubmit={(e) => props.tracker.addTask(e)}
+            >
+              <TextInput
+                class="-gc"
+                style={{ "--gc": "1 / -1" }}
                 aria-label="New issue title"
                 placeholder="Add an issue to the sprint…"
                 value={props.tracker.draftTitle()}
                 onInput={(e) => props.tracker.setDraftTitle(e.currentTarget.value)}
               />
-              <select
-                class="c--select -bdrs:20 -c:text"
+              <Select
                 aria-label="New issue category"
                 value={props.tracker.draftCategory()}
                 onChange={(e) => props.tracker.setDraftCategory(e.currentTarget.value as Category)}
               >
                 <For each={CATEGORIES}>{(cat) => <option>{cat}</option>}</For>
-              </select>
-              <select
-                class="c--select -bdrs:20 -c:text"
+              </Select>
+              <Select
                 aria-label="New issue priority"
                 value={props.tracker.draftPriority()}
                 onChange={(e) => props.tracker.setDraftPriority(e.currentTarget.value as Priority)}
@@ -156,26 +189,41 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
-              </select>
-              <button class="c--primary -bdrs:20 -bgc:brand -c:white -fw:600" type="submit">
+              </Select>
+              <Button class="-fz:s" variant="primary" type="submit">
                 Create issue
-              </button>
+              </Button>
             </form>
-            <div class="l--grid -ai:center c--tableHead -g:10 -c:text-2 -fz:xs">
+            <div
+              class="l--grid -gtc -gtc_sm -g:10 -bd-be -pbe:10 -fz:xs -c:text-2"
+              style={{
+                "--gtc": "minmax(0, 1fr) 70px 42px",
+                "--gtc_sm": "minmax(0, 1fr) 100px 78px 55px 45px",
+              }}
+            >
               <span>Issue</span>
-              <span>Category</span>
+              <span class="-d:none -d_sm" style={{ "--d_sm": "block" }}>
+                Category
+              </span>
               <span>Priority</span>
-              <span>Due</span>
+              <span class="-d:none -d_sm" style={{ "--d_sm": "block" }}>
+                Due
+              </span>
               <span />
             </div>
-            <ul class="c--rows -m:0 -p:0">
+            <ul class="l--stack">
               <For each={props.tracker.filteredTasks()}>
                 {(item) => (
                   <li
-                    class={`l--grid -ai:center c--row -g:10 -fz:xs ${props.tracker.selectedTask()?.id === item.id ? "is--selected" : ""}`}
+                    class="c--issueRow l--grid -gtc -gtc_sm -ai:center -g:10 -py:15 -bd-be -fz:s -hov:-bgc"
+                    style={{
+                      "--gtc": "minmax(0, 1fr) 70px 42px",
+                      "--gtc_sm": "minmax(0, 1fr) 100px 78px 55px 45px",
+                    }}
+                    data-selected={props.tracker.selectedTask()?.id === item.id ? "true" : "false"}
                     onClick={() => props.tracker.setSelectedId(item.id)}
                   >
-                    <label class="l--flex -ai:center c--issue">
+                    <div class="l--flex -ai:center -g:10 -min-w" style={{ "--min-w": "0" }}>
                       <input
                         type="checkbox"
                         checked={item.done}
@@ -183,20 +231,33 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                         onClick={(e) => e.stopPropagation()}
                         onChange={() => props.tracker.toggleTask(item.id)}
                       />
-                      <code>{item.key}</code>
-                      <span class={item.done ? "is--done" : ""}>{item.title}</span>
-                    </label>
-                    <span class="c--category -ov:hidden -c:text-2 -whs:nowrap">
+                      <code class="-fxsh:0">{item.key}</code>
+                      <button
+                        type="button"
+                        class="b--issueTitle c--issueTitle set--plain -ov:hidden -whs:nowrap -ta:left -c:text"
+                        data-done={item.done ? "true" : "false"}
+                        aria-pressed={
+                          props.tracker.selectedTask()?.id === item.id ? "true" : "false"
+                        }
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          props.tracker.setSelectedId(item.id);
+                        }}
+                      >
+                        {item.title}
+                      </button>
+                    </div>
+                    <span class="-d:none -d_sm -c:text-2 -fz:xs" style={{ "--d_sm": "block" }}>
                       {item.category}
                     </span>
-                    <span
-                      class={`c--badge -whs:nowrap -fxsh:0 -bdrs:99 -fz:2xs ${priorityClasses[item.priority]}`}
-                    >
+                    <span class={`b--priority ${priorityClasses[item.priority]}`}>
                       {PRIORITY_LABELS[item.priority]}
                     </span>
-                    <span>{item.due}</span>
+                    <span class="-d:none -d_sm" style={{ "--d_sm": "block" }}>
+                      {item.due}
+                    </span>
                     <button
-                      class="c--delete -bgc:transparent -c:text-2 -fz:2xs"
+                      class="set--plain -fz:xs -c:text-2 -whs:nowrap -hov:-c"
                       onClick={(e) => {
                         e.stopPropagation();
                         props.tracker.removeTask(item.id);
@@ -209,105 +270,97 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
               </For>
             </ul>
             <Show when={!props.tracker.filteredTasks().length}>
-              <p class="-ta:center c--empty -p:30 -c:text-2">No issues match these filters.</p>
+              <p class="-p:30 -c:text-2 -ta:center">No issues match these filters.</p>
             </Show>
-            <footer class="c--footer -c:text-2 -fz:xs">
+            <footer class="-fz:s -c:text-2">
               Showing {props.tracker.filteredTasks().length} of {props.tracker.tasks().length}{" "}
               sprint issues
             </footer>
-          </section>
-          <aside class="is--side c--panel -p:25 -bdrs:30 -bgc:base">
+          </Card>
+          <Card as="aside" class="l--stack -g:20">
             <Show when={props.tracker.selectedTask()}>
               {(task) => (
                 <>
-                  <div class="l--flex -ai:flex-start -jc:between c--detailTop">
+                  <div class="l--flex -ai:start -jc:between -g:15 -bd-be -pbe:20">
                     <div>
-                      <p class="c--eyebrow -m:0 -c:text-2 -fz:xs">
+                      <p class="-fz:xs -c:text-2 -lts:l">
                         {task().key} · {task().category}
                       </p>
-                      <h2>{task().title}</h2>
+                      <h2 class="-fz:l">{task().title}</h2>
                     </div>
-                    <span
-                      class={`c--badge -whs:nowrap -fxsh:0 -bdrs:99 -fz:2xs ${priorityClasses[task().priority]}`}
-                    >
+                    <span class={`b--priority ${priorityClasses[task().priority]}`}>
                       {PRIORITY_LABELS[task().priority]}
                     </span>
                   </div>
-                  <dl class="l--grid c--meta -m:0">
+                  <dl class="l--columns -g:20 -bd-be -pbe:20" style={{ "--cols": 2 }}>
                     <div>
-                      <dt>Status</dt>
+                      <dt class="-c:text-2 -fz:s">Status</dt>
                       <dd>{task().done ? "Completed" : "In progress"}</dd>
                     </div>
                     <div>
-                      <dt>Assignee</dt>
+                      <dt class="-c:text-2 -fz:s">Assignee</dt>
                       <dd>{task().assignee}</dd>
                     </div>
                     <div>
-                      <dt>Target date</dt>
+                      <dt class="-c:text-2 -fz:s">Target date</dt>
                       <dd>{task().due}</dd>
                     </div>
                     <div>
-                      <dt>Estimate</dt>
+                      <dt class="-c:text-2 -fz:s">Estimate</dt>
                       <dd>{task().estimate}</dd>
                     </div>
                   </dl>
-                  <section class="c--detailSection">
-                    <h3>Specification</h3>
+                  <section class="l--stack -g:10">
+                    <h3 class="-fz:m">Specification</h3>
                     <p>{task().summary}</p>
                   </section>
-                  <section class="c--detailSection">
-                    <h3>Acceptance criteria</h3>
-                    <ul class="c--criteria -m:0 -p:0">
+                  <section class="l--stack -g:10">
+                    <h3 class="-fz:m">Acceptance criteria</h3>
+                    <ul class="l--stack">
                       <For each={task().subtasks}>
                         {(sub) => (
-                          <li>
+                          <li class="l--flex -jc:between -g:10 -py:10 -bd-be -fz:xs">
                             <span>
                               {sub.done ? "✓" : "○"} {sub.label}
                             </span>
-                            <small>{sub.done ? "Done" : "Pending"}</small>
+                            <small class="-c:text-2 -fz:xs">{sub.done ? "Done" : "Pending"}</small>
                           </li>
                         )}
                       </For>
                     </ul>
                   </section>
-                  <section class="c--detailSection">
-                    <h3>Recent activity</h3>
-                    <ul class="c--activity -m:0 -p:0">
+                  <section class="c--activity l--stack -g:10">
+                    <h3 class="-fz:m">Recent activity</h3>
+                    <ul class="l--stack">
                       <For each={task().activity}>
                         {(a) => (
-                          <li>
+                          <li class="l--flex -jc:between -g:10 -py:10 -fz:xs">
                             <span>
                               <b>{a.author}</b> {a.action}
                             </span>
-                            <small>{a.time}</small>
+                            <small class="-c:text-2 -fz:xs">{a.time}</small>
                           </li>
                         )}
                       </For>
                     </ul>
                   </section>
-                  <div class="l--flex c--detailActions -g:10">
-                    <button
-                      class="c--button -bdrs:20 -bgc:base -c:text"
-                      onClick={() => props.tracker.cyclePriority(task().id)}
-                    >
+                  <div class="l--cluster -g:10 -pt:20 -bd-bs">
+                    <Button onClick={() => props.tracker.cyclePriority(task().id)}>
                       Cycle priority
-                    </button>
-                    <button
-                      class="c--button -bdrs:20 -bgc:base -c:text"
-                      onClick={() => props.tracker.toggleTask(task().id)}
-                    >
+                    </Button>
+                    <Button onClick={() => props.tracker.toggleTask(task().id)}>
                       {task().done ? "Reopen issue" : "Mark complete"}
-                    </button>
+                    </Button>
                   </div>
                 </>
               )}
             </Show>
-          </aside>
+          </Card>
         </div>
-        <p class="-ta:center c--compareNote -m:0 -c:text-2 -fz:xs">
+        <p class="-ta:center -c:text-2 -fz:xs">
           Same Solid 2.0 issue board and interactions in each app · styling: {props.library}
         </p>
       </div>
-    </main>
+    </section>
   );
 }

@@ -1,3 +1,100 @@
-:root {
-  --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%23585c60' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+/* Theme values cascade through utilities, including lazy-loaded pages. */
+[data-theme] {
+  color-scheme: light;
+  --brand: #147d68;
+  --ink: #202521;
+  --muted: #626b65;
+  --line: #dce3dd;
+  --paper: #fff;
+  --ground: #f4f6f3;
+  --body-muted: #4d5650;
+  --badge: #edf1ed;
+  --badge-ink: #58605b;
+  --hover: #8b9f91;
+  --progress: #e1eae3;
+  --selected: #e7f3ec;
+  --row-hover: #f1f6f2;
+  --row-space: 1rem;
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --brand: #7be4c1;
+  --ink: #eff3f0;
+  --muted: #bdc9c0;
+  --line: #3a463e;
+  --paper: #202923;
+  --ground: #151d18;
+  --body-muted: #c5cec8;
+  --badge: #334339;
+  --badge-ink: #dae7dd;
+  --hover: #709780;
+  --progress: #3a4b40;
+  --selected: #244b38;
+  --row-hover: #2a392f;
+}
+[data-density="compact"] {
+  --row-space: 9px;
+}
+:where(button, a, input, select):focus-visible {
+  outline: 2px solid #23a88a;
+  outline-offset: 3px;
+}
+:where(h1, h2, h3, p) {
+  margin: 0;
+}
+:where(h2) {
+  font-size: 1.125rem;
+}
+:where(button) {
+  cursor: pointer;
+}
+:where(input[type="checkbox"]) {
+  accent-color: #147d68;
+}
+
+[data-theme] {
+  --warning: #80591c;
+  --muted: #59645d;
+  --line: #dbe1dc;
+  --selected: #e0eee7;
+  --control: #fff;
+  --brand-contrast: #fff;
+  --hover: #eaf0eb;
+  --body-muted: #202521;
+  --badge: #eaf0eb;
+  --badge-ink: #59645d;
+  --row-hover: #eaf0eb;
+  --danger: #a73c35;
+  --danger-surface: #f8e7e5;
+  --warning-surface: #f6eddc;
+  --success: #376d3b;
+  --success-surface: #e0f1df;
+}
+[data-theme="dark"] {
+  --brand: #76d8bb;
+  --warning: #efc67a;
+  --paper: #202623;
+  --ground: #171b19;
+  --muted: #b4beb7;
+  --line: #404b43;
+  --selected: #293f35;
+  --control: #1b211e;
+  --brand-contrast: #102a21;
+  --hover: #303a33;
+  --body-muted: #eff3f0;
+  --badge: #303a33;
+  --badge-ink: #b4beb7;
+  --row-hover: #303a33;
+  --danger: #f2a49d;
+  --danger-surface: #482b29;
+  --warning-surface: #423721;
+  --success: #a4d3a7;
+  --success-surface: #293c2c;
+}
+.comparison-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='m4.5 6.25 3.5 3.5 3.5-3.5' stroke='%237c8880' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 16px;
 }

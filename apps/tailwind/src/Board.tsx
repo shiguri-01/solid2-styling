@@ -1,3 +1,6 @@
+import { Button } from "./components/Button";
+import { TextInput } from "./components/TextInput";
+import { Select } from "./components/Select";
 import { For, Show } from "solid-js";
 import {
   CATEGORIES,
@@ -24,10 +27,8 @@ const priorityClasses: Record<Priority, string> = {
 
 export function Board(props: { library: string; tracker: IssueTrackerStore }) {
   return (
-    <main
-      class={`min-h-screen box-border bg-ground text-ink p-6 md:p-9 font-sans dark:bg-night dark:text-night-ink ${props.tracker.isDark() ? "dark" : ""}`}
-    >
-      <div class="mx-auto flex max-w-[1320px] flex-col gap-5">
+    <section class="text-ink">
+      <div class="flex flex-col gap-5">
         <header class="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-[18px]">
           <div class="flex items-center gap-3 [&_h1]:m-0 [&_h1]:text-[22px] [&_h1]:font-semibold">
             <span class="grid h-[34px] w-[34px] place-items-center rounded-[10px] bg-brand font-bold text-white">
@@ -53,20 +54,17 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                 )}
               </For>
             </div>
-            <span class="px-2.5 text-xs text-muted">Sprint 14</span>
-            <button
-              class="cursor-pointer rounded-md border border-line bg-paper px-3 py-2 text-xs text-ink dark:bg-night-control dark:text-night-ink dark:border-night-border hover:border-hover"
-              onClick={() => props.tracker.toggleTheme()}
-            >
+            <span class="text-[11px] text-muted">Sprint 14</span>
+            <Button onClick={() => props.tracker.toggleTheme()}>
               {props.tracker.isDark() ? "Light theme" : "Dark theme"}
-            </button>
+            </Button>
           </div>
         </header>
-        <section class="grid grid-cols-2 rounded-[9px] border border-line bg-paper dark:bg-night-panel dark:border-night-line md:grid-cols-4 [&>div]:flex [&>div]:flex-col [&>div]:gap-1.5 [&>div]:border-r [&>div]:border-line [&>div]:p-[18px_20px] [&>div:last-child]:border-0 [&_span]:text-xs [&_span]:text-muted [&_strong]:text-2xl [&_strong]:font-semibold [&_small]:text-[11px] [&_small]:text-muted">
+        <section class="grid grid-cols-2 rounded-[9px] border border-line bg-paper md:grid-cols-4 [&>div]:flex [&>div]:flex-col [&>div]:gap-1.5 [&>div]:border-r [&>div]:border-line [&>div]:p-[18px_20px] [&>div:last-child]:border-0 [&_span]:text-xs [&_span]:text-muted [&_strong]:text-2xl [&_strong]:font-bold [&_small]:text-[11px] [&_small]:text-muted">
           <div>
             <span>Sprint progress</span>
             <strong>{props.tracker.completionRate()}%</strong>
-            <div class="h-1 overflow-hidden rounded-full bg-progress [&_i]:block [&_i]:h-full [&_i]:bg-brand">
+            <div class="h-1 overflow-hidden rounded-full bg-line [&_i]:block [&_i]:h-full [&_i]:bg-brand">
               <i style={{ width: `${props.tracker.completionRate()}%` }} />
             </div>
           </div>
@@ -87,7 +85,7 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
           </div>
         </section>
         <div class="grid items-start gap-[18px] lg:grid-cols-[minmax(0,1.35fr)_minmax(320px,.9fr)]">
-          <section class="min-w-0 rounded-[9px] border border-line bg-paper dark:bg-night-panel dark:border-night-line p-5">
+          <section class="@container/issue-panel min-w-0 rounded-md border border-line bg-paper p-5 max-[700px]:p-4">
             <div class="flex items-center justify-between gap-2.5 [&_h2]:m-0 [&_h2]:text-base [&_h2]:font-semibold [&_p]:mt-1 [&_p]:mb-0 [&_p]:text-xs [&_p]:text-muted">
               <div>
                 <h2>Sprint issues</h2>
@@ -97,28 +95,30 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                 {props.tracker.filteredTasks().length} issues
               </span>
             </div>
-            <div class="mt-[18px] flex gap-2 [&_input]:flex-1">
-              <input
-                class="h-[34px] min-w-0 rounded-md border border-line bg-paper dark:bg-night-control dark:text-night-ink dark:border-night-border px-2.5 text-xs text-ink"
+            <div class="mt-[18px] grid grid-cols-[minmax(0,1fr)_minmax(140px,180px)] items-center gap-2 @max-[380px]/issue-panel:grid-cols-1">
+              <TextInput
+                class="flex-1"
+                aria-label="Search issues"
                 type="search"
                 placeholder="Search key, title, or category…"
                 value={props.tracker.searchQuery()}
                 onInput={(e) => props.tracker.setSearchQuery(e.currentTarget.value)}
               />
-              <select
-                class="box-border min-w-[126px] h-[34px] appearance-none rounded-md border border-line bg-paper dark:bg-night-control dark:text-night-ink dark:border-night-border bg-[image:var(--select-chevron)] bg-[position:right_9px_center] bg-[length:12px_12px] bg-no-repeat pl-2.5 pr-[30px] text-xs text-ink cursor-pointer"
+              <Select
+                aria-label="Filter by category"
                 value={props.tracker.categoryFilter()}
                 onChange={(e) => props.tracker.setCategoryFilter(e.currentTarget.value)}
               >
                 <option value="all">All categories</option>
                 <For each={CATEGORIES}>{(cat) => <option>{cat}</option>}</For>
-              </select>
+              </Select>
             </div>
             <nav class="mt-3 flex gap-1 border-b border-line" aria-label="Issue status">
               <For each={FILTER_OPTIONS}>
                 {(filter) => (
                   <button
-                    class={`cursor-pointer border-0 bg-transparent px-2.5 py-[9px] text-xs text-muted [&_span]:ml-1 [&_span]:text-[10px] ${props.tracker.filter() === filter ? "border-b-2 border-brand text-brand" : ""}`}
+                    class="cursor-pointer rounded-none border-x-0 border-t-0 border-b-2 border-transparent bg-transparent px-2.5 py-[9px] text-xs text-muted aria-pressed:border-brand aria-pressed:text-brand [&_span]:ml-1 [&_span]:text-[10px]"
+                    aria-pressed={props.tracker.filter() === filter ? "true" : "false"}
                     onClick={() => props.tracker.setFilter(filter)}
                   >
                     {FILTER_LABELS[filter]} <span>{props.tracker.countForFilter(filter)}</span>
@@ -127,26 +127,24 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
               </For>
             </nav>
             <form
-              class="mt-[14px] flex gap-[7px] max-[680px]:flex-wrap [&_input]:flex-1"
+              class="mt-[14px] grid grid-cols-[minmax(180px,1fr)_minmax(140px,160px)_minmax(100px,120px)_auto] items-center gap-2 @max-[640px]/issue-panel:grid-cols-[minmax(0,1fr)_minmax(100px,140px)_auto] @max-[380px]/issue-panel:grid-cols-2"
               onSubmit={(e) => props.tracker.addTask(e)}
             >
-              <input
-                class="h-[34px] min-w-0 rounded-md border border-line bg-paper dark:bg-night-control dark:text-night-ink dark:border-night-border px-2.5 text-xs text-ink"
+              <TextInput
+                class="@max-[640px]/issue-panel:col-span-full"
                 aria-label="New issue title"
                 placeholder="Add an issue to the sprint…"
                 value={props.tracker.draftTitle()}
                 onInput={(e) => props.tracker.setDraftTitle(e.currentTarget.value)}
               />
-              <select
-                class="box-border min-w-[126px] h-[34px] appearance-none rounded-md border border-line bg-paper dark:bg-night-control dark:text-night-ink dark:border-night-border bg-[image:var(--select-chevron)] bg-[position:right_9px_center] bg-[length:12px_12px] bg-no-repeat pl-2.5 pr-[30px] text-xs text-ink cursor-pointer"
+              <Select
                 aria-label="New issue category"
                 value={props.tracker.draftCategory()}
                 onChange={(e) => props.tracker.setDraftCategory(e.currentTarget.value as Category)}
               >
                 <For each={CATEGORIES}>{(cat) => <option>{cat}</option>}</For>
-              </select>
-              <select
-                class="box-border min-w-[126px] h-[34px] appearance-none rounded-md border border-line bg-paper dark:bg-night-control dark:text-night-ink dark:border-night-border bg-[image:var(--select-chevron)] bg-[position:right_9px_center] bg-[length:12px_12px] bg-no-repeat pl-2.5 pr-[30px] text-xs text-ink cursor-pointer"
+              </Select>
+              <Select
                 aria-label="New issue priority"
                 value={props.tracker.draftPriority()}
                 onChange={(e) => props.tracker.setDraftPriority(e.currentTarget.value as Priority)}
@@ -154,15 +152,16 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
-              </select>
-              <button
-                class="cursor-pointer rounded-md border-0 bg-brand px-3 text-xs font-semibold text-white"
+              </Select>
+              <Button
+                class="whitespace-nowrap @max-[380px]/issue-panel:col-span-full"
+                variant="primary"
                 type="submit"
               >
                 Create issue
-              </button>
+              </Button>
             </form>
-            <div class="mt-5 grid grid-cols-[minmax(0,1fr)_100px_78px_55px_45px] gap-2 border-b border-line px-[5px] pb-2 text-[11px] text-muted max-[700px]:grid-cols-[minmax(0,1fr)_70px_42px]">
+            <div class="mt-5 grid grid-cols-[minmax(0,1fr)_100px_78px_55px_45px] gap-2 border-b border-line px-[5px] pb-2 text-[11px] text-muted @max-[560px]/issue-panel:grid-cols-[minmax(0,1fr)_70px_42px] @max-[560px]/issue-panel:[&>span:nth-child(2)]:hidden @max-[560px]/issue-panel:[&>span:nth-child(4)]:hidden">
               <span>Issue</span>
               <span>Category</span>
               <span>Priority</span>
@@ -173,7 +172,7 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
               <For each={props.tracker.filteredTasks()}>
                 {(item) => (
                   <li
-                    class={`grid min-h-[49px] cursor-pointer grid-cols-[minmax(0,1fr)_100px_78px_55px_45px] items-center gap-2 border-b border-line px-[5px] text-[11px] hover:bg-row-hover dark:hover:bg-night-hover max-[700px]:grid-cols-[minmax(0,1fr)_70px_42px] max-[700px]:[&>span:nth-child(2)]:hidden max-[700px]:[&>span:nth-child(4)]:hidden ${props.tracker.selectedTask()?.id === item.id ? "bg-selected" : ""}`}
+                    class={`grid min-h-[49px] cursor-pointer grid-cols-[minmax(0,1fr)_100px_78px_55px_45px] items-center gap-2 border-b border-line px-[5px] text-[11px] hover:bg-row-hover @max-[560px]/issue-panel:grid-cols-[minmax(0,1fr)_70px_42px] @max-[560px]/issue-panel:[&>span:nth-child(2)]:hidden @max-[560px]/issue-panel:[&>span:nth-child(4)]:hidden ${props.tracker.selectedTask()?.id === item.id ? "bg-selected shadow-[inset_2px_0_var(--color-brand)] hover:bg-selected-hover" : ""}`}
                     onClick={() => props.tracker.setSelectedId(item.id)}
                   >
                     <label class="flex min-w-0 items-center gap-[7px] [&_span]:overflow-hidden [&_span]:text-ellipsis [&_span]:whitespace-nowrap [&_code]:shrink-0 [&_code]:text-[10px] [&_code]:text-muted [&_code]:whitespace-nowrap">
@@ -191,7 +190,7 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                       {item.category}
                     </span>
                     <span
-                      class={`w-max rounded-full bg-badge px-[7px] py-[3px] text-[10px] text-badge-ink ${priorityClasses[item.priority]}`}
+                      class={`w-max rounded-[20px] px-[7px] py-[3px] text-[10px] ${priorityClasses[item.priority]}`}
                     >
                       {PRIORITY_LABELS[item.priority]}
                     </span>
@@ -217,11 +216,11 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
               sprint issues
             </footer>
           </section>
-          <aside class="min-w-0 rounded-[9px] border border-line bg-paper dark:bg-night-panel dark:border-night-line p-5">
+          <aside class="min-w-0 rounded-md border border-line bg-paper p-5 max-[700px]:p-4">
             <Show when={props.tracker.selectedTask()}>
               {(task) => (
                 <>
-                  <div class="flex items-start justify-between gap-2.5 border-b border-line pb-[14px] [&_h2]:mt-[5px] [&_h2]:mb-0 [&_h2]:text-base [&_h2]:leading-[1.4]">
+                  <div class="flex items-start justify-between gap-2.5 border-b border-line pb-[14px] [&_h2]:mt-[5px] [&_h2]:mb-0 [&_h2]:text-base [&_h2]:leading-[1.4] [&_h2]:font-bold">
                     <div>
                       <p class="m-0 text-[11px] tracking-[.08em] text-muted">
                         {task().key} · {task().category}
@@ -229,7 +228,7 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                       <h2>{task().title}</h2>
                     </div>
                     <span
-                      class={`w-max rounded-full bg-badge px-[7px] py-[3px] text-[10px] text-badge-ink ${priorityClasses[task().priority]}`}
+                      class={`w-max rounded-[20px] px-[7px] py-[3px] text-[10px] ${priorityClasses[task().priority]}`}
                     >
                       {PRIORITY_LABELS[task().priority]}
                     </span>
@@ -252,11 +251,11 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                       <dd>{task().estimate}</dd>
                     </div>
                   </dl>
-                  <section class="mt-4 [&_h3]:mb-2 [&_h3]:mt-0 [&_h3]:text-xs [&_h3]:font-semibold [&_h3]:text-muted [&_p]:m-0 [&_p]:text-xs [&_p]:leading-relaxed [&_p]:text-body-muted dark:[&_p]:text-night-muted">
+                  <section class="mt-4 [&_h3]:mb-2 [&_h3]:mt-0 [&_h3]:text-xs [&_h3]:font-bold [&_h3]:text-muted [&_p]:m-0 [&_p]:text-xs [&_p]:leading-relaxed [&_p]:text-ink">
                     <h3>Specification</h3>
                     <p>{task().summary}</p>
                   </section>
-                  <section class="mt-4 [&_h3]:mb-2 [&_h3]:mt-0 [&_h3]:text-xs [&_h3]:font-semibold [&_h3]:text-muted [&_p]:m-0 [&_p]:text-xs [&_p]:leading-relaxed [&_p]:text-body-muted">
+                  <section class="mt-4 [&_h3]:mb-2 [&_h3]:mt-0 [&_h3]:text-xs [&_h3]:font-bold [&_h3]:text-muted [&_p]:m-0 [&_p]:text-xs [&_p]:leading-relaxed [&_p]:text-ink">
                     <h3>Acceptance criteria</h3>
                     <ul class="m-0 list-none p-0 [&_li]:flex [&_li]:justify-between [&_li]:gap-2.5 [&_li]:border-b [&_li]:border-line [&_li]:py-2 [&_li]:text-[11px] [&_small]:whitespace-nowrap [&_small]:text-muted">
                       <For each={task().subtasks}>
@@ -271,7 +270,7 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                       </For>
                     </ul>
                   </section>
-                  <section class="mt-4 [&_h3]:mb-2 [&_h3]:mt-0 [&_h3]:text-xs [&_h3]:font-semibold [&_h3]:text-muted [&_p]:m-0 [&_p]:text-xs [&_p]:leading-relaxed [&_p]:text-body-muted">
+                  <section class="mt-4 [&_h3]:mb-2 [&_h3]:mt-0 [&_h3]:text-xs [&_h3]:font-bold [&_h3]:text-muted [&_p]:m-0 [&_p]:text-xs [&_p]:leading-relaxed [&_p]:text-ink">
                     <h3>Recent activity</h3>
                     <ul class="m-0 list-none p-0 [&_li]:flex [&_li]:justify-between [&_li]:gap-2.5 [&_li]:py-[7px] [&_li]:text-[11px] [&_small]:whitespace-nowrap [&_small]:text-muted">
                       <For each={task().activity}>
@@ -287,18 +286,12 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                     </ul>
                   </section>
                   <div class="mt-[18px] flex gap-2 border-t border-line pt-[14px]">
-                    <button
-                      class="cursor-pointer rounded-md border border-line bg-paper px-3 py-2 text-xs text-ink dark:bg-night-control dark:text-night-ink dark:border-night-border hover:border-hover"
-                      onClick={() => props.tracker.cyclePriority(task().id)}
-                    >
+                    <Button onClick={() => props.tracker.cyclePriority(task().id)}>
                       Cycle priority
-                    </button>
-                    <button
-                      class="cursor-pointer rounded-md border border-line bg-paper px-3 py-2 text-xs text-ink dark:bg-night-control dark:text-night-ink dark:border-night-border hover:border-hover"
-                      onClick={() => props.tracker.toggleTask(task().id)}
-                    >
+                    </Button>
+                    <Button onClick={() => props.tracker.toggleTask(task().id)}>
                       {task().done ? "Reopen issue" : "Mark complete"}
-                    </button>
+                    </Button>
                   </div>
                 </>
               )}
@@ -309,6 +302,6 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
           Same Solid 2.0 issue board and interactions in each app · styling: {props.library}
         </p>
       </div>
-    </main>
+    </section>
   );
 }

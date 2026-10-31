@@ -1,21 +1,14 @@
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-ink: #202521;
-  --color-muted: #737b76;
-  --color-line: #e1e6e2;
+  --color-muted: #59645d;
+  --font-sans: system-ui, sans-serif;
+  --color-line: #dbe1dc;
   --color-brand: #147d68;
   --color-paper: #ffffff;
+  --color-control: #fff;
   --color-ground: #f4f6f3;
-  --color-night: #171b19;
-  --color-night-ink: #eff3f0;
-  --color-night-muted: #c5cec8;
-  --color-night-panel: #202623;
-  --color-night-control: #1b211e;
-  --color-night-border: #3a443e;
-  --color-night-line: #343c37;
-  --color-night-hover: #29312c;
   --color-teal-soft: #d8eee8;
   --color-teal-ink: #17634f;
   --color-emerald-soft: #e0f1df;
@@ -25,20 +18,90 @@
   --color-rose-soft: #f5e0df;
   --color-rose-ink: #8b4745;
   --color-red-soft: #f8e7e5;
-  --color-red-ink: #9e4640;
+  --color-red-ink: #a73c35;
   --color-priority-amber-soft: #f6eddc;
-  --color-priority-amber-ink: #86602b;
-  --color-green-soft: #e7f2e8;
-  --color-green-ink: #3d7345;
+  --color-priority-amber-ink: #80591c;
+  --color-green-soft: #e0f1df;
+  --color-green-ink: #376d3b;
   --color-body-muted: #4d5650;
   --color-badge: #f0f2f0;
   --color-badge-ink: #58605b;
   --color-hover: #aebbb2;
   --color-progress: #e7eee9;
-  --color-selected: #eef6f2;
-  --color-row-hover: #f7f9f7;
+  --color-selected: #e0eee7;
+  --color-selected-hover: #d2e6dc;
+  --color-row-hover: #eaf0eb;
 }
 
-:root {
-  --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%23585c60' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+/* Theme variables power utilities in every lazy-loaded view. */
+@layer base {
+  body {
+    margin: 0;
+  }
+  [data-theme] {
+    --row-space: 1rem;
+    color-scheme: light;
+  }
+  [data-density="compact"] {
+    --row-space: 0.5625rem;
+  }
+  [data-theme="dark"] {
+    color-scheme: dark;
+    --color-ink: #eff3f0;
+    --color-muted: #b4beb7;
+    --color-line: #404b43;
+    --color-paper: #202623;
+    --color-control: #1b211e;
+    --color-ground: #171b19;
+    --color-row-hover: #303a33;
+    --color-selected: #293f35;
+    --color-selected-hover: #344e41;
+    --color-body-muted: #c5cec8;
+    --color-progress: #343c37;
+    --color-badge: #303a33;
+    --color-badge-ink: #d7e2db;
+    --color-emerald-soft: #293c2c;
+    --color-emerald-ink: #a4d3a7;
+    --color-amber-soft: #423721;
+    --color-amber-ink: #efc67a;
+    --color-red-soft: #482b29;
+    --color-red-ink: #f2a49d;
+    --color-priority-amber-soft: #423721;
+    --color-priority-amber-ink: #efc67a;
+    --color-green-soft: #293c2c;
+    --color-green-ink: #a4d3a7;
+  }
+  :where(button, a, input, select, textarea):focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+  input[type="checkbox"] {
+    accent-color: var(--color-brand);
+  }
+}
+
+@theme {
+  --color-warning: #80591c;
+  --color-success-tint: color-mix(in srgb, var(--color-brand) 8%, transparent);
+  --color-warning-tint: color-mix(in srgb, var(--color-warning) 8%, transparent);
+}
+@layer base {
+  [data-theme="dark"] {
+    --color-brand: #76d8bb;
+    --color-warning: #efc67a;
+  }
+}
+.comparison-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='m4.5 6.25 3.5 3.5 3.5-3.5' stroke='%237c8880' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 16px;
 }

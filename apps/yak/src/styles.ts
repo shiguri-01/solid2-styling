@@ -1,46 +1,11 @@
 import { styled, css } from "@yak/solid";
 
-export const Page = styled.main`
-  --ink: #202521;
-  --muted: #737b76;
-  --line: #e1e6e2;
-  --brand: #147d68;
-  --paper: #ffffff;
-  --ground: #f4f6f3;
-  --control: #ffffff;
-  --body-muted: #4d5650;
-  --row-hover: #f7f9f7;
-  --selected: #eef6f2;
-
-  min-height: 100vh;
-  box-sizing: border-box;
-  padding: 32px;
-  background: var(--ground);
-  color: var(--ink);
-  font:
-    14px/1.5 system-ui,
-    sans-serif;
-
-  @media (max-width: 700px) {
-    padding: 18px;
-  }
-  ${(p) =>
-    p.theme().dark &&
-    css`
-      --ink: #eff3f0;
-      --muted: #b4beb7;
-      --line: #343c37;
-      --paper: #202623;
-      --ground: #171b19;
-      --control: #1b211e;
-      --body-muted: #c5cec8;
-      --row-hover: #29312c;
-      --selected: #263e34;
-    `}
+export const Page = styled.section`
+  min-width: 0;
 `;
 
 export const Shell = styled.div`
-  max-width: 1320px;
+  max-width: none;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -76,7 +41,7 @@ export const Mark = styled.span`
   place-items: center;
   border-radius: 10px;
   background: var(--brand);
-  color: white;
+  color: var(--brand-contrast);
   font-weight: 700;
 `;
 
@@ -110,26 +75,26 @@ export const Avatar = styled.span<{ $tone: string }>`
   ${(p) =>
     p.$tone === "teal" &&
     css`
-      background: #d8eee8;
-      color: #17634f;
+      background: var(--selected);
+      color: var(--brand);
     `}
   ${(p) =>
     p.$tone === "emerald" &&
     css`
-      background: #e0f1df;
-      color: #376d3b;
+      background: var(--success-surface);
+      color: var(--success);
     `}
   ${(p) =>
     p.$tone === "amber" &&
     css`
-      background: #f6ead3;
-      color: #805915;
+      background: var(--warning-surface);
+      color: var(--warning);
     `}
   ${(p) =>
     p.$tone === "rose" &&
     css`
-      background: #f5e0df;
-      color: #8b4745;
+      background: var(--danger-surface);
+      color: var(--danger);
     `}
 `;
 
@@ -139,13 +104,18 @@ export const Sprint = styled.span`
 `;
 
 export const Button = styled.button`
-  padding: 8px 12px;
+  min-height: 40px;
+  padding: 9px 12px;
+  line-height: 20px;
   border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--control);
+  border-radius: 4px;
+  background: var(--paper);
   color: var(--ink);
   cursor: pointer;
-  font-size: 12px;
+  font: inherit;
+  &:hover:not(:disabled) {
+    background: var(--hover);
+  }
 `;
 
 export const Metrics = styled.section`
@@ -188,7 +158,7 @@ export const Progress = styled.div`
   height: 4px;
   overflow: hidden;
   border-radius: 4px;
-  background: #e7eee9;
+  background: var(--line);
 `;
 
 export const ProgressFill = styled.i<{ $percent: number }>`
@@ -213,8 +183,12 @@ const panelStyles = css`
   min-width: 0;
   padding: 20px;
   border: 1px solid var(--line);
-  border-radius: 9px;
+  border-radius: 6px;
   background: var(--paper);
+  container: issue-panel / inline-size;
+  @media (max-width: 700px) {
+    padding: 16px;
+  }
 `;
 export const Panel = styled.section`
   ${panelStyles};
@@ -241,9 +215,13 @@ export const PanelHeading = styled.div`
 export const Count = Sprint;
 
 export const Toolbar = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(140px, 180px);
   gap: 8px;
-
+  align-items: center;
+  @container issue-panel (max-width:380px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
   margin-top: 18px;
 
   & input {
@@ -253,28 +231,31 @@ export const Toolbar = styled.div`
 
 export const Input = styled.input`
   min-width: 0;
-  height: 34px;
-  padding: 0 10px;
+  min-height: 40px;
+  padding: 9px 12px;
+  line-height: 20px;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 4px;
   background: var(--control);
   color: var(--ink);
-  font-size: 12px;
+  font: inherit;
 `;
 
 export const Select = styled.select`
   box-sizing: border-box;
-  min-width: 126px;
-  height: 34px;
+  min-width: 0;
+  width: 100%;
+  min-height: 40px;
+  line-height: 20px;
   appearance: none;
-  padding: 0 30px 0 10px;
+  padding: 9px 36px 9px 12px;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 4px;
   background: var(--control)
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%23585c60' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
-    no-repeat right 9px center / 12px 12px;
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='m4.5 6.25 3.5 3.5 3.5-3.5' stroke='%237c8880' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat right 12px center / 16px 16px;
   color: var(--ink);
-  font-size: 12px;
+  font: inherit;
   cursor: pointer;
 `;
 
@@ -308,7 +289,9 @@ export const Filter = styled.button<{ $active: boolean }>`
 `;
 
 export const CreateForm = styled.form`
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(140px, 160px) minmax(100px, 120px) auto;
+  align-items: center;
   gap: 8px;
 
   & input {
@@ -317,19 +300,26 @@ export const CreateForm = styled.form`
 
   margin-top: 14px;
 
-  @media (max-width: 700px) {
-    flex-wrap: wrap;
+  @container issue-panel (max-width:640px) {
+    grid-template-columns: minmax(0, 1fr) minmax(100px, 140px) auto;
     & input {
-      flex-basis: 100%;
+      grid-column: 1/-1;
+    }
+  }
+  @container issue-panel (max-width:380px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    & button {
+      grid-column: 1/-1;
     }
   }
 `;
 
 export const Primary = styled(Button)`
-  border-color: var(--brand);
-  background: var(--brand);
-  color: white;
-  font-weight: 600;
+  background: var(--ink);
+  color: var(--paper);
+  &:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--ink) 85%, var(--paper));
+  }
 `;
 
 export const TableHead = styled.div`
@@ -344,7 +334,7 @@ export const TableHead = styled.div`
   color: var(--muted);
   font-size: 11px;
 
-  @media (max-width: 700px) {
+  @container issue-panel (max-width: 560px) {
     grid-template-columns: minmax(0, 1fr) 70px 42px;
 
     & > *:nth-child(2) {
@@ -379,7 +369,7 @@ export const Row = styled.li<{ $selected: boolean }>`
     background: var(--row-hover);
   }
 
-  @media (max-width: 700px) {
+  @container issue-panel (max-width: 560px) {
     grid-template-columns: minmax(0, 1fr) 70px 42px;
 
     & > *:nth-child(2) {
@@ -394,6 +384,10 @@ export const Row = styled.li<{ $selected: boolean }>`
     p.$selected &&
     css`
       background: var(--selected);
+      box-shadow: inset 2px 0 var(--brand);
+      &:hover {
+        background: var(--selected-hover);
+      }
     `}
 `;
 
@@ -444,27 +438,27 @@ export const Badge = styled.span<{ $priority: "high" | "medium" | "low" }>`
   width: max-content;
   padding: 3px 7px;
   border-radius: 20px;
-  background: #f0f2f0;
-  color: #58605b;
+  background: var(--hover);
+  color: var(--muted);
   font-size: 10px;
 
   ${(p) =>
     p.$priority === "high" &&
     css`
-      background: #f8e7e5;
-      color: #9e4640;
+      background: var(--danger-surface);
+      color: var(--danger);
     `}
   ${(p) =>
     p.$priority === "medium" &&
     css`
-      background: #f6eddc;
-      color: #86602b;
+      background: var(--warning-surface);
+      color: var(--warning);
     `}
   ${(p) =>
     p.$priority === "low" &&
     css`
-      background: #e7f2e8;
-      color: #3d7345;
+      background: var(--success-surface);
+      color: var(--success);
     `}
 `;
 

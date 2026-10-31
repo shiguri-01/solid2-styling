@@ -1,2 +1,20 @@
 /* StyleX injection target required by @stylexjs/unplugin */
 @layer priority1;
+
+/* Browser defaults shared by the comparison; component styles remain in StyleX. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}

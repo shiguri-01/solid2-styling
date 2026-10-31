@@ -7,7 +7,7 @@ export default function App() {
     <Router>
       {(props) => (
         <>
-          <Title>Solid 2.0 + vanilla-extract Showcase</Title>
+          <Title>Solid 2.0 × vanilla-extract — Workspace</Title>
           <Loading fallback={<div>Loading…</div>}>{props.children}</Loading>
         </>
       )}
