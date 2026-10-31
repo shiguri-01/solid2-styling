@@ -28,7 +28,8 @@
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check",
-    "prepublishOnly": "vp run build"
+    "prepublishOnly": "vp run build",
+    "lint": "vp lint ."
   },
   "dependencies": {
     "solid-js": "^2.0.0-rc.20"

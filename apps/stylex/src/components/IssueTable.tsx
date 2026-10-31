@@ -68,7 +68,9 @@ const styles = stylex.create({
       ":focus-within": tokens.brand,
     },
     backgroundColor: tokens.surface,
-    flex: "1 1 200px",
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: "200px",
     maxWidth: {
       default: "280px",
       "@media (max-width: 640px)": "100%",
@@ -154,7 +156,9 @@ const styles = stylex.create({
   },
   textInput: {
     boxSizing: "border-box",
-    flex: "1 1 200px",
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: "200px",
     minWidth: "160px",
     height: "34px",
     paddingInline: "12px",

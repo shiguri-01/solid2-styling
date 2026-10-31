@@ -3,6 +3,12 @@ import solid from "@solidjs/vite-plugin";
 import { lismCss } from "@lism-css/plugin/vite";
 
 export default defineConfig({
+  lint: {
+    ignorePatterns: ["dist/**", "**/file-routes.d.ts", "**/lism-env.d.ts"],
+    jsPlugins: [{ name: "vite-plus", specifier: "vite-plus/oxlint-plugin" }],
+    rules: { "vite-plus/prefer-vite-plus-imports": "error" },
+    options: { typeAware: true, typeCheck: true },
+  },
   plugins: lazyPlugins(() => [lismCss({ purge: { report: true } }), solid({ diagnostics: true })]),
   server: { port: 3009 },
   build: { target: "esnext", assetsInlineLimit: 0 },

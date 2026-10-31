@@ -25,6 +25,7 @@ The comparison covers how each library expresses the same product requirements: 
 ```sh
 vp install
 vp check
+vp run -r lint
 vp run -r test
 vp run -r build
 ```
@@ -59,9 +60,9 @@ CSS totals below include all emitted client CSS assets, including resets and the
 | Library         | Client asset directory                     | CSS files | Raw bytes | Gzip bytes |
 | :-------------- | :----------------------------------------- | --------: | --------: | ---------: |
 | vanilla-extract | `apps/vanilla-extract/dist/client/assets/` |         2 |    13,610 |      3,338 |
-| StyleX          | `apps/stylex/dist/client/assets/`          |         1 |    14,570 |      3,954 |
+| StyleX          | `apps/stylex/dist/client/assets/`          |         1 |    14,650 |      3,959 |
 | Zyzz            | `apps/zyzz/dist/client/assets/`            |         3 |    24,420 |      6,012 |
-| Panda CSS       | `apps/panda-css/dist/assets/`              |         1 |    29,666 |      8,716 |
+| Panda CSS       | `apps/panda-css/dist/assets/`              |         1 |    31,106 |      8,864 |
 | Tailwind CSS    | `apps/tailwind/dist/assets/`               |         1 |    17,620 |      4,719 |
 | UnoCSS          | `apps/unocss/dist/assets/`                 |         1 |    10,685 |      3,124 |
 | CSS Modules     | `apps/css-modules/dist/assets/`            |         1 |     7,695 |      2,234 |
@@ -73,6 +74,20 @@ These totals describe the implementations in this repository. They are not a lib
 vanilla-extract, StyleX, and Zyzz use Solid's turnkey/prerender configuration and emit `dist/client/` plus `dist/server/`. The other apps use an `index.html` client entry and emit `dist/`. Account for that difference when comparing initial stylesheet loading, route splitting, or hydration.
 
 ## Integration Details
+
+### Lint plugins and Agent Skills
+
+| Library         | Lint plugin                                                                                | Agent Skills                                                                                    |
+| :-------------- | :----------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------- |
+| vanilla-extract | —                                                                                          | —                                                                                               |
+| StyleX          | [ESLint](https://stylexjs.com/docs/api/configuration/eslint-plugin/)                       | —                                                                                               |
+| Zyzz            | —                                                                                          | —                                                                                               |
+| Panda CSS       | [ESLint / Oxlint](https://github.com/chakra-ui/panda/tree/main/packages/eslint-plugin)     | [Styling · Theming · Migration](https://github.com/chakra-ui/panda/tree/main/skills)            |
+| Tailwind CSS    | —                                                                                          | —                                                                                               |
+| UnoCSS          | [ESLint](https://unocss.dev/integrations/eslint)                                           | —                                                                                               |
+| CSS Modules     | —                                                                                          | —                                                                                               |
+| yak             | [ESLint / Oxlint](https://github.com/galaxuslabs/yak/tree/main/packages/yak-eslint-plugin) | —                                                                                               |
+| Lism CSS        | —                                                                                          | [Implementation · Refactoring · Mockups](https://github.com/lism-css/lism-css/tree/main/skills) |
 
 ### Solid bindings and state lifetime
 

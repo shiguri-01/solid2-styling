@@ -88,13 +88,13 @@ export const issueStyles = {
     borderBottom: "1px solid token(colors.line)",
     fontSize: "11px",
     cursor: "pointer",
-    _hover: { bg: "#f7f9f7" },
+    _hover: { bg: "row-hover" },
     "@media(max-width:700px)": {
       gridTemplateColumns: "minmax(0,1fr) 70px 42px",
       "& > span:nth-child(2), & > span:nth-child(4)": { display: "none" },
     },
   }),
-  selected: css({ bg: "#eef6f2" }),
+  selected: css({ bg: "selected" }),
   issue: css({
     display: "flex",
     alignItems: "center",

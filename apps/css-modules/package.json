@@ -8,7 +8,7 @@
     "dev": "cross-env \"PATH=$PATH\" PORTLESS_HTTPS=0 PORTLESS_SYNC_HOSTS=0 portless run --name css-modules vp dev",
     "build": "vp build",
     "serve": "vp preview",
-    "lint": "vp lint src"
+    "lint": "vp lint ."
   },
   "dependencies": {
     "@solidjs/web": "^2.0.0-rc.20",

@@ -9,7 +9,7 @@
     "build": "vp build",
     "serve": "vp preview",
     "test": "vp test",
-    "lint": "vp lint src"
+    "lint": "vp lint ."
   },
   "dependencies": {
     "@solidjs/meta": "^1.0.0-next.2",

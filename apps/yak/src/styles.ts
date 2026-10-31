@@ -217,7 +217,7 @@ const panelStyles = css`
   background: var(--paper);
 `;
 export const Panel = styled.section`
-  ${panelStyles}
+  ${panelStyles};
 `;
 
 export const PanelHeading = styled.div`
@@ -489,7 +489,7 @@ export const Footer = styled.footer`
 `;
 
 export const PanelAside = styled.aside`
-  ${panelStyles}
+  ${panelStyles};
 `;
 
 export const DetailTop = styled.div`

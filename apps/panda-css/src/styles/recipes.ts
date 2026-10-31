@@ -26,14 +26,14 @@ export const priorityBadge = cva({
     py: "3px",
     borderRadius: "full",
     fontSize: "10px",
-    bg: "#f0f2f0",
-    color: "#58605b",
+    bg: "badge",
+    color: "badge-ink",
   },
   variants: {
     priority: {
-      high: { bg: "#f8e7e5", color: "#9e4640" },
-      medium: { bg: "#f6eddc", color: "#86602b" },
-      low: { bg: "#e7f2e8", color: "#3d7345" },
+      high: { bg: "red-soft", color: "red-ink" },
+      medium: { bg: "priority-amber-soft", color: "priority-amber-ink" },
+      low: { bg: "green-soft", color: "green-ink" },
     },
   },
 });

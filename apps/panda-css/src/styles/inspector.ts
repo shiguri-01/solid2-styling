@@ -24,7 +24,7 @@ export const inspectorStyles = {
   detailSection: css({
     mt: "16px",
     "& h3": { m: "0 0 8px", color: "muted", fontSize: "12px", fontWeight: 600 },
-    "& p": { m: 0, color: "#4d5650", fontSize: "12px", lineHeight: 1.6 },
+    "& p": { m: 0, color: "body-muted", fontSize: "12px", lineHeight: 1.6 },
   }),
   criteria: css({
     listStyle: "none",

@@ -5,6 +5,12 @@ import { lazyPlugins } from "vite-plus";
 import { zyzz } from "zyzz/vite";
 
 export default defineConfig({
+  lint: {
+    ignorePatterns: ["dist/**", "**/file-routes.d.ts", "**/lism-env.d.ts"],
+    jsPlugins: [{ name: "vite-plus", specifier: "vite-plus/oxlint-plugin" }],
+    rules: { "vite-plus/prefer-vite-plus-imports": "error" },
+    options: { typeAware: true, typeCheck: true },
+  },
   // Turnkey client mode: no index.html and no mount file — the plugin generates
   // the entries around src/App.tsx (wrapped in src/Document.tsx) and `vite build`
   // prerenders the shell into a purely static dist/client.

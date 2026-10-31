@@ -9,7 +9,7 @@
     "build": "vp build",
     "serve": "vp preview",
     "prepare": "panda codegen",
-    "lint": "vp lint src"
+    "lint": "vp lint ."
   },
   "dependencies": {
     "@pandacss/vite": "^2.4.0",
@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@pandacss/dev": "^2.4.0",
+    "@pandacss/eslint-plugin": "catalog:",
     "@pandacss/preset-base": "^2.4.0",
     "@pandacss/preset-panda": "^2.4.0",
     "@solidjs/diagnostics": "^2.0.0-rc.20",
