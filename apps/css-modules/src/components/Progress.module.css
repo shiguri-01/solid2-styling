@@ -1,0 +1,18 @@
+.progress {
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--line);
+}
+.progress span {
+  display: block;
+  width: var(--progress);
+  height: 100%;
+  background: var(--brand);
+  transition: width 180ms ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .progress span {
+    transition: none;
+  }
+}

@@ -1,0 +1,74 @@
+.toolbar {
+  display: flex;
+  align-items: end;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.toolbar label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+}
+.toolbar .check {
+  display: flex;
+  align-items: center;
+  padding-bottom: 8px;
+}
+.toolbar > span {
+  margin-left: auto;
+  color: var(--muted);
+}
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 24px;
+  align-items: start;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  container-type: inline-size;
+}
+.detail h2 {
+  font-size: 18px;
+  margin: 0;
+}
+.detail p {
+  color: var(--muted);
+}
+.issue {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+  padding-block: var(--row-space);
+  border-bottom: 1px solid var(--line);
+}
+.issue small {
+  color: var(--muted);
+}
+.issueTitle {
+  display: block;
+}
+.issueTitle[data-done="true"] {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+.detail > a {
+  display: inline-block;
+  margin-top: 20px;
+}
+@media (max-width: 1200px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .toolbar > span {
+    margin-left: 0;
+  }
+}

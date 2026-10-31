@@ -1,3 +1,7 @@
+import { Card } from "./components/Card";
+import { Button } from "./components/Button";
+import { TextInput } from "./components/TextInput";
+import { Select } from "./components/Select";
 import { For, Show } from "solid-js";
 import styles from "./styles.module.css";
 import {
@@ -13,7 +17,7 @@ import {
 
 export function Board(props: { library: string; tracker: IssueTrackerStore }) {
   return (
-    <main class={`${styles.page} ${props.tracker.isDark() ? styles.dark : ""}`}>
+    <section class={styles.page}>
       <div class={styles.shell}>
         <header class={styles.header}>
           <div class={styles.brand}>
@@ -34,9 +38,9 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
               </For>
             </div>
             <span class={styles.sprint}>Sprint 14</span>
-            <button class={styles.button} onClick={() => props.tracker.toggleTheme()}>
+            <Button onClick={() => props.tracker.toggleTheme()}>
               {props.tracker.isDark() ? "Light theme" : "Dark theme"}
-            </button>
+            </Button>
           </div>
         </header>
         <section class={styles.metrics}>
@@ -64,7 +68,7 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
           </div>
         </section>
         <div class={styles.workspace}>
-          <section class={styles.panel}>
+          <Card as="section" class={styles.panel}>
             <div class={styles.panelHeading}>
               <div>
                 <h2>Sprint issues</h2>
@@ -73,21 +77,21 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
               <span class={styles.count}>{props.tracker.filteredTasks().length} issues</span>
             </div>
             <div class={styles.toolbar}>
-              <input
-                class={styles.input}
+              <TextInput
                 type="search"
+                aria-label="Search issues"
                 placeholder="Search key, title, or category…"
                 value={props.tracker.searchQuery()}
                 onInput={(e) => props.tracker.setSearchQuery(e.currentTarget.value)}
               />
-              <select
-                class={styles.select}
+              <Select
+                aria-label="Filter by category"
                 value={props.tracker.categoryFilter()}
                 onChange={(e) => props.tracker.setCategoryFilter(e.currentTarget.value)}
               >
                 <option value="all">All categories</option>
                 <For each={CATEGORIES}>{(cat) => <option>{cat}</option>}</For>
-              </select>
+              </Select>
             </div>
             <nav class={styles.filters} aria-label="Issue status">
               <For each={FILTER_OPTIONS}>
@@ -102,23 +106,21 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
               </For>
             </nav>
             <form class={styles.createForm} onSubmit={(e) => props.tracker.addTask(e)}>
-              <input
-                class={styles.input}
+              <TextInput
+                class={styles.createTitle}
                 aria-label="New issue title"
                 placeholder="Add an issue to the sprint…"
                 value={props.tracker.draftTitle()}
                 onInput={(e) => props.tracker.setDraftTitle(e.currentTarget.value)}
               />
-              <select
-                class={styles.select}
+              <Select
                 aria-label="New issue category"
                 value={props.tracker.draftCategory()}
                 onChange={(e) => props.tracker.setDraftCategory(e.currentTarget.value as Category)}
               >
                 <For each={CATEGORIES}>{(cat) => <option>{cat}</option>}</For>
-              </select>
-              <select
-                class={styles.select}
+              </Select>
+              <Select
                 aria-label="New issue priority"
                 value={props.tracker.draftPriority()}
                 onChange={(e) => props.tracker.setDraftPriority(e.currentTarget.value as Priority)}
@@ -126,10 +128,10 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
-              </select>
-              <button class={styles.primary} type="submit">
+              </Select>
+              <Button class={styles.createAction} variant="primary" type="submit">
                 Create issue
-              </button>
+              </Button>
             </form>
             <div class={styles.tableHead}>
               <span>Issue</span>
@@ -145,7 +147,7 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                     class={`${styles.row} ${props.tracker.selectedTask()?.id === item.id ? styles.selected : ""}`}
                     onClick={() => props.tracker.setSelectedId(item.id)}
                   >
-                    <label class={styles.issue}>
+                    <div class={styles.issue}>
                       <input
                         type="checkbox"
                         checked={item.done}
@@ -154,8 +156,20 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                         onChange={() => props.tracker.toggleTask(item.id)}
                       />
                       <code>{item.key}</code>
-                      <span class={item.done ? styles.done : ""}>{item.title}</span>
-                    </label>
+                      <button
+                        type="button"
+                        class={[styles.issueTitle, item.done && styles.done]}
+                        aria-pressed={
+                          props.tracker.selectedTask()?.id === item.id ? "true" : "false"
+                        }
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          props.tracker.setSelectedId(item.id);
+                        }}
+                      >
+                        {item.title}
+                      </button>
+                    </div>
                     <span class={styles.category}>{item.category}</span>
                     <span class={`${styles.badge} ${styles[`priority-${item.priority}`]}`}>
                       {PRIORITY_LABELS[item.priority]}
@@ -181,8 +195,8 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
               Showing {props.tracker.filteredTasks().length} of {props.tracker.tasks().length}{" "}
               sprint issues
             </footer>
-          </section>
-          <aside class={styles.panel}>
+          </Card>
+          <Card as="aside" class={styles.panel}>
             <Show when={props.tracker.selectedTask()}>
               {(task) => (
                 <>
@@ -250,28 +264,22 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
                     </ul>
                   </section>
                   <div class={styles.detailActions}>
-                    <button
-                      class={styles.button}
-                      onClick={() => props.tracker.cyclePriority(task().id)}
-                    >
+                    <Button onClick={() => props.tracker.cyclePriority(task().id)}>
                       Cycle priority
-                    </button>
-                    <button
-                      class={styles.button}
-                      onClick={() => props.tracker.toggleTask(task().id)}
-                    >
+                    </Button>
+                    <Button onClick={() => props.tracker.toggleTask(task().id)}>
                       {task().done ? "Reopen issue" : "Mark complete"}
-                    </button>
+                    </Button>
                   </div>
                 </>
               )}
             </Show>
-          </aside>
+          </Card>
         </div>
         <p class={styles.compareNote}>
           Same Solid 2.0 issue board and interactions in each app · styling: {props.library}
         </p>
       </div>
-    </main>
+    </section>
   );
 }

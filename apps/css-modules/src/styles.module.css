@@ -1,15 +1,3 @@
-:global(body) {
-  margin: 0;
-}
-:root {
-  --ink: #202521;
-  --muted: #737b76;
-  --line: #e1e6e2;
-  --brand: #147d68;
-  --paper: #ffffff;
-  --ground: #f4f6f3;
-  --control: #ffffff;
-}
 .page {
   min-height: 100vh;
   box-sizing: border-box;
@@ -19,14 +7,6 @@
   font:
     14px/1.5 system-ui,
     sans-serif;
-}
-.dark {
-  --ink: #eff3f0;
-  --muted: #b4beb7;
-  --line: #343c37;
-  --paper: #202623;
-  --ground: #171b19;
-  --control: #1b211e;
 }
 .shell {
   max-width: 1320px;
@@ -61,7 +41,7 @@
   place-items: center;
   border-radius: 10px;
   background: var(--brand);
-  color: white;
+  color: var(--brand-contrast);
   font-weight: 700;
 }
 .eyebrow {
@@ -90,35 +70,25 @@
   font-size: 10px;
 }
 .tone-teal {
-  background: #d8eee8;
-  color: #17634f;
+  background: var(--selected);
+  color: var(--brand);
 }
 .tone-emerald {
-  background: #e0f1df;
-  color: #376d3b;
+  background: var(--success-surface);
+  color: var(--success);
 }
 .tone-amber {
-  background: #f6ead3;
-  color: #805915;
+  background: var(--warning-surface);
+  color: var(--warning);
 }
 .tone-rose {
-  background: #f5e0df;
-  color: #8b4745;
+  background: var(--danger-surface);
+  color: var(--danger);
 }
 .sprint,
 .count {
   color: var(--muted);
   font-size: 11px;
-}
-.button,
-.primary {
-  padding: 8px 12px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--paper);
-  color: var(--ink);
-  cursor: pointer;
-  font-size: 12px;
 }
 .metrics {
   display: grid;
@@ -151,7 +121,7 @@
   height: 4px;
   overflow: hidden;
   border-radius: 4px;
-  background: #e7eee9;
+  background: var(--line);
 }
 .progress i {
   display: block;
@@ -165,11 +135,7 @@
   align-items: start;
 }
 .panel {
-  min-width: 0;
-  padding: 20px;
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  background: var(--paper);
+  container: issue-panel / inline-size;
 }
 .panelHeading {
   display: flex;
@@ -188,40 +154,43 @@
 }
 .toolbar,
 .createForm {
-  display: flex;
+  display: grid;
   gap: 8px;
+  align-items: center;
+}
+.toolbar {
+  grid-template-columns: minmax(0, 1fr) minmax(140px, 180px);
+}
+.createForm {
+  grid-template-columns: minmax(180px, 1fr) minmax(140px, 160px) minmax(100px, 120px) auto;
+}
+.createTitle {
+  min-width: 0;
+}
+.createAction {
+  white-space: nowrap;
+}
+@container issue-panel (max-width: 640px) {
+  .createForm {
+    grid-template-columns: minmax(0, 1fr) minmax(100px, 140px) auto;
+  }
+  .createTitle {
+    grid-column: 1 / -1;
+  }
+}
+@container issue-panel (max-width: 380px) {
+  .toolbar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .createForm {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .createAction {
+    grid-column: 1 / -1;
+  }
 }
 .toolbar {
   margin-top: 18px;
-}
-.toolbar input,
-.createForm input {
-  flex: 1;
-}
-.input {
-  min-width: 0;
-  height: 34px;
-  padding: 0 10px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--paper);
-  color: var(--ink);
-  font-size: 12px;
-}
-.select {
-  box-sizing: border-box;
-  min-width: 126px;
-  height: 34px;
-  appearance: none;
-  padding: 0 30px 0 10px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: white
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%23585c60' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
-    no-repeat right 9px center / 12px 12px;
-  color: var(--ink);
-  font-size: 12px;
-  cursor: pointer;
 }
 .filters {
   display: flex;
@@ -248,12 +217,6 @@
 }
 .createForm {
   margin-top: 14px;
-}
-.primary {
-  border-color: var(--brand);
-  background: var(--brand);
-  color: white;
-  font-weight: 600;
 }
 .tableHead,
 .row {
@@ -282,10 +245,18 @@
   cursor: pointer;
 }
 .row:hover {
-  background: #f7f9f7;
+  background: var(--hover);
 }
 .selected {
-  background: #eef6f2;
+  background: var(--selected);
+  box-shadow: inset 2px 0 var(--brand);
+}
+.selected:hover {
+  background: var(--selected-hover);
+}
+.row:focus-within {
+  outline: 2px solid var(--brand);
+  outline-offset: -2px;
 }
 .issue {
   display: flex;
@@ -293,7 +264,14 @@
   align-items: center;
   gap: 7px;
 }
-.issue span {
+.issueTitle {
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -318,21 +296,21 @@
   width: max-content;
   padding: 3px 7px;
   border-radius: 20px;
-  background: #f0f2f0;
-  color: #58605b;
+  background: var(--hover);
+  color: var(--muted);
   font-size: 10px;
 }
 .priority-high {
-  background: #f8e7e5;
-  color: #9e4640;
+  background: var(--danger-surface);
+  color: var(--danger);
 }
 .priority-medium {
-  background: #f6eddc;
-  color: #86602b;
+  background: var(--warning-surface);
+  color: var(--warning);
 }
 .priority-low {
-  background: #e7f2e8;
-  color: #3d7345;
+  background: var(--success-surface);
+  color: var(--success);
 }
 .delete {
   border: 0;
@@ -395,7 +373,7 @@
 }
 .detailSection p {
   margin: 0;
-  color: #4d5650;
+  color: var(--ink);
   font-size: 12px;
   line-height: 1.6;
 }
@@ -435,24 +413,6 @@
   color: var(--muted);
   font-size: 11px;
 }
-.dark .panel,
-.dark .metrics {
-  background: var(--paper);
-  border-color: var(--line);
-}
-.dark input,
-.dark select,
-.dark .button {
-  background-color: var(--control);
-  border-color: var(--line);
-  color: var(--ink);
-}
-.dark .metrics strong {
-  color: var(--ink);
-}
-.dark .detailSection p {
-  color: #c5cec8;
-}
 @media (max-width: 1000px) {
   .workspace {
     grid-template-columns: 1fr;
@@ -463,10 +423,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-@media (max-width: 700px) {
-  .page {
-    padding: 18px;
-  }
+@container issue-panel (max-width: 560px) {
   .tableHead,
   .row {
     grid-template-columns: minmax(0, 1fr) 70px 42px;
@@ -477,7 +434,13 @@
   .row > *:nth-child(4) {
     display: none;
   }
-  .createForm {
-    flex-wrap: wrap;
-  }
+}
+/* The workspace owns the palette; this module owns only the issue board. */
+.page {
+  padding: 0;
+  min-height: 0;
+  background: transparent;
+}
+.shell {
+  max-width: none;
 }

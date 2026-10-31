@@ -1,0 +1,108 @@
+.scope {
+  display: grid;
+  font-size: 12px;
+  gap: 6px;
+}
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0 0 24px;
+  padding: 20px 0;
+  border-block: 1px solid var(--line);
+}
+.metrics > div {
+  padding-inline: 20px;
+  border-right: 1px solid var(--line);
+}
+.metrics > div:last-child {
+  border: 0;
+}
+.metrics dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+.metrics dd {
+  margin: 6px 0 0;
+  font-size: 28px;
+  font-variant-numeric: tabular-nums;
+}
+.metrics small {
+  font-size: 14px;
+  color: var(--muted);
+}
+.columns {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.panel h2 {
+  font-size: 16px;
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+.panel p {
+  color: var(--muted);
+  font-size: 13px;
+}
+.barRow {
+  margin-top: 22px;
+}
+.barRow > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.priority {
+  display: flex;
+  justify-content: space-between;
+  padding-block: var(--row-space);
+  border-bottom: 1px solid var(--line);
+}
+.note {
+  margin-top: 24px;
+}
+.tableScroll {
+  overflow-x: auto;
+}
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  white-space: nowrap;
+}
+.table :where(th, td) {
+  padding: var(--row-space) 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.table th:first-child {
+  text-align: left;
+}
+.table thead th {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 12px;
+}
+.table tbody th {
+  font-weight: 500;
+}
+.table tbody tr:hover {
+  background: var(--hover);
+}
+@media (max-width: 1000px) {
+  .columns {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .metrics {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 0;
+  }
+  .metrics > div:nth-child(2) {
+    border: 0;
+  }
+}

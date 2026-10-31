@@ -1,0 +1,23 @@
+.card {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper);
+}
+.card[data-variant="plain"] {
+  border: 0;
+}
+.card[data-spacing="roomy"] {
+  padding: 24px;
+}
+.card[data-selected="true"] {
+  border-color: var(--brand);
+  background: var(--selected);
+}
+@media (max-width: 700px) {
+  .card,
+  .card[data-spacing="roomy"] {
+    padding: 16px;
+  }
+}

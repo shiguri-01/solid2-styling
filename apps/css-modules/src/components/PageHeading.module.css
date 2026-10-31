@@ -1,0 +1,21 @@
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.heading h1 {
+  font-size: 26px;
+  letter-spacing: -0.03em;
+  margin: 4px 0;
+  font-weight: 600;
+}
+.heading p {
+  margin: 0;
+  color: var(--muted);
+}
+.kicker {
+  font-size: 12px;
+}

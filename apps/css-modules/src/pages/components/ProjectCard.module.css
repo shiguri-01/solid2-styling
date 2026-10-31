@@ -1,0 +1,36 @@
+.project {
+  display: grid;
+  gap: 16px;
+}
+.project h2,
+.project p {
+  margin: 0;
+}
+.project p,
+.meta,
+.risk {
+  font-size: 12px;
+  color: var(--muted);
+}
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.name {
+  border: 0;
+  background: none;
+  color: var(--ink);
+  padding: 0;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+}
+.name:hover {
+  text-decoration: underline;
+}
+.risk {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
