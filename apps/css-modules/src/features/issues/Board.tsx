@@ -1,9 +1,9 @@
-import { Card } from "./components/Card";
-import { Button } from "./components/Button";
-import { TextInput } from "./components/TextInput";
-import { Select } from "./components/Select";
+import { Card } from "../../components/Card";
+import { Button } from "../../components/Button";
+import { TextInput } from "../../components/TextInput";
+import { Select } from "../../components/Select";
 import { For, Show } from "solid-js";
-import styles from "./styles.module.css";
+import styles from "./board.module.css";
 import {
   CATEGORIES,
   FILTER_LABELS,

@@ -1,3 +1,4 @@
+import { useWorkspace } from "../layouts/workspace-context";
 import { Card } from "../components/Card";
 import { Button } from "../components/Button";
 import { Switch } from "../components/Switch";
@@ -8,14 +9,10 @@ import { TEAM_MEMBERS } from "utils";
 import { Badge } from "../components/Badge";
 import { PageHeading } from "../components/PageHeading";
 import s from "./settings.module.css";
-export default function Settings(props: {
-  compact: boolean;
-  setCompact: (v: boolean) => void;
-  name: string;
-  setName: (v: string) => void;
-}) {
-  const [draft, setDraft] = createSignal(() => props.name);
-  const [savedName, setSavedName] = createSignal(() => props.name);
+export default function Settings() {
+  const workspace = useWorkspace();
+  const [draft, setDraft] = createSignal(() => workspace.name());
+  const [savedName, setSavedName] = createSignal(() => workspace.name());
   const [message, setMessage] = createSignal("");
   const [error, setError] = createSignal("");
   const [digest, setDigest] = createSignal(true);
@@ -29,7 +26,7 @@ export default function Settings(props: {
       setMessage("");
       return;
     }
-    props.setName(value);
+    workspace.setName(value);
     setSavedName(value);
     setError("");
     setMessage("Workspace name saved for this session.");
@@ -132,10 +129,10 @@ export default function Settings(props: {
             <Switch
               label="Compact rows"
               description="Reduce vertical spacing for detailed reviews."
-              checked={props.compact}
-              onChange={(e) => props.setCompact(e.currentTarget.checked)}
+              checked={workspace.compact()}
+              onChange={(e) => workspace.setCompact(e.currentTarget.checked)}
             />
-            <div class={s.preview} data-compact={props.compact}>
+            <div class={s.preview} data-compact={workspace.compact()}>
               <For each={["Review token naming", "Verify keyboard focus", "Check narrow layouts"]}>
                 {(title) => (
                   <div>

@@ -1,18 +1,20 @@
+import { useWorkspace } from "../layouts/workspace-context";
 import { Card } from "../components/Card";
-import { ProjectCard } from "./components/ProjectCard";
+import { ProjectCard } from "../features/projects/ProjectCard";
 import { TextInput } from "../components/TextInput";
 import { createMemo, createSignal, For, Show } from "solid-js";
-import { CATEGORIES, type IssueTrackerStore } from "utils";
+import { CATEGORIES } from "utils";
 import { Empty } from "../components/Empty";
 import { PageHeading } from "../components/PageHeading";
 import s from "./projects.module.css";
-export default function Projects(props: { tracker: IssueTrackerStore }) {
+export default function Projects() {
+  const workspace = useWorkspace();
   const [query, setQuery] = createSignal("");
   const [onlyOpen, setOnlyOpen] = createSignal(false);
   const [selected, setSelected] = createSignal("Design System");
   const projects = createMemo(() =>
     CATEGORIES.map((category, i) => {
-      const issues = props.tracker.tasks().filter((t) => t.category === category);
+      const issues = workspace.tracker.tasks().filter((t) => t.category === category);
       const done = issues.filter((t) => t.done).length;
       return {
         category,
@@ -79,7 +81,7 @@ export default function Projects(props: { tracker: IssueTrackerStore }) {
                 <input
                   type="checkbox"
                   checked={t.done}
-                  onChange={() => props.tracker.toggleTask(t.id)}
+                  onChange={() => workspace.tracker.toggleTask(t.id)}
                 />
                 <span>
                   <small>{t.key}</small>
@@ -93,7 +95,7 @@ export default function Projects(props: { tracker: IssueTrackerStore }) {
           <Show when={!current()?.issues.length}>
             <Empty>No issues assigned.</Empty>
           </Show>
-          <a href="#issues">Open issue board →</a>
+          <a href="/issues">Open issue board →</a>
         </Card>
       </div>
     </>

@@ -1,15 +1,17 @@
+import { useWorkspace } from "../layouts/workspace-context";
 import { Card } from "../components/Card";
 import { Select } from "../components/Select";
 import { createMemo, createSignal, For } from "solid-js";
-import { CATEGORIES, TEAM_MEMBERS, type IssueTrackerStore } from "utils";
+import { CATEGORIES, TEAM_MEMBERS } from "utils";
 import { Badge } from "../components/Badge";
 import { PageHeading } from "../components/PageHeading";
 import { Progress } from "../components/Progress";
 import s from "./reports.module.css";
-export default function Reports(props: { tracker: IssueTrackerStore }) {
+export default function Reports() {
+  const workspace = useWorkspace();
   const [scope, setScope] = createSignal("all");
   const tasks = createMemo(() =>
-    props.tracker.tasks().filter((t) => scope() === "all" || t.category === scope()),
+    workspace.tracker.tasks().filter((t) => scope() === "all" || t.category === scope()),
   );
   const completed = createMemo(() => tasks().filter((t) => t.done).length);
   const points = createMemo(() => tasks().reduce((n, t) => n + parseInt(t.estimate), 0));
