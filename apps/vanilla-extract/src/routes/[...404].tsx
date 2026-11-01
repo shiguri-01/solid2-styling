@@ -1,8 +1,8 @@
 import { Title } from "@solidjs/meta";
 import type { RouteDefinition } from "@solidjs/router";
 import { httpStatus } from "@solidjs/web";
-import { container, pageShell, panel, panelTitle } from "../styles.css";
-import { lightTheme } from "../theme.css";
+import { Card } from "../components/Card";
+import { PageHeading } from "../components/PageHeading";
 
 export const route = {
   preload: () => httpStatus(404),
@@ -10,13 +10,15 @@ export const route = {
 
 export default function NotFound() {
   return (
-    <main class={`${lightTheme} ${pageShell}`}>
-      <Title>Not Found - Solid App</Title>
-      <div class={container}>
-        <div class={panel}>
-          <h1 class={panelTitle}>404 - Page Not Found</h1>
-        </div>
-      </div>
-    </main>
+    <>
+      <Title>404 — Page Not Found</Title>
+      <PageHeading
+        title="404 — Page Not Found"
+        description="The page you requested could not be found."
+      />
+      <Card>
+        <a href="/issues">Back to issues →</a>
+      </Card>
+    </>
   );
 }

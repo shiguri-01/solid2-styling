@@ -1,7 +1,7 @@
 import type { JSX } from "@solidjs/web";
 import { css } from "../../styled-system/css";
 import { stack } from "../../styled-system/patterns";
-import { headingLayout } from "../workspace-styles";
+import { headingLayout } from "../layouts/workspace-styles";
 export function PageHeading(props: { title: string; description: string; children?: JSX.Element }) {
   return (
     <header class={headingLayout}>

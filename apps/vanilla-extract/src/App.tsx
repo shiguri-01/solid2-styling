@@ -1,5 +1,6 @@
 import { Title } from "@solidjs/meta";
-import { Loading } from "solid-js";
+import Workspace from "./layouts/Workspace";
+import { WorkspaceProvider } from "./layouts/workspace-context";
 import { Router } from "./router";
 
 export default function App() {
@@ -8,7 +9,9 @@ export default function App() {
       {(props) => (
         <>
           <Title>Solid 2.0 × vanilla-extract — Workspace</Title>
-          <Loading fallback={<div>Loading…</div>}>{props.children}</Loading>
+          <WorkspaceProvider>
+            <Workspace>{props.children}</Workspace>
+          </WorkspaceProvider>
         </>
       )}
     </Router>

@@ -1,0 +1,78 @@
+import { css } from "../../styled-system/css";
+import { stack, flex } from "../../styled-system/patterns";
+
+export const s = {
+  workspace: css({
+    minH: "100vh",
+    display: "grid",
+    gridTemplateColumns: { base: "minmax(0, 1fr)", md: "220px minmax(0, 1fr)" },
+    bg: "ground",
+    color: "ink",
+    fontFamily: "sans",
+    fontSize: "sm",
+    lineHeight: "1.5",
+    colorScheme: "light",
+    _dark: { colorScheme: "dark" },
+  }),
+  sidebar: stack({
+    gap: "5",
+    p: "5",
+    borderRightWidth: { md: "1px" },
+    borderBottomWidth: { base: "1px", md: "0" },
+    borderColor: "line",
+    position: { md: "sticky" },
+    top: "0",
+    alignSelf: "start",
+    height: { md: "100dvh" },
+    overflowY: { base: "visible", md: "auto" },
+    overscrollBehavior: "contain",
+  }),
+  nav: css({
+    display: { base: "flex", md: "block" },
+    flexWrap: "wrap",
+    gap: "1",
+    flex: { base: "none", md: "1" },
+    minH: "0",
+    overflowY: { md: "auto" },
+  }),
+  brand: css({ flexShrink: "0", fontSize: "lg", fontWeight: "semibold", textDecoration: "none" }),
+  caption: css({ flexShrink: "0", color: "muted", fontSize: "xs", overflowWrap: "anywhere" }),
+  navLink: css({
+    display: "block",
+    rounded: "4px",
+    px: "3",
+    py: "2",
+    my: "1",
+    textDecoration: "none",
+    _hover: { bg: "row-hover" },
+    '&[aria-current="page"]': { bg: "selected", fontWeight: "semibold" },
+  }),
+  sidebarFooter: flex({
+    mt: "auto",
+    flexShrink: "0",
+    direction: { base: "row", md: "column" },
+    justify: "space-between",
+    align: { base: "center", md: "stretch" },
+    gap: "3",
+    color: "muted",
+    fontSize: "xs",
+  }),
+  content: css({ minW: "0", p: { base: "4", md: "8" } }),
+  skip: css({
+    position: "absolute",
+    top: "-24",
+    left: "4",
+    zIndex: "10",
+    p: "3",
+    bg: "paper",
+    _focus: { top: "4" },
+  }),
+};
+
+export const headingLayout = flex({
+  justify: "space-between",
+  align: "center",
+  wrap: "wrap",
+  gap: "4",
+  mb: "7",
+});
