@@ -153,11 +153,8 @@ export function Button(props: ButtonProps) {
   return (
     <button
       type="button"
+      {...stylex.attrs(s.control, s.button, props.variant === "primary" && s.primary, props.xstyle)}
       {...omit(props, "xstyle", "variant", "class")}
-      class={
-        stylex.attrs(s.control, s.button, props.variant === "primary" && s.primary, props.xstyle)
-          .class
-      }
     />
   );
 }
@@ -171,32 +168,30 @@ export function Card(
   return (
     <Dynamic
       component={props.as ?? "div"}
+      {...stylex.attrs(
+        s.card,
+        props.variant === "plain" && s.plain,
+        props.spacing === "roomy" && s.roomy,
+        props.selected && s.selected,
+        props.xstyle,
+      )}
       {...omit(props, "as", "xstyle", "variant", "spacing", "selected", "class")}
-      class={
-        stylex.attrs(
-          s.card,
-          props.variant === "plain" && s.plain,
-          props.spacing === "roomy" && s.roomy,
-          props.selected && s.selected,
-          props.xstyle,
-        ).class
-      }
     />
   );
 }
 export function TextInput(props: JSX.InputHTMLAttributes<HTMLInputElement> & XStyle) {
   return (
     <input
+      {...stylex.attrs(s.control, s.field, props.xstyle)}
       {...omit(props, "xstyle", "class")}
-      class={stylex.attrs(s.control, s.field, props.xstyle).class}
     />
   );
 }
 export function Select(props: JSX.SelectHTMLAttributes<HTMLSelectElement> & XStyle) {
   return (
     <select
+      {...stylex.attrs(s.control, s.field, s.select, props.xstyle)}
       {...omit(props, "xstyle", "class")}
-      class={stylex.attrs(s.control, s.field, s.select, props.xstyle).class}
     />
   );
 }
