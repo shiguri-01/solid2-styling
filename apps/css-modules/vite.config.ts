@@ -1,5 +1,6 @@
 import { defineConfig, lazyPlugins } from "vite-plus";
 import solid from "@solidjs/vite-plugin";
+import { fileRoutes } from "filesystem-routing/vite";
 export default defineConfig({
   lint: {
     ignorePatterns: ["dist/**", "**/file-routes.d.ts", "**/lism-env.d.ts"],
@@ -7,7 +8,16 @@ export default defineConfig({
     rules: { "vite-plus/prefer-vite-plus-imports": "error" },
     options: { typeAware: true, typeCheck: true },
   },
-  plugins: lazyPlugins(() => [solid({ extensions: [".jsx", ".tsx"], diagnostics: true })]),
+  plugins: lazyPlugins(() => [
+    solid({ start: true, extensions: [".jsx", ".tsx"], diagnostics: true }),
+    fileRoutes({ types: true }),
+  ]),
   server: { port: 3007 },
+  test: {
+    environment: "jsdom",
+    globals: false,
+    setupFiles: ["./vitest-setup.ts"],
+    isolate: false,
+  },
   build: { manifest: true, target: "esnext", assetsInlineLimit: 0 },
 });

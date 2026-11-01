@@ -1,6 +1,7 @@
 import { defineConfig, lazyPlugins } from "vite-plus";
 import solid from "@solidjs/vite-plugin";
 import UnoCSS from "unocss/vite";
+import { fileRoutes } from "filesystem-routing/vite";
 export default defineConfig({
   lint: {
     ignorePatterns: ["dist/**", "styled-system/**"],
@@ -19,8 +20,15 @@ export default defineConfig({
   },
   plugins: lazyPlugins(() => [
     UnoCSS(),
-    solid({ extensions: [".jsx", ".tsx"], diagnostics: true }),
+    solid({ start: true, extensions: [".jsx", ".tsx"], diagnostics: true }),
+    fileRoutes({ types: true }),
   ]),
   server: { port: 3006 },
+  test: {
+    environment: "jsdom",
+    globals: false,
+    setupFiles: ["./vitest-setup.ts"],
+    isolate: false,
+  },
   build: { target: "esnext", assetsInlineLimit: 0 },
 });

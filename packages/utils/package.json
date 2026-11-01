@@ -32,7 +32,7 @@
     "lint": "vp lint ."
   },
   "dependencies": {
-    "solid-js": "^2.0.0-rc.20"
+    "solid-js": "catalog:"
   },
   "devDependencies": {
     "@types/node": "^26.6.5",

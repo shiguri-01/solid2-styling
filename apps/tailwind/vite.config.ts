@@ -1,6 +1,7 @@
 import { defineConfig, lazyPlugins } from "vite-plus";
 import solid from "@solidjs/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
+import { fileRoutes } from "filesystem-routing/vite";
 export default defineConfig({
   lint: {
     ignorePatterns: ["dist/**", "**/file-routes.d.ts", "**/lism-env.d.ts"],
@@ -10,8 +11,15 @@ export default defineConfig({
   },
   plugins: lazyPlugins(() => [
     tailwindcss(),
-    solid({ extensions: [".jsx", ".tsx"], diagnostics: true }),
+    solid({ start: true, extensions: [".jsx", ".tsx"], diagnostics: true }),
+    fileRoutes({ types: true }),
   ]),
   server: { port: 3005 },
+  test: {
+    environment: "jsdom",
+    globals: false,
+    setupFiles: ["./vitest-setup.ts"],
+    isolate: false,
+  },
   build: { target: "esnext", assetsInlineLimit: 0 },
 });

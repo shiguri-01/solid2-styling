@@ -9,11 +9,14 @@
     "build": "vp build",
     "serve": "vp preview",
     "prepare": "panda codegen",
+    "test": "vp test",
     "lint": "vp lint ."
   },
   "dependencies": {
-    "@solidjs/web": "^2.0.0-rc.20",
-    "solid-js": "^2.0.0-rc.20",
+    "@solidjs/meta": "catalog:",
+    "@solidjs/router": "catalog:",
+    "@solidjs/web": "catalog:",
+    "solid-js": "catalog:",
     "utils": "workspace:*"
   },
   "devDependencies": {
@@ -22,10 +25,16 @@
     "@pandacss/preset-base": "catalog:",
     "@pandacss/preset-panda": "catalog:",
     "@pandacss/vite": "catalog:",
-    "@solidjs/diagnostics": "^2.0.0-rc.20",
+    "@solidjs/diagnostics": "catalog:",
+    "@solidjs/testing-library": "catalog:",
     "@solidjs/vite-plugin": "catalog:",
+    "@testing-library/jest-dom": "catalog:",
+    "eslint-plugin-solid": "catalog:",
+    "filesystem-routing": "catalog:",
+    "jsdom": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
-    "vite-plus": "catalog:"
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
   }
 }

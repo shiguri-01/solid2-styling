@@ -117,7 +117,7 @@ export function Board(props: { library: string; tracker: IssueTrackerStore }) {
             "--gtc_md": "minmax(0, 1.35fr) minmax(320px, 0.9fr)",
           }}
         >
-          <Card as="section" class="c--issuePanel is--container l--stack -g:20">
+          <Card as="section" class="is--container l--stack -g:20">
             <div class="l--cluster -jc:between -g:15">
               <div>
                 <h2 class="-fz:l">Sprint issues</h2>

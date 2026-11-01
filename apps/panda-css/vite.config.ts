@@ -1,9 +1,10 @@
 import { defineConfig, lazyPlugins } from "vite-plus";
 import solid from "@solidjs/vite-plugin";
 import pandacss from "@pandacss/vite";
+import { fileRoutes } from "filesystem-routing/vite";
 export default defineConfig({
   lint: {
-    ignorePatterns: ["dist/**", "styled-system/**"],
+    ignorePatterns: ["dist/**", "styled-system/**", "**/file-routes.d.ts"],
     rules: { "vite-plus/prefer-vite-plus-imports": "error" },
     jsPlugins: [
       { name: "vite-plus", specifier: "vite-plus/oxlint-plugin" },
@@ -27,8 +28,15 @@ export default defineConfig({
   },
   plugins: lazyPlugins(() => [
     pandacss(),
-    solid({ extensions: [".jsx", ".tsx"], diagnostics: true }),
+    solid({ start: true, extensions: [".jsx", ".tsx"], diagnostics: true }),
+    fileRoutes({ types: true }),
   ]),
   server: { port: 3004 },
+  test: {
+    environment: "jsdom",
+    globals: false,
+    setupFiles: ["./vitest-setup.ts"],
+    isolate: false,
+  },
   build: { target: "esnext", assetsInlineLimit: 0 },
 });

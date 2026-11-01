@@ -8,20 +8,29 @@
     "dev": "cross-env \"PATH=$PATH\" PORTLESS_HTTPS=0 PORTLESS_SYNC_HOSTS=0 portless run --name unocss vp dev",
     "build": "vp build",
     "serve": "vp preview",
+    "test": "vp test",
     "lint": "vp lint ."
   },
   "dependencies": {
-    "@solidjs/web": "^2.0.0-rc.20",
-    "solid-js": "^2.0.0-rc.20",
+    "@solidjs/meta": "catalog:",
+    "@solidjs/router": "catalog:",
+    "@solidjs/web": "catalog:",
+    "solid-js": "catalog:",
     "utils": "workspace:*"
   },
   "devDependencies": {
-    "@solidjs/diagnostics": "^2.0.0-rc.20",
+    "@solidjs/diagnostics": "catalog:",
+    "@solidjs/testing-library": "catalog:",
     "@solidjs/vite-plugin": "catalog:",
+    "@testing-library/jest-dom": "catalog:",
     "@unocss/eslint-plugin": "catalog:",
+    "eslint-plugin-solid": "catalog:",
+    "filesystem-routing": "catalog:",
+    "jsdom": "catalog:",
     "typescript": "catalog:",
     "unocss": "catalog:",
     "vite": "catalog:",
-    "vite-plus": "catalog:"
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
   }
 }

@@ -1,6 +1,6 @@
 # Solid 2.0 Styling Library Comparison
 
-A Vite+ monorepo comparing nine styling approaches in **Solid 2.0** (`solid-js@^2.0.0-rc.20` + `@solidjs/vite-plugin@^3.0.0-next.53`).
+A Vite+ monorepo comparing nine styling approaches in **Solid 2.0**.
 
 Each app implements an issue board using the data and state logic in [`packages/utils`](packages/utils/): search, category and status filters, creation, deletion, selection, priority changes, completion, and theme switching.
 
@@ -59,19 +59,17 @@ CSS totals below include all emitted client CSS assets, including resets and the
 
 | Library         | Client asset directory                     | CSS files | Raw bytes | Gzip bytes |
 | :-------------- | :----------------------------------------- | --------: | --------: | ---------: |
-| vanilla-extract | `apps/vanilla-extract/dist/client/assets/` |         2 |    13,610 |      3,338 |
-| StyleX          | `apps/stylex/dist/client/assets/`          |         1 |    14,650 |      3,959 |
-| Zyzz            | `apps/zyzz/dist/client/assets/`            |         3 |    24,420 |      6,012 |
-| Panda CSS       | `apps/panda-css/dist/assets/`              |         1 |    31,106 |      8,864 |
-| Tailwind CSS    | `apps/tailwind/dist/assets/`               |         1 |    17,620 |      4,719 |
-| UnoCSS          | `apps/unocss/dist/assets/`                 |         1 |    10,685 |      3,124 |
-| CSS Modules     | `apps/css-modules/dist/assets/`            |         1 |     7,695 |      2,234 |
-| yak             | `apps/yak/dist/assets/`                    |         1 |     6,632 |      1,917 |
-| Lism CSS        | `apps/lism-css/dist/assets/`               |         1 |    12,089 |      3,815 |
+| vanilla-extract | `apps/vanilla-extract/dist/client/assets/` |         8 |    18,216 |      5,770 |
+| StyleX          | `apps/stylex/dist/client/assets/`          |         1 |    17,624 |      4,612 |
+| Zyzz            | `apps/zyzz/dist/client/assets/`            |         9 |    54,372 |     10,653 |
+| Panda CSS       | `apps/panda-css/dist/client/assets/`       |         1 |    43,014 |     11,093 |
+| Tailwind CSS    | `apps/tailwind/dist/client/assets/`        |         1 |    31,664 |      7,360 |
+| UnoCSS          | `apps/unocss/dist/client/assets/`          |         1 |    17,504 |      5,220 |
+| CSS Modules     | `apps/css-modules/dist/client/assets/`     |        10 |    20,114 |      7,158 |
+| yak             | `apps/yak/dist/client/assets/`             |         6 |    19,307 |      5,892 |
+| Lism CSS        | `apps/lism-css/dist/client/assets/`        |         1 |    17,714 |      5,269 |
 
 These totals describe the implementations in this repository. They are not a library performance ranking: the apps retain different defaults, emit different declarations, and use different rendering configurations. CSS size also excludes JavaScript runtime cost. For a complete bundle comparison, inspect the emitted JavaScript and initial HTML alongside CSS.
-
-vanilla-extract, StyleX, and Zyzz use Solid's turnkey/prerender configuration and emit `dist/client/` plus `dist/server/`. The other apps use an `index.html` client entry and emit `dist/`. Account for that difference when comparing initial stylesheet loading, route splitting, or hydration.
 
 ## Integration Details
 
