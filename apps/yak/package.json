@@ -12,13 +12,13 @@
   },
   "dependencies": {
     "@solidjs/web": "^2.0.0-rc.20",
-    "@yak/solid": "^0.4.0",
+    "@yak/solid": "catalog:",
     "solid-js": "^2.0.0-rc.20",
     "utils": "workspace:*"
   },
   "devDependencies": {
     "@solidjs/diagnostics": "^2.0.0-rc.20",
-    "@solidjs/vite-plugin": "^3.0.0-next.53",
+    "@solidjs/vite-plugin": "catalog:",
     "@yak/eslint-plugin": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",

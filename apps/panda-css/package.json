@@ -12,18 +12,18 @@
     "lint": "vp lint ."
   },
   "dependencies": {
-    "@pandacss/vite": "^2.4.0",
     "@solidjs/web": "^2.0.0-rc.20",
     "solid-js": "^2.0.0-rc.20",
     "utils": "workspace:*"
   },
   "devDependencies": {
-    "@pandacss/dev": "^2.4.0",
+    "@pandacss/dev": "catalog:",
     "@pandacss/eslint-plugin": "catalog:",
-    "@pandacss/preset-base": "^2.4.0",
-    "@pandacss/preset-panda": "^2.4.0",
+    "@pandacss/preset-base": "catalog:",
+    "@pandacss/preset-panda": "catalog:",
+    "@pandacss/vite": "catalog:",
     "@solidjs/diagnostics": "^2.0.0-rc.20",
-    "@solidjs/vite-plugin": "^3.0.0-next.53",
+    "@solidjs/vite-plugin": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plus": "catalog:"

@@ -15,7 +15,7 @@
     "@solidjs/meta": "^1.0.0-next.2",
     "@solidjs/router": "^2.0.0-next.43",
     "@solidjs/web": "^2.0.0-rc.20",
-    "@vanilla-extract/css": "^1.21.3",
+    "@vanilla-extract/css": "catalog:",
     "@vanilla-extract/dynamic": "catalog:",
     "solid-js": "^2.0.0-rc.20",
     "utils": "workspace:*"
@@ -23,9 +23,9 @@
   "devDependencies": {
     "@solidjs/diagnostics": "^2.0.0-rc.20",
     "@solidjs/testing-library": "^1.0.0-beta.3",
-    "@solidjs/vite-plugin": "^3.0.0-next.53",
+    "@solidjs/vite-plugin": "catalog:",
     "@testing-library/jest-dom": "^7.0.0",
-    "@vanilla-extract/vite-plugin": "^5.2.6",
+    "@vanilla-extract/vite-plugin": "catalog:",
     "eslint-plugin-solid": "~0.18.1",
     "filesystem-routing": "0.4.0",
     "jsdom": "^25.0.1",

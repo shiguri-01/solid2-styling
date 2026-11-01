@@ -17,10 +17,10 @@
   },
   "devDependencies": {
     "@solidjs/diagnostics": "^2.0.0-rc.20",
-    "@solidjs/vite-plugin": "^3.0.0-next.53",
+    "@solidjs/vite-plugin": "catalog:",
     "@unocss/eslint-plugin": "catalog:",
     "typescript": "catalog:",
-    "unocss": "^66.0.0",
+    "unocss": "catalog:",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   }
