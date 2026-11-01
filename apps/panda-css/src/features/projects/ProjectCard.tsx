@@ -16,7 +16,7 @@ export function ProjectCard(props: {
   onSelect: () => void;
 }) {
   return (
-    <Card as="article" class={s.project} selected={props.selected}>
+    <Card as="article" css={s.project} selected={props.selected}>
       <div class={s.meta}>
         <Badge tone={props.project.percent === 100 ? "success" : "neutral"}>
           {props.project.percent === 100 ? "Complete" : "In progress"}

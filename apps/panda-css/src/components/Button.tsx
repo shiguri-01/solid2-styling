@@ -1,6 +1,7 @@
 import { omit } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { cva } from "../../styled-system/css";
+import { css, cva } from "../../styled-system/css";
+import type { StyleProps } from "./style-props";
 const button = cva({
   base: {
     px: "3",
@@ -23,15 +24,16 @@ const button = cva({
   },
   defaultVariants: { variant: "default" },
 });
-export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "default" | "primary";
-};
+export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> &
+  StyleProps & {
+    variant?: "default" | "primary";
+  };
 export function Button(props: ButtonProps) {
   return (
     <button
       type="button"
-      {...omit(props, "class", "variant")}
-      class={[button({ variant: props.variant }), props.class]}
+      {...omit(props, "class", "variant", "css")}
+      class={[css(button.raw({ variant: props.variant }), props.css), props.class]}
     />
   );
 }

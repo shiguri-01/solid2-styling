@@ -2,7 +2,8 @@ import { omit } from "solid-js";
 import type { JSX } from "@solidjs/web";
 import { field } from "./fields";
 import { css } from "../../styled-system/css";
-const select = css({
+import type { StyleProps } from "./style-props";
+const select = css.raw({
   appearance: "none",
   paddingRight: "36px",
   backgroundImage:
@@ -11,6 +12,8 @@ const select = css({
   backgroundPosition: "right 12px center",
   backgroundSize: "16px 16px",
 });
-export function Select(props: JSX.SelectHTMLAttributes<HTMLSelectElement>) {
-  return <select {...omit(props, "class")} class={[field, select, props.class]} />;
+export function Select(props: JSX.SelectHTMLAttributes<HTMLSelectElement> & StyleProps) {
+  return (
+    <select {...omit(props, "class", "css")} class={[css(field, select, props.css), props.class]} />
+  );
 }

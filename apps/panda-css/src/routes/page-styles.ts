@@ -2,7 +2,7 @@ import { css } from "../../styled-system/css";
 import { flex, grid, stack } from "../../styled-system/patterns";
 const heading = css({ fontSize: "16px", fontWeight: "semibold", mb: "2" });
 const description = css({ color: "muted", fontSize: "sm" });
-const panel = stack({ gap: "4" });
+const panel = stack.raw({ gap: "4" });
 const cellStyle = css.raw({
   px: "3",
   py: "row",
@@ -119,7 +119,7 @@ export const settings = {
     borderBottomWidth: "1px",
     borderColor: "line",
   }),
-  form: stack({ gap: "3" }),
+  form: stack.raw({ gap: "3" }),
   error: css({ color: "danger", _empty: { display: "none" } }),
   message: css({ color: "brand", _empty: { display: "none" } }),
   actions: flex({ wrap: "wrap", gap: "3" }),

@@ -83,7 +83,7 @@ export default function Settings() {
             <h2 class={s.heading}>Workspace profile</h2>
             <p class={s.description}>The name appears in the workspace navigation.</p>
           </div>
-          <Card as="form" variant="plain" spacing="roomy" class={s.form} onSubmit={save} novalidate>
+          <Card as="form" variant="plain" spacing="roomy" css={s.form} onSubmit={save} novalidate>
             <label for="workspace-name">Workspace name</label>
             <TextInput
               id="workspace-name"
@@ -131,7 +131,7 @@ export default function Settings() {
               theme.
             </p>
           </div>
-          <Card variant="plain" spacing="roomy" class={s.form}>
+          <Card variant="plain" spacing="roomy" css={s.form}>
             <Switch
               label="Compact rows"
               description="Reduce vertical spacing for detailed reviews."
@@ -155,7 +155,7 @@ export default function Settings() {
             <h2 class={s.heading}>Notifications</h2>
             <p class={s.description}>Local preference examples; this demo does not send emails.</p>
           </div>
-          <Card variant="plain" spacing="roomy" class={s.form}>
+          <Card variant="plain" spacing="roomy" css={s.form}>
             <Switch
               label="Weekly delivery digest"
               description="A summary of open work and completion."

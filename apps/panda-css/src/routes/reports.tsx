@@ -57,7 +57,7 @@ export default function Reports() {
         </div>
       </dl>
       <div class={s.columns}>
-        <Card as="section" class={s.panel} spacing="roomy">
+        <Card as="section" css={s.panel} spacing="roomy">
           <h2 class={s.heading}>Completion by workstream</h2>
           <p class={s.description}>Completed issues as a share of each workstream.</p>
           <For each={categories()}>
@@ -77,7 +77,7 @@ export default function Reports() {
             )}
           </For>
         </Card>
-        <Card as="section" class={s.panel} spacing="roomy">
+        <Card as="section" css={s.panel} spacing="roomy">
           <h2 class={s.heading}>Priority distribution</h2>
           <p class={s.description}>Open issues requiring attention.</p>
           <For each={["high", "medium", "low"]}>
@@ -93,7 +93,7 @@ export default function Reports() {
           </p>
         </Card>
       </div>
-      <Card as="section" class={s.panel} spacing="roomy">
+      <Card as="section" css={s.panel} spacing="roomy">
         <h2 class={s.heading}>Team workload</h2>
         <div class={s.tableScroll}>
           <table class={s.table}>

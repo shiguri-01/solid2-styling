@@ -1,6 +1,7 @@
 import { createUniqueId, omit } from "solid-js";
 import type { JSX } from "@solidjs/web";
-import { sva } from "../../styled-system/css";
+import { css, sva } from "../../styled-system/css";
+import type { StyleProps } from "./style-props";
 const toggle = sva({
   slots: ["root", "label", "description", "control"],
   base: {
@@ -32,10 +33,11 @@ const toggle = sva({
     },
   },
 });
-type Props = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, "type" | "role" | "children"> & {
-  label: string;
-  description: string;
-};
+type Props = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, "type" | "role" | "children"> &
+  StyleProps & {
+    label: string;
+    description: string;
+  };
 export function Switch(props: Props) {
   const id = createUniqueId();
   const classes = toggle();
@@ -48,10 +50,10 @@ export function Switch(props: Props) {
         </small>
       </span>
       <input
-        {...omit(props, "label", "description", "class")}
+        {...omit(props, "label", "description", "class", "css")}
         type="checkbox"
         role="switch"
-        class={[classes.control, props.class]}
+        class={[css(toggle.raw().control, props.css), props.class]}
         aria-describedby={`${id} ${props["aria-describedby"] ?? ""}`}
       />
     </label>

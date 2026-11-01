@@ -1,5 +1,5 @@
 import { css } from "../../styled-system/css";
-export const field = css({
+export const field = css.raw({
   width: "full",
   minW: "0",
   borderWidth: "1px",

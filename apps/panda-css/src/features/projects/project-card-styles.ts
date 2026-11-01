@@ -1,7 +1,7 @@
 import { css } from "../../../styled-system/css";
 import { flex, stack } from "../../../styled-system/patterns";
 export const s = {
-  project: stack({ gap: "4" }),
+  project: stack.raw({ gap: "4" }),
   heading: css({ m: "0", fontSize: "18px", fontWeight: "semibold" }),
   description: css({ m: "0", color: "muted", fontSize: "xs" }),
   meta: flex({

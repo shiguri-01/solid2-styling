@@ -72,7 +72,7 @@ export default function Projects() {
             <Empty>No projects match your filters.</Empty>
           </Show>
         </section>
-        <Card as="aside" class={s.detail} aria-label="Project detail">
+        <Card as="aside" css={s.detail} aria-label="Project detail">
           <h2 class={s.heading}>{current()?.category}</h2>
           <p class={s.description}>Delivery checklist</p>
           <For each={current()?.issues ?? []}>

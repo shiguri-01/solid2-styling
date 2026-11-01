@@ -1,14 +1,16 @@
 import { omit } from "solid-js";
 import { Dynamic, type JSX } from "@solidjs/web";
-import { cva } from "../../styled-system/css";
+import { css, cva } from "../../styled-system/css";
+import type { StyleProps } from "./style-props";
 type ElementProps =
   | (JSX.HTMLAttributes<HTMLElement> & { as?: "div" | "section" | "article" | "aside" })
   | (JSX.FormHTMLAttributes<HTMLFormElement> & { as: "form" });
-type CardProps = ElementProps & {
-  variant?: "outlined" | "plain";
-  spacing?: "default" | "roomy";
-  selected?: boolean;
-};
+type CardProps = ElementProps &
+  StyleProps & {
+    variant?: "outlined" | "plain";
+    spacing?: "default" | "roomy";
+    selected?: boolean;
+  };
 const card = cva({
   base: { minW: "0", rounded: "6px", bg: "paper", borderWidth: "1px", borderColor: "line" },
   variants: {
@@ -25,9 +27,12 @@ export function Card(props: CardProps) {
   return (
     <Dynamic
       component={props.as ?? "div"}
-      {...omit(props, "as", "class", "variant", "spacing", "selected")}
+      {...omit(props, "as", "class", "variant", "spacing", "selected", "css")}
       class={[
-        card({ variant: props.variant, spacing: props.spacing, selected: props.selected }),
+        css(
+          card.raw({ variant: props.variant, spacing: props.spacing, selected: props.selected }),
+          props.css,
+        ),
         props.class,
       ]}
     />
