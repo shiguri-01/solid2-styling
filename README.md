@@ -50,7 +50,7 @@ Codegen-driven atomic CSS that generates a project-specific `styled-system` from
 
 A compiler-driven atomic CSS system designed for predictable style composition. Styles are co-located in component files with `stylex.create()`, disallowing selector reach-out and resolving overrides deterministically—the last style passed always wins—via atomic rules and CSS cascade layers.
 
-In Solid, bind styles with `{...stylex.attrs(...)}` or `stylex.attrs(...).class` (since `stylex.props()` outputs `className`). In turnkey mode (where `src/Document.tsx` replaces `index.html`), `Document.tsx` includes the virtual dev tags (`/virtual:stylex.css` and `/@id/virtual:stylex:runtime`), while production outputs into `src/stylex.css`.
+In Solid, bind styles with `{...stylex.attrs(...)}` or `stylex.attrs(...).class` (since `stylex.props()` outputs `className`).
 
 ### [Zyzz](apps/zyzz/)
 
@@ -68,7 +68,7 @@ Solid 2 support is provided by `@yak/solid`. In `vite.config.ts`, `yak()` must b
 
 ## Production CSS Output
 
-All client CSS emitted by `vp run -r build` into `apps/<library>/dist/client/assets/` for the sample issue tracker (which covers multi-route navigation, filtering, dynamic progress values, priority variants, and light/dark themes):
+All client CSS emitted by `vp run -r build` for the sample issue tracker (which covers multi-route navigation, filtering, dynamic progress values, priority variants, and light/dark themes):
 
 | Library             | Bundling Strategy                                | CSS Files | Raw Bytes | Gzip Bytes |
 | :------------------ | :----------------------------------------------- | --------: | --------: | ---------: |
