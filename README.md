@@ -1,26 +1,93 @@
-# Solid 2.0 Styling Library Comparison
+# Styling Libraries in Solid 2.0
 
-A Vite+ monorepo comparing nine styling approaches in **Solid 2.0**.
+A side-by-side comparison of **nine styling approaches in Solid 2.0**, implemented against the same issue tracker app in [`apps/`](apps/).
 
-Each app implements an issue board using the data and state logic in [`packages/utils`](packages/utils/): search, category and status filters, creation, deletion, selection, priority changes, completion, and theme switching.
+## Overview
 
-The comparison covers how each library expresses the same product requirements: authoring and composing styles, representing state, defining themes, handling responsive layouts, and producing CSS. Library defaults and opinions—such as Lism's harmonic scales, half-leading, and layout primitives—are part of the comparison. Typography, spacing, colors, and layout behavior can therefore differ between implementations.
+| Library                                      | Authoring                            | Variant API                  | Token Enforcement                    | Lint Plugin                                                                                | Agent Skills                                                    |
+| :------------------------------------------- | :----------------------------------- | :--------------------------- | :----------------------------------- | :----------------------------------------------------------------------------------------- | :-------------------------------------------------------------- |
+| **[CSS Modules](apps/css-modules/)**         | `.module.css`                        | — (plain CSS)                | Optional (`var(--*)`)                | —                                                                                          | —                                                               |
+| **[Tailwind CSS](apps/tailwind/)**           | Utility classes                      | — (utility composition)      | Utility scale + arbitrary `[...]`    | —                                                                                          | —                                                               |
+| **[UnoCSS](apps/unocss/)**                   | Utility classes + `shortcuts`        | — (utility composition)      | Utility scale + arbitrary `[...]`    | [ESLint](https://unocss.dev/integrations/eslint)                                           | —                                                               |
+| **[Lism CSS](apps/lism-css/)**               | Layout primitives & property classes | — (modifier classes)         | Harmonic scales + custom CSS         | —                                                                                          | [Skills](https://github.com/lism-css/lism-css/tree/main/skills) |
+| **[vanilla-extract](apps/vanilla-extract/)** | TS objects in `.css.ts`              | `styleVariants()`            | Typed contract + free CSS            | —                                                                                          | —                                                               |
+| **[Panda CSS](apps/panda-css/)**             | `css()` TS objects                   | `cva()` recipes              | Typed tokens + free CSS              | [ESLint / Oxlint](https://github.com/chakra-ui/panda/tree/main/packages/eslint-plugin)     | [Skills](https://github.com/chakra-ui/panda/tree/main/skills)   |
+| **[StyleX](apps/stylex/)**                   | `stylex.create()` TS objects         | `stylex.attrs()` composition | Typed vars + free CSS                | [ESLint](https://stylexjs.com/docs/api/configuration/eslint-plugin/)                       | —                                                               |
+| **[Zyzz](apps/zyzz/)**                       | `style()` TS objects                 | `variants()` recipes         | Strict (requires token or `!custom`) | —                                                                                          | —                                                               |
+| **[yak](apps/yak/)**                         | `styled` / `css` templates           | `$` transient props          | Standard CSS custom properties       | [ESLint / Oxlint](https://github.com/galaxuslabs/yak/tree/main/packages/yak-eslint-plugin) | —                                                               |
 
-## Implementation Comparison
+---
 
-| Library                                  | Authoring and composition                                                                                               | UI states and dynamic values                                                                                        | Themes and tokens                                                                                                                                                                      | Responsive styling                                                                                                           | CSS output                                                                                                      |
-| :--------------------------------------- | :---------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------- |
-| [vanilla-extract](apps/vanilla-extract/) | TypeScript objects in `.css.ts` files. `style()` composes declarations; `styleVariants()` defines named alternatives.   | Components choose classes for completion, priority, and button tone.                                                | `createThemeContract()` and light/dark `createTheme()` classes define the shared palette. One-off values remain CSS declarations.                                                      | Media and container queries are written in style objects.                                                                    | The Vite plugin extracts CSS into assets associated with importing modules.                                     |
-| [StyleX](apps/stylex/)                   | `stylex.create()` defines typed style objects. Solid binds `stylex.attrs(...).class`.                                   | Conditional style objects compose base and state styles through `stylex.attrs()`.                                   | `tokens.stylex.ts` defines variables; `stylex.createTheme()` supplies alternate theme values.                                                                                          | Media conditions and pseudo-classes are expressed in style objects.                                                          | The Vite plugin extracts atomic rules into ordered cascade layers.                                              |
-| [Zyzz](apps/zyzz/)                       | `style()` defines styles; `variants()` defines recipes. `output: "html"` provides Solid-compatible `.class` values.     | Recipes select tone and size variants from current state. `selection: "class"` supplies class-based variants.       | `zyzz.config.ts` defines native light/dark token pairs. Mapped token domains require tokens or the explicit `!custom` escape hatch.                                                    | Media conditions, nested selectors, and container properties are expressed in style objects.                                 | The Vite integration emits theme variables and compiled atomic CSS across shared and route assets.              |
-| [Panda CSS](apps/panda-css/)             | Generated `css()` helpers consume TypeScript style objects; `cva()` defines recipes.                                    | Recipes select priority and filter variants; other state changes select named classes.                              | `panda.config.ts` extends the theme with project colors. One-off values can be written in style objects.                                                                               | Responsive conditions, media queries, and nested selectors are expressed in style objects.                                   | Codegen and the Vite integration emit static CSS.                                                               |
-| [Tailwind CSS](apps/tailwind/)           | Utility classes are written directly on elements; arbitrary values express one-off declarations.                        | Solid composes class strings and selects priority/tone classes.                                                     | `@theme` defines named colors; the `dark:` variant handles theme-dependent styles.                                                                                                     | Responsive prefixes and arbitrary variants are written in utility strings.                                                   | The Vite plugin scans source classes and emits matching utilities.                                              |
-| [UnoCSS](apps/unocss/)                   | Utility classes are written directly on elements. A separate reset supplies base styles.                                | Solid composes class strings and selects priority/tone utilities.                                                   | `uno.config.ts` extends the Wind3 theme with project colors.                                                                                                                           | Preset responsive variants and arbitrary selectors are written in utility strings.                                           | The Vite integration generates utilities on demand; the reset remains regular CSS.                              |
-| [CSS Modules](apps/css-modules/)         | Semantic selectors are written in `.module.css`; Solid binds imported local class names.                                | Components select local classes for active, selected, completed, priority, and dark states.                         | CSS custom properties define the palette; a root class overrides dark values.                                                                                                          | Standard media queries and selectors are written in CSS.                                                                     | Vite scopes class names and emits ordinary CSS.                                                                 |
-| [yak](apps/yak/)                         | `styled` defines components; `styled(Button)` extends components and `css` composes reusable styles.                    | Transient props select extracted state rules. `$percent` becomes a reactive CSS variable.                           | `yak.context.ts` defines the typed theme; `YakThemeProvider` supplies reactive theme values consumed by styled interpolations.                                                         | Native nested selectors and media queries are written in template literals.                                                  | `yak()` runs before `solid()` and extracts CSS. The Solid runtime handles reactive class and variable bindings. |
-| [Lism CSS](apps/lism-css/)               | Intrinsic Solid elements use layout primitives and Property Classes. Component-specific rules use `@layer lism-custom`. | Complete class strings select palette colors and states. The progress bar's `-sz` class reads signal-driven `--sz`. | Native semantic colors, palette, harmonic typography/spacing, radii, and half-leading are retained. `lism.config.js` customizes the brand; a root class supplies dark semantic colors. | Container-based class/variable pairs control metric columns. `l--withSide` wraps the inspector according to available space. | The official Vite plugin generates configured `full.css` and purges unused production selectors.                |
+## Libraries
 
-## Run the Comparison
+### [CSS Modules](apps/css-modules/)
+
+Standard CSS scoped per file by Vite, with zero external styling libraries. You write ordinary CSS rules—using native nesting, container queries, and custom properties—while Vite hashes class names locally so styles never leak across components.
+
+### [Tailwind CSS](apps/tailwind/)
+
+CSS-first utility styling powered by Tailwind v4 (`@tailwindcss/vite`). Design tokens are declared directly in CSS via `@theme`, and components are styled by composing utility classes in JSX—reaching for arbitrary value syntax only when stepping outside the scale.
+
+### [UnoCSS](apps/unocss/)
+
+A customizable on-demand utility engine configured in TypeScript (`uno.config.ts`). Alongside standard utilities via `presetWind3()`, it lets you group recurring utility combinations into named `shortcuts` to keep JSX templates concise.
+
+### [Lism CSS](apps/lism-css/)
+
+An opinionated CSS architecture built around layout primitives (`l--*`), component blocks (`b--*`), and single-purpose Property Classes (`-prop:value`). Rather than treating every spacing or font size as an arbitrary value, Lism provides built-in harmonic scales, half-leading typography, and container-aware layouts out of the box.
+
+In Solid, you use Lism's HTML/CSS class API directly on elements instead of its React component package. Because `@lism-css/plugin/vite` statically purges unused selectors in production, conditional classes should be written as complete string literals.
+
+### [vanilla-extract](apps/vanilla-extract/)
+
+Type-safe static stylesheets written in `.css.ts` files. It separates style authoring from component code while keeping full TypeScript autocomplete across theme contracts (`createThemeContract()`) and variants (`styleVariants()`), emitting module-scoped CSS chunks.
+
+### [Panda CSS](apps/panda-css/)
+
+Codegen-driven atomic CSS that generates a project-specific `styled-system` from `panda.config.ts`. It pairs inline `css()` style objects for layout with `cva()` recipes for multi-variant components, backed by semantic tokens that adapt to conditions like `_dark`.
+
+### [StyleX](apps/stylex/)
+
+A compiler-driven atomic CSS system designed for predictable style composition. Styles are co-located in component files with `stylex.create()`, disallowing selector reach-out and resolving overrides deterministically—the last style passed always wins—via atomic rules and CSS cascade layers.
+
+In Solid, bind styles with `{...stylex.attrs(...)}` or `stylex.attrs(...).class` (since `stylex.props()` outputs `className`). In turnkey mode (where `src/Document.tsx` replaces `index.html`), `Document.tsx` includes the virtual dev tags (`/virtual:stylex.css` and `/@id/virtual:stylex:runtime`), while production outputs into `src/stylex.css`.
+
+### [Zyzz](apps/zyzz/)
+
+An atomic TypeScript styling system with strict design-token governance. It provides `style()` and `variants()` recipes while enforcing token boundaries by default: properties mapped to token domains require a defined token unless you explicitly opt out with the `!custom` escape hatch. Theme tokens are declared as native `{ light, dark }` pairs in `zyzz.config.ts`.
+
+To integrate with Solid, set `output: "html"` in `defineConfig()` so Zyzz returns `{ class: string }` objects that spread directly onto Solid elements.
+
+### [yak](apps/yak/)
+
+Zero-runtime CSS-in-JS that preserves the classic `styled.div` and tagged-template authoring model. Styles and conditional blocks driven by `$`-prefixed transient props are extracted into static CSS at build time, while dynamic interpolations compile into reactive CSS variables.
+
+Solid 2 support is provided by `@yak/solid`. In `vite.config.ts`, `yak()` must be placed **before** `solid()` so template literals are extracted before Solid compiles JSX.
+
+---
+
+## Production CSS Output
+
+All client CSS emitted by `vp run -r build` into `apps/<library>/dist/client/assets/` for the sample issue tracker (which covers multi-route navigation, filtering, dynamic progress values, priority variants, and light/dark themes):
+
+| Library             | Bundling Strategy                                | CSS Files | Raw Bytes | Gzip Bytes |
+| :------------------ | :----------------------------------------------- | --------: | --------: | ---------: |
+| **CSS Modules**     | Per-route & per-component CSS chunks             |        11 |    20,115 |      7,234 |
+| **Tailwind CSS**    | Single v4 utility + `@theme` stylesheet          |         1 |    30,986 |      7,270 |
+| **UnoCSS**          | Single on-demand utility bundle + reset          |         1 |    17,504 |      5,220 |
+| **Lism CSS**        | Single purged architecture + property stylesheet |         1 |    17,714 |      5,269 |
+| **vanilla-extract** | Route- and module-split static CSS chunks        |         5 |    17,867 |      5,251 |
+| **Panda CSS**       | Single static codegen + recipe stylesheet        |         1 |    42,608 |     11,007 |
+| **StyleX**          | Single atomic stylesheet with cascade layers     |         1 |    17,412 |      4,569 |
+| **Zyzz**            | Shared + route-split atomic CSS & theme tokens   |         3 |    51,219 |      8,759 |
+| **yak**             | Route-split extracted CSS-in-JS chunks           |         5 |    19,306 |      5,609 |
+
+> [!NOTE]
+> Gzip sizes are summed across emitted files. Totals include each library's baseline reset, token definitions, and design defaults.
+
+---
+
+## Running the Apps
 
 ```sh
 vp install
@@ -30,81 +97,16 @@ vp run -r test
 vp run -r build
 ```
 
-Start the apps you want to compare:
+Start any implementation locally:
 
-| App             | Command                      | URL                                 |
-| :-------------- | :--------------------------- | :---------------------------------- |
-| vanilla-extract | `vp run vanilla-extract#dev` | <http://vanilla-extract.localhost/> |
-| StyleX          | `vp run stylex#dev`          | <http://stylex.localhost/>          |
-| Zyzz            | `vp run zyzz#dev`            | <http://zyzz.localhost/>            |
-| Panda CSS       | `vp run panda-css#dev`       | <http://panda-css.localhost/>       |
-| Tailwind CSS    | `vp run tailwind#dev`        | <http://tailwind.localhost/>        |
-| UnoCSS          | `vp run unocss#dev`          | <http://unocss.localhost/>          |
-| CSS Modules     | `vp run css-modules#dev`     | <http://css-modules.localhost/>     |
-| yak             | `vp run yak#dev`             | <http://yak.localhost/>             |
-| Lism CSS        | `vp run lism-css#dev`        | <http://lism-css.localhost/>        |
-
-Use the same issue and interactions in each app. Compare the corresponding source for:
-
-- A priority badge and its variants.
-- Active filters, selected rows, and completed issues.
-- Light/dark theme definitions and bindings.
-- The signal-driven progress bar.
-- Layout changes at narrow widths.
-- A reusable component, a shared token, and a one-off value.
-
-## Production CSS
-
-CSS totals below include all emitted client CSS assets, including resets and theme definitions. Gzip totals sum the separately compressed assets. Sizes are in bytes and depend on the source, dependency versions, and build configuration.
-
-| Library         | Client asset directory                     | CSS files | Raw bytes | Gzip bytes |
-| :-------------- | :----------------------------------------- | --------: | --------: | ---------: |
-| vanilla-extract | `apps/vanilla-extract/dist/client/assets/` |         8 |    18,216 |      5,770 |
-| StyleX          | `apps/stylex/dist/client/assets/`          |         1 |    17,624 |      4,612 |
-| Zyzz            | `apps/zyzz/dist/client/assets/`            |         9 |    54,372 |     10,653 |
-| Panda CSS       | `apps/panda-css/dist/client/assets/`       |         1 |    43,014 |     11,093 |
-| Tailwind CSS    | `apps/tailwind/dist/client/assets/`        |         1 |    31,664 |      7,360 |
-| UnoCSS          | `apps/unocss/dist/client/assets/`          |         1 |    17,504 |      5,220 |
-| CSS Modules     | `apps/css-modules/dist/client/assets/`     |        10 |    20,114 |      7,158 |
-| yak             | `apps/yak/dist/client/assets/`             |         6 |    19,307 |      5,892 |
-| Lism CSS        | `apps/lism-css/dist/client/assets/`        |         1 |    17,714 |      5,269 |
-
-These totals describe the implementations in this repository. They are not a library performance ranking: the apps retain different defaults, emit different declarations, and use different rendering configurations. CSS size also excludes JavaScript runtime cost. For a complete bundle comparison, inspect the emitted JavaScript and initial HTML alongside CSS.
-
-## Integration Details
-
-### Lint plugins and Agent Skills
-
-| Library         | Lint plugin                                                                                | Agent Skills                                                                                    |
-| :-------------- | :----------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------- |
-| vanilla-extract | —                                                                                          | —                                                                                               |
-| StyleX          | [ESLint](https://stylexjs.com/docs/api/configuration/eslint-plugin/)                       | —                                                                                               |
-| Zyzz            | —                                                                                          | —                                                                                               |
-| Panda CSS       | [ESLint / Oxlint](https://github.com/chakra-ui/panda/tree/main/packages/eslint-plugin)     | [Styling · Theming · Migration](https://github.com/chakra-ui/panda/tree/main/skills)            |
-| Tailwind CSS    | —                                                                                          | —                                                                                               |
-| UnoCSS          | [ESLint](https://unocss.dev/integrations/eslint)                                           | —                                                                                               |
-| CSS Modules     | —                                                                                          | —                                                                                               |
-| yak             | [ESLint / Oxlint](https://github.com/galaxuslabs/yak/tree/main/packages/yak-eslint-plugin) | —                                                                                               |
-| Lism CSS        | —                                                                                          | [Implementation · Refactoring · Mockups](https://github.com/lism-css/lism-css/tree/main/skills) |
-
-### Solid bindings and state lifetime
-
-Bind class strings to Solid's `class` attribute. StyleX uses `stylex.attrs(...).class`; Zyzz uses `output: "html"` and the returned `.class`. This preserves their styling APIs while giving Solid targeted bindings.
-
-Create an issue tracker once within the owning component and pass that instance to the board. Reactive reads belong in JSX or tracked computations. Static style definitions stay outside reactive expressions; state-dependent variants and values remain reactive.
-
-### Library-specific configuration
-
-- **vanilla-extract:** `.css.ts` imports determine where extracted styles enter the module graph. Route-owned CSS can be split from entry CSS.
-- **StyleX:** shared variable definitions live in `.stylex.ts` files. In turnkey mode, `Document.tsx` includes development virtual CSS/runtime tags because there is no `index.html` transform. `src/stylex.css` provides the production CSS asset used by the plugin.
-- **Zyzz:** token-domain validation and native light/dark pairs remain enabled. `selection: "class"` selects the library's class-based recipe API.
-- **Panda CSS:** codegen supplies the `css()` and recipe helpers used by the board.
-- **Tailwind CSS:** `@theme` and the configured dark variant define the utility vocabulary and theme behavior.
-- **UnoCSS:** the Wind3 preset and project theme drive utility generation; the app explicitly imports its reset.
-- **CSS Modules:** module scoping and ordinary CSS custom properties provide isolation and theming without a separate styling runtime.
-- **yak:** the Vite plugin precedes `solid()` so extraction sees original source. The Solid integration targets Solid 2 and is experimental.
-- **Lism CSS:** the app uses the HTML/CSS API directly in Solid; packaged React components are not imported. Default scales and layout behavior remain active. `lismCss({ purge: { report: true } })` removes unused production CSS. Conditional classes are complete string literals so purge can discover every state; dynamically assembled classes require a safelist. The plugin's generic CSR warning can also match the `apps/lism-css/src/` path, so verify conditional styles in the production preview.
-
-### Reactivity diagnostics
-
-The configured component tests use `@solidjs/diagnostics` to check reactive behavior. A text-only signal update and a text-plus-class update have different scope counts; `expectRerunBudget` should reflect the bindings an interaction actually changes. Run tests through `vp run -r test` so each package uses its Solid-aware test configuration.
+| App                 | Command                      | Local URL                           |
+| :------------------ | :--------------------------- | :---------------------------------- |
+| **CSS Modules**     | `vp run css-modules#dev`     | <http://css-modules.localhost/>     |
+| **Tailwind CSS**    | `vp run tailwind#dev`        | <http://tailwind.localhost/>        |
+| **UnoCSS**          | `vp run unocss#dev`          | <http://unocss.localhost/>          |
+| **Lism CSS**        | `vp run lism-css#dev`        | <http://lism-css.localhost/>        |
+| **vanilla-extract** | `vp run vanilla-extract#dev` | <http://vanilla-extract.localhost/> |
+| **Panda CSS**       | `vp run panda-css#dev`       | <http://panda-css.localhost/>       |
+| **StyleX**          | `vp run stylex#dev`          | <http://stylex.localhost/>          |
+| **Zyzz**            | `vp run zyzz#dev`            | <http://zyzz.localhost/>            |
+| **yak**             | `vp run yak#dev`             | <http://yak.localhost/>             |
