@@ -66,24 +66,39 @@ Solid 2 support is provided by `@yak/solid`. In `vite.config.ts`, `yak()` must b
 
 ---
 
-## Production CSS Output
+## Production Bundle Output
 
-All client CSS emitted by `vp run -r build` for the sample issue tracker (which covers multi-route navigation, filtering, dynamic progress values, priority variants, and light/dark themes):
+All client assets emitted by `vp run -r build` for the sample issue tracker:
 
-| Library             | Bundling Strategy                                | CSS Files | Raw Bytes | Gzip Bytes |
-| :------------------ | :----------------------------------------------- | --------: | --------: | ---------: |
-| **CSS Modules**     | Per-route & per-component CSS chunks             |        11 |    20,115 |      7,234 |
-| **Tailwind CSS**    | Single v4 utility + `@theme` stylesheet          |         1 |    30,986 |      7,270 |
-| **UnoCSS**          | Single on-demand utility bundle + reset          |         1 |    17,504 |      5,220 |
-| **Lism CSS**        | Single purged architecture + property stylesheet |         1 |    17,714 |      5,269 |
-| **vanilla-extract** | Route- and module-split static CSS chunks        |         5 |    17,867 |      5,251 |
-| **Panda CSS**       | Single static codegen + recipe stylesheet        |         1 |    42,608 |     11,007 |
-| **StyleX**          | Single atomic stylesheet with cascade layers     |         1 |    17,412 |      4,569 |
-| **Zyzz**            | Shared + route-split atomic CSS & theme tokens   |         3 |    51,219 |      8,759 |
-| **yak**             | Route-split extracted CSS-in-JS chunks           |         5 |    19,306 |      5,609 |
+| Library             | CSS Files | CSS Raw | CSS Gzip | JS Files |  JS Raw | JS Gzip | Total Files | Total Raw | Total Gzip |
+| :------------------ | --------: | ------: | -------: | -------: | ------: | ------: | ----------: | --------: | ---------: |
+| **CSS Modules**     |        11 |  20,115 |    7,234 |       13 | 135,101 |  51,612 |          27 |   176,260 |     65,222 |
+| **Tailwind CSS**    |         1 |  30,986 |    7,270 |       12 | 142,257 |  53,709 |          16 |   192,761 |     67,168 |
+| **UnoCSS**          |         1 |  17,504 |    5,220 |       12 | 142,062 |  53,795 |          16 |   179,078 |     65,219 |
+| **Lism CSS**        |         1 |  17,714 |    5,269 |       13 | 138,609 |  52,801 |          17 |   176,127 |     64,273 |
+| **vanilla-extract** |         5 |  17,867 |    5,251 |       14 | 137,898 |  53,260 |          22 |   176,122 |     64,775 |
+| **Panda CSS**       |         1 |  42,608 |   11,007 |       12 | 174,939 |  66,029 |          16 |   237,105 |     83,359 |
+| **StyleX**          |         1 |  17,412 |    4,569 |        8 | 154,405 |  57,118 |          12 |   190,484 |     67,779 |
+| **Zyzz**            |         3 |  51,219 |    8,759 |       14 | 168,129 |  59,597 |          20 |   239,712 |     74,500 |
+| **yak**             |         5 |  19,306 |    5,609 |       14 | 140,810 |  54,394 |          22 |   180,383 |     66,277 |
 
 > [!NOTE]
-> Gzip sizes are summed across emitted files. Totals include each library's baseline reset, token definitions, and design defaults.
+> Gzip sizes are summed across emitted client files, including JavaScript chunks, CSS stylesheets, HTML, and assets.
+
+### JavaScript & Runtime Impact
+
+- **CSS Modules, vanilla-extract**: Static extraction. All styles extract to CSS at build time, leaving only class lookup tables in JS to keep the bundle at baseline size.
+- **Tailwind CSS, UnoCSS, Lism CSS**: Zero-runtime. Predefined class names are placed directly on elements, shipping no styling runtime or style objects in JS.
+- **Panda CSS**: Runtime parser. Style objects remain in JS calls alongside a runtime engine that resolves classes dynamically, producing the largest JS output.
+- **StyleX**: Runtime conflict resolution. Ships property identifier maps and a merge function to guarantee deterministic style overrides at runtime.
+- **Zyzz**: Object wrappers. Expands style declarations into wrapper objects for spreading onto elements, noticeably growing route chunks.
+- **yak**: Zero-runtime with dynamic helper. Extracts static styles to CSS, but includes a small helper to bind dynamic properties to CSS variables.
+
+### HTML & Assets Impact
+
+- **Body classes**: StyleX and Zyzz inject atomic reset classes directly into the HTML body tag. Other libraries style the root via stylesheets.
+- **Chunk splitting**: vanilla-extract, yak, and Zyzz split the core framework runtime into a separate preloaded file, while others bundle it into the client entry.
+- **CSS bundling**: Tailwind, UnoCSS, Lism, Panda, and StyleX bundle all CSS into a single file. CSS Modules, vanilla-extract, yak, and Zyzz split CSS across routes.
 
 ---
 
